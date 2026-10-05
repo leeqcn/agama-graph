@@ -1,0 +1,15 @@
+# CBETA 原始文件不提交，只保留说明
+raw/*
+!raw/README.md
+
+# 脚本中间产物
+pipeline/out/
+
+# MkDocs 构建输出
+site/
+
+# 杂项
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
