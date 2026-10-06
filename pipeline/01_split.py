@@ -18,6 +18,9 @@
   - 重新运行安全：data/sutras.csv 里「所属诵」「会编号」两列是人工填的，
     脚本会按经号保留，不会覆盖。
   - 偈颂的「句中停顿」(caesura) 输出为一个空格，其余不加任何标点。
+  - CBETA 的造字（私用区字符，网页上显示为方框）按文件头 charDecl 换成
+    对应的标准 Unicode 字；有替换的经在「备注」中标明。
+  - 同时把 XML 的 teiHeader 原样存到 data/T99_teiHeader.xml（CBETA 要求保留文件头）。
 """
 
 import argparse
@@ -43,6 +46,28 @@ HUMAN_COLUMNS = ["所属诵", "会编号"]
 
 def local(tag):
     return tag.rsplit("}", 1)[-1] if isinstance(tag, str) else ""
+
+
+def is_pua(c):
+    o = ord(c)
+    return 0xE000 <= o <= 0xF8FF or 0xF0000 <= o <= 0x10FFFF
+
+
+def load_gaiji(root):
+    """从文件头 charDecl 读出 私用区字符 → 标准 Unicode 字 的对照。"""
+    header = next((c for c in root if local(c.tag) == "teiHeader"), None)
+    table = {}
+    if header is None:
+        return table
+    for ch in header.iter():
+        if local(ch.tag) != "char":
+            continue
+        maps = {m.get("type"): (m.text or "").strip() for m in ch if local(m.tag) == "mapping"}
+        pua = maps.get("PUA")
+        rep = maps.get("unicode") or maps.get("normal_unicode")
+        if pua and rep:
+            table[chr(int(pua.replace("U+", ""), 16))] = chr(int(rep.replace("U+", ""), 16))
+    return table
 
 
 def squeeze(s):
@@ -95,7 +120,7 @@ def make_id(a, b):
     return f"{CANON}-{int(a):04d}" if a == b else f"{CANON}-{int(a):04d}~{int(b):04d}"
 
 
-def collect(root):
+def collect(root, gaiji):
     """按文档顺序收集所有 jing 区块，并记录起始卷。"""
     results = []
     state = {"juan": None}
@@ -110,11 +135,16 @@ def collect(root):
                 raise ValueError("发现没有目录标签的 jing 区块")
             label = "".join(mulu.itertext()).strip()
             inner_juan = [x.get("n") for x in e.iter() if local(x.tag) == "milestone" and x.get("unit") == "juan"]
+            text = extract_text(e)
+            replaced = any(ch in gaiji for ch in text)
+            if replaced:
+                text = text.translate(str.maketrans(gaiji))
             results.append({
                 "label": label,
                 "juan": state["juan"],
                 "inner_juan": inner_juan,
-                "text": extract_text(e),
+                "text": text,
+                "gaiji": replaced,
             })
             return
         for c in e:
@@ -135,7 +165,18 @@ def main():
 
     print(f"读取 {xml_path} ...")
     root = ET.parse(xml_path).getroot()
-    blocks = collect(root)
+    gaiji = load_gaiji(root)
+    blocks = collect(root, gaiji)
+
+    # 原样保存文件头（CBETA 要求保留）
+    raw = xml_path.read_text(encoding="utf-8")
+    i, j = raw.find("<teiHeader"), raw.find("</teiHeader>")
+    if i >= 0 and j > i:
+        header_path = ROOT / "data" / "T99_teiHeader.xml"
+        header_path.parent.mkdir(parents=True, exist_ok=True)
+        header_path.write_text(
+            "<!-- 摘自 CBETA T02n0099.xml 的 teiHeader，原样保留 -->\n" + raw[i:j + len("</teiHeader>")] + "\n",
+            encoding="utf-8")
 
     # --- 组装记录 ---
     rows = []
@@ -158,6 +199,8 @@ def main():
             rec["notes"].append(f"略出（不足{SHORT_LIMIT}字，疑为前经省略）")
         if b["inner_juan"]:
             rec["notes"].append("区块内含卷界标记，请核对是否跨卷")
+        if b["gaiji"]:
+            rec["notes"].append("含造字，已用相近的标准字替代")
         rows.append(rec)
 
     # 错位检测：经号应随文件顺序递增
@@ -218,12 +261,14 @@ def main():
     check(len(ids) == len(set(ids)), "经号无重复")
     dirty = [r["id"] for r in rows if re.search(r"[<>&]", r["text"])]
     check(not dirty, "正文无残留标签字符" + (f"：{dirty[:5]}" if dirty else ""))
+    pua_left = [r["id"] for r in rows if any(is_pua(c) for c in r["text"])]
+    check(not pua_left, "无残留造字（私用区字符）" + (f"：{pua_left[:5]}" if pua_left else ""))
     empty = [r["id"] for r in rows if r["chars"] == 0]
     check(not empty, "无空经文" + (f"：{empty[:5]}" if empty else ""))
 
     print("\n=== 统计 ===")
     print(f"生成 {len(rows)} 条记录；保留已有人工填写 {kept} 条")
-    for key, label in (("合并", "合并区块"), ("略出", "略出"), ("错位", "顺序错位"), ("跨卷", "卷界标记")):
+    for key, label in (("合并", "合并区块"), ("略出", "略出"), ("错位", "顺序错位"), ("跨卷", "卷界标记"), ("造字", "含造字替换")):
         hit = [r["id"] for r in rows if any(key in n for n in r["notes"])]
         print(f"{label}：{len(hit)} 条 {hit[:6]}{' ...' if len(hit) > 6 else ''}")
 
