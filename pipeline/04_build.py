@@ -7,14 +7,20 @@
 
 读取：
     data/sutras.csv            经文清单（01_split.py 生成）
-    data/tags.csv              经文标签（没有或只有表头也可以，页面显示「尚未标注」）
+    data/tags_raw.csv          你自己填的标签（经号、标签、备注）
     data/T99_teiHeader.xml     CBETA 文件头（01_split.py 保存）
     pipeline/out/sutras/*.txt  每经正文（01_split.py 生成）
 
 写出：
+    data/tags_raw.csv          补全缺的经号（第一次运行时生成；你填的内容原样保留）
     pages/sutras/index.md      经文目录（按卷）
     pages/sutras/T99-xxxx.md   每经一页：标签 + 原文
-    pages/about.md             关于页（数据来源与授权，取自 CBETA 文件头）
+    pages/about.md             关于页（说明、数据来源、致谢、授权）
+
+标签填写约定（data/tags_raw.csv）：
+    一条经的多个标签用顿号「、」隔开，最重要的写在最前面（页面上加粗显示）；
+    「备注」栏随便写笔记，页面上显示为「笔记」。
+    重新运行前会把旧文件备份到 pipeline/out/tags_raw.backup.csv。
 
 重新运行安全：只重写上述文件，会清掉旧的 pages/sutras/T99-*.md 再重建。
 pages/index.md、pages/terms/、pages/graph.md 不动。
@@ -38,7 +44,10 @@ TEI = "http://www.tei-c.org/ns/1.0"
 XML_LANG = "{http://www.w3.org/XML/1998/namespace}lang"
 
 SOURCE_LINE = ("经文来源：CBETA 电子佛典集成（中华电子佛典协会），大正藏 T99《杂阿含经》，"
-               "刘宋 求那跋陀罗译。授权 CC BY-NC-SA 4.0，详见[关于](../about.md)。")
+               "刘宋 求那跋陀罗译，谨此致谢。本站仅供学习，不保证内容正确。"
+               "授权 CC BY-NC-SA 4.0，详见[关于](../about.md)。")
+
+TAG_SPLIT = re.compile(r"[、，,；;]+")
 
 
 # ---------- 小工具 ----------
@@ -80,30 +89,59 @@ def render_body(text):
     return "\n\n".join(blocks)
 
 
-def load_tags():
-    path = ROOT / "data" / "tags.csv"
-    tags = defaultdict(list)
+RAW_HEADER = ["经号", "标签", "备注"]
+
+
+def read_raw_tags():
+    path = ROOT / "data" / "tags_raw.csv"
+    data = {}
+    if not path.exists():
+        return data
+    with open(path, encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        if not reader.fieldnames or any(h not in reader.fieldnames for h in RAW_HEADER):
+            sys.exit(f"data/tags_raw.csv 的表头应包含：{'、'.join(RAW_HEADER)}。"
+                     f"文件未做任何改动，请检查表头（可能是表格软件改了列名）。")
+        for row in reader:
+            sid = (row.get("经号") or "").strip()
+            if sid:
+                data[sid] = {"标签": (row.get("标签") or "").strip(), "备注": (row.get("备注") or "").strip()}
+    return data
+
+
+def sync_tags_raw(rows):
+    """保证 tags_raw.csv 含全部经号；已填内容原样保留；写入前先备份。"""
+    path = ROOT / "data" / "tags_raw.csv"
+    existing = read_raw_tags()
     if path.exists():
-        with open(path, encoding="utf-8", newline="") as f:
-            for row in csv.DictReader(f):
-                if row.get("经号") and row.get("名相"):
-                    tags[row["经号"]].append(row)
-    return tags
+        backup = ROOT / "pipeline" / "out" / "tags_raw.backup.csv"
+        backup.parent.mkdir(parents=True, exist_ok=True)
+        backup.write_bytes(path.read_bytes())
+    ids = [r["经号"] for r in rows]
+    known = set(ids)
+    extra = [k for k in existing if k not in known]
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f, lineterminator="\n")
+        w.writerow(RAW_HEADER)
+        for sid in ids + extra:
+            e = existing.get(sid, {"标签": "", "备注": ""})
+            w.writerow([sid, e["标签"], e["备注"]])
+    if extra:
+        print(f"提示：tags_raw.csv 里有 {len(extra)} 个经号不在 sutras.csv 中，已保留在文件末尾：{extra[:5]}")
+    return read_raw_tags()
 
 
-def render_tags(rows):
-    if not rows:
+def render_tags(entry):
+    if not entry or not (entry["标签"] or entry["备注"]):
         return "_尚未标注。_"
-    lines = []
-    for role in ("主题", "定义", "提及"):
-        items = []
-        for r in rows:
-            if r.get("角色") == role:
-                mark = "" if r.get("状态") == "已核" else "（待核）"
-                items.append(md_escape(r["名相"]) + mark)
-        if items:
-            lines.append(f"- **{role}**：" + "、".join(items))
-    return "\n".join(lines) if lines else "_尚未标注。_"
+    parts = []
+    tags = [t.strip() for t in TAG_SPLIT.split(entry["标签"]) if t.strip()]
+    if tags:
+        shown = ["**" + md_escape(tags[0]) + "**"] + [md_escape(t) for t in tags[1:]]
+        parts.append("标签：" + "、".join(shown))
+    if entry["备注"]:
+        parts.append("笔记：" + md_escape(entry["备注"]))
+    return "\n\n".join(parts)
 
 
 # ---------- 经文页 ----------
@@ -114,7 +152,7 @@ def build_sutras():
     with open(csv_path, encoding="utf-8", newline="") as f:
         rows = list(csv.DictReader(f))
     rows.sort(key=lambda r: int(r["顺序"]))
-    tags = load_tags()
+    tags = sync_tags_raw(rows)
 
     SUT.mkdir(parents=True, exist_ok=True)
     for old in SUT.glob("T99-*.md"):
@@ -131,7 +169,7 @@ def build_sutras():
         parts = [f"# {title_of(sid)}", "", meta, ""]
         if r.get("备注"):
             parts += [f"> 备注：{r['备注']}", ""]
-        parts += ["## 标签", "", render_tags(tags.get(sid, [])), "", "## 原文", "", body, "", "---", ""]
+        parts += ["## 标签（个人标注）", "", render_tags(tags.get(sid)), "", "## 原文", "", body, "", "---", ""]
 
         nav = []
         if i > 0:
@@ -191,10 +229,20 @@ def build_about():
     else:
         print("提示：没有 data/T99_teiHeader.xml，关于页将缺少 CBETA 文件头信息；请先运行 01_split.py")
 
-    L = ["# 关于", "", "## 数据来源", ""]
+    L = [
+        "# 关于", "",
+        "## 说明", "",
+        "本站是个人学习阿含经的笔记，**仅供学习使用，不保证内容正确**。"
+        "标签、整理和说明都出自学习过程中的个人理解，难免有误；"
+        "经文请以 CBETA 及原典为准，引用前务请自行核对。", "",
+        "## 致谢", "",
+        "衷心感谢中华电子佛典协会（CBETA）。本站的全部经文都来自 CBETA 多年的电子化与校对工作，"
+        "并承蒙其开放使用。没有这些工作，就没有这个项目。", "",
+        "## 数据来源", "",
+    ]
     L.append("- 经典：大正新脩大藏經 No. 99《雜阿含經》" + (f"，{info['author']}" if info.get("author") else "")
              + (f"（{info['extent']}）" if info.get("extent") else ""))
-    L.append("- 电子化：" + (info.get("dist") or "中華電子佛典協會（CBETA）") + "，XML TEI P5")
+    L.append("- 电子化：" + re.sub(r"\s+（", "（", info.get("dist") or "中華電子佛典協會（CBETA）") + "，XML TEI P5")
     if info.get("date"):
         L.append(f"- CBETA 文件版本日期：{info['date']}")
     if info.get("proj"):
@@ -219,7 +267,8 @@ def build_about():
         "",
         "## 标签",
         "",
-        "经文的名相标签先由 AI 标注，再由人工复核。标注为「待核」者尚未复核，请谨慎使用。",
+        "经文页上的标签是我读经时的个人标注，用词随意，尚未整理。",
+        "日后会整理归并，并对应到佛法名相；其他类别的标签放在「其他」或附录。",
         "",
     ]
     (PAGES / "about.md").write_text("\n".join(L), encoding="utf-8")
@@ -253,6 +302,7 @@ def validate(rows):
 
     ids = {r["经号"] for r in rows}
     check({p.stem for p in pages} == ids, "页面与 sutras.csv 的经号一一对应")
+    check(ids <= set(read_raw_tags()), "tags_raw.csv 含全部经号")
     if problems:
         sys.exit(f"\n有 {problems} 项校验未通过。")
 
