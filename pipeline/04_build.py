@@ -17,17 +17,15 @@
     pages/sutras/T99-xxxx.md   每经一页：标签 + 原文
     pages/about.md             关于页（说明、数据来源、致谢、授权）
 
-标签填写约定（data/tags_raw.csv，四列：经号、标签（unsorted）、标签、备注）：
-    「标签（unsorted）」：先把想到的标签随手扔进去，不用排序；
-    「标签」：整理后的标签，最重要的写在最前面（页面上加粗显示）；
-    一个格子里的多个标签，用换行（Sheets 里 Alt+Enter）或顿号「、」隔开都可以；
+标签填写约定（data/tags_raw.csv，五列：经号、标签（unsorted）、标签、核心、备注）：
+    「标签（unsorted）」：想到的全部标签（含地点、人物），顺序随意；
+    「标签」：入选的标签，按重要性或论证次第排好；
+    「核心」：最重要的至多三个（A、B、C 的顺序），页面上加粗；没有这一列时，加粗「标签」的第一个；
+    一个格子里有多行时，只按换行分隔，所以标签内部可以带顿号（如「生、老、病、死怖」）；
+    只有一行时，顿号、逗号、分号也当分隔符；
     「备注」栏随便写笔记，换行会保留，页面上显示为「笔记」。
     页面上「未整理」只显示还没出现在「标签」里的那些，所以排序后不清空也不会重复。
     重新运行前会把旧文件备份到 pipeline/out/tags_raw.backup.csv。
-
-重新运行安全：只重写上述文件，会清掉旧的 pages/sutras/T99-*.md 再重建。
-pages/index.md、pages/terms/、pages/graph.md 不动。
-注意：pages/about.md 由本脚本整页生成，手改会被覆盖；要改内容请改本脚本里的模板。
 
 只依赖 Python 标准库。
 """
@@ -50,7 +48,7 @@ SOURCE_LINE = ("经文来源：CBETA 电子佛典集成（中华电子佛典协�
                "刘宋 求那跋陀罗译，谨此致谢。本站仅供学习，不保证内容正确。"
                "授权 CC BY-NC-SA 4.0，详见[关于](../about.md)。")
 
-TAG_SPLIT = re.compile(r"[、，,；;\n\r]+")
+TAG_SPLIT = re.compile(r"[、，,；;]+")   # 仅用于单行的格子；多行的格子只按换行分
 
 
 # ---------- 小工具 ----------
@@ -93,8 +91,10 @@ def render_body(text):
 
 
 UNSORTED = "标签（unsorted）"
-RAW_HEADER = ["经号", UNSORTED, "标签", "备注"]
+CORE = "核心"
+RAW_HEADER = ["经号", UNSORTED, "标签", CORE, "备注"]
 UNSORTED_NAMES = {"标签(unsorted)", "未整理标签", "未整理", "unsorted"}   # 表头写法容错
+CORE_NAMES = {"核心", "核心标签", "精选", "top3"}
 
 
 def _norm(h):
@@ -102,11 +102,11 @@ def _norm(h):
 
 
 def read_raw_tags():
-    """读取 tags_raw.csv。返回 (数据, 是否已有 unsorted 列)。表头不对则停止，不动文件。"""
+    """读取 tags_raw.csv。返回 (数据, 缺少的可选列)。必需列不对则停止，不动文件。"""
     path = ROOT / "data" / "tags_raw.csv"
     data = {}
     if not path.exists():
-        return data, True
+        return data, []
     with open(path, encoding="utf-8-sig", newline="") as f:
         reader = csv.DictReader(f)
         col = {}
@@ -120,46 +120,53 @@ def read_raw_tags():
                 col["note"] = h
             elif n in UNSORTED_NAMES:
                 col["uns"] = h
+            elif n in CORE_NAMES:
+                col["core"] = h
         if not all(k in col for k in ("id", "tags", "note")):
-            sys.exit("data/tags_raw.csv 的表头应包含：经号、标签、备注（可另有「标签（unsorted）」）。"
+            sys.exit("data/tags_raw.csv 的表头应包含：经号、标签、备注（可另有「标签（unsorted）」「核心」）。"
                      "文件未做任何改动，请检查表头（可能是表格软件改了列名）。")
+
+        def cell(row, k):
+            return (row.get(col[k]) or "").strip() if k in col else ""
+
         for row in reader:
             sid = (row.get(col["id"]) or "").strip()
             if sid:
-                data[sid] = {
-                    "未整理": (row.get(col["uns"]) or "").strip() if "uns" in col else "",
-                    "标签": (row.get(col["tags"]) or "").strip(),
-                    "备注": (row.get(col["note"]) or "").strip(),
-                }
-    return data, "uns" in col
+                data[sid] = {"未整理": cell(row, "uns"), "标签": cell(row, "tags"),
+                             "核心": cell(row, "core"), "备注": cell(row, "note")}
+    missing = [name for key, name in (("uns", UNSORTED), ("core", CORE)) if key not in col]
+    return data, missing
 
 
 def sync_tags_raw(rows):
-    """保证 tags_raw.csv 含全部经号、四列齐全；已填内容原样保留；写入前先备份。"""
+    """保证 tags_raw.csv 含全部经号、五列齐全；已填内容原样保留；写入前先备份。"""
     path = ROOT / "data" / "tags_raw.csv"
-    existing, had_uns = read_raw_tags()
+    existing, missing = read_raw_tags()
     if path.exists():
         backup = ROOT / "pipeline" / "out" / "tags_raw.backup.csv"
         backup.parent.mkdir(parents=True, exist_ok=True)
         backup.write_bytes(path.read_bytes())
-        if not had_uns:
-            print(f"提示：已为 tags_raw.csv 增加「{UNSORTED}」一列")
+        if missing:
+            print(f"提示：已为 tags_raw.csv 补上列：{'、'.join(missing)}")
     ids = [r["经号"] for r in rows]
     known = set(ids)
     extra = [k for k in existing if k not in known]
+    blank = {"未整理": "", "标签": "", "核心": "", "备注": ""}
     with open(path, "w", encoding="utf-8", newline="") as f:
         w = csv.writer(f, lineterminator="\n")
         w.writerow(RAW_HEADER)
         for sid in ids + extra:
-            e = existing.get(sid, {"未整理": "", "标签": "", "备注": ""})
-            w.writerow([sid, e["未整理"], e["标签"], e["备注"]])
+            e = existing.get(sid, blank)
+            w.writerow([sid, e["未整理"], e["标签"], e["核心"], e["备注"]])
     if extra:
         print(f"提示：tags_raw.csv 里有 {len(extra)} 个经号不在 sutras.csv 中，已保留在文件末尾：{extra[:5]}")
     return read_raw_tags()[0]
 
 
 def split_tags(s):
-    return [t.strip() for t in TAG_SPLIT.split(s or "") if t.strip()]
+    s = (s or "").strip()
+    parts = s.splitlines() if "\n" in s else TAG_SPLIT.split(s)
+    return [t.strip() for t in parts if t.strip()]
 
 
 def render_tags(entry):
@@ -167,12 +174,15 @@ def render_tags(entry):
         return "_尚未标注。_"
     parts = []
     tags = split_tags(entry["标签"])
+    core = set(split_tags(entry["核心"]))
     if tags:
-        shown = ["**" + md_escape(tags[0]) + "**"] + [md_escape(t) for t in tags[1:]]
-        parts.append("标签：" + "、".join(shown))
+        def fmt(t):
+            bold = (t in core) if core else (t == tags[0])
+            return "**" + md_escape(t) + "**" if bold else md_escape(t)
+        parts.append("标签：" + " · ".join(fmt(t) for t in tags))
     rest = [t for t in split_tags(entry["未整理"]) if t not in tags]
     if rest:
-        parts.append("未整理：" + "、".join(md_escape(t) for t in rest))
+        parts.append("未整理：" + " · ".join(md_escape(t) for t in rest))
     lines = [l.strip() for l in entry["备注"].splitlines() if l.strip()]
     if lines:
         parts.append("笔记：" + "  \n".join(md_escape(l) for l in lines))
