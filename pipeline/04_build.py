@@ -8,6 +8,7 @@
 读取：
     data/sutras.csv            经文清单（01_split.py 生成）
     data/tags_raw.csv          你自己填的标签（经号、标签、备注）
+    data/tables/T99-xxxx.md    可选：某条经的整理表（一张 Markdown 表），有就显示在原文之后
     data/T99_teiHeader.xml     CBETA 文件头（01_split.py 保存）
     pipeline/out/sutras/*.txt  每经正文（01_split.py 生成）
 
@@ -47,6 +48,8 @@ XML_LANG = "{http://www.w3.org/XML/1998/namespace}lang"
 SOURCE_LINE = ("经文来源：CBETA 电子佛典集成（中华电子佛典协会），大正藏 T99《杂阿含经》，"
                "刘宋 求那跋陀罗译，谨此致谢。本站仅供学习，不保证内容正确。"
                "授权 CC BY-NC-SA 4.0，详见[关于](../about.md)。")
+
+TABLE_NOTE = "_此表由我根据原文整理，不是经文原有的格式，仅供学习，请以原文为准。_"
 
 TAG_SPLIT = re.compile(r"[、，,；;]+")   # 仅用于单行的格子；多行的格子只按换行分
 
@@ -169,6 +172,14 @@ def split_tags(s):
     return [t.strip() for t in parts if t.strip()]
 
 
+def read_table(sid):
+    path = ROOT / "data" / "tables" / f"{sid}.md"
+    if path.exists():
+        text = path.read_text(encoding="utf-8").strip()
+        return text or None
+    return None
+
+
 def render_tags(entry):
     if not entry or not any(entry.values()):
         return "_尚未标注。_"
@@ -214,7 +225,11 @@ def build_sutras():
         parts = [f"# {title_of(sid)}", "", meta, ""]
         if r.get("备注"):
             parts += [f"> 备注：{r['备注']}", ""]
-        parts += ["## 标签（个人标注）", "", render_tags(tags.get(sid)), "", "## 原文", "", body, "", "---", ""]
+        parts += ["## 标签（个人标注）", "", render_tags(tags.get(sid)), "", "## 原文", "", body, ""]
+        table = read_table(sid)
+        if table:
+            parts += ["## 整理表", "", table, "", TABLE_NOTE, ""]
+        parts += ["---", ""]
 
         nav = []
         if i > 0:
@@ -348,6 +363,10 @@ def validate(rows):
     ids = {r["经号"] for r in rows}
     check({p.stem for p in pages} == ids, "页面与 sutras.csv 的经号一一对应")
     check(ids <= set(read_raw_tags()[0]), "tags_raw.csv 含全部经号")
+    tdir = ROOT / "data" / "tables"
+    tabs = sorted(p.stem for p in tdir.glob("*.md")) if tdir.exists() else []
+    unknown = [t for t in tabs if t not in ids]
+    check(not unknown, f"整理表文件的经号都存在（共 {len(tabs)} 张）" + (f"：{unknown[:3]}" if unknown else ""))
     if problems:
         sys.exit(f"\n有 {problems} 项校验未通过。")
 
