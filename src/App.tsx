@@ -140,15 +140,44 @@ export default function App() {
   // Undo notification toast
   const [undoToast, setUndoToast] = useState<string | null>(null);
 
+  // Public read-only mode (automatically enabled when hosted on static platforms like Vercel / GitHub Pages)
+  const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
+  const staticModeRef = useRef<boolean>(false);
+
   // Documentation
   const [docContent, setDocContent] = useState<string>('');
-  const [activeDocTab, setActiveDocTab] = useState<'about' | 'changelog' | 'relation_types' | 'rules' | 'agents'>('about');
+  const [activeDocTab, setActiveDocTab] = useState<'about' | 'changelog' | 'changelog_2' | 'relation_types' | 'rules' | 'agents'>('about');
+
+  // Helper: fetch from live Express API in local/AI Studio mode, or automatically fall back to static JSON in Vercel/GitHub Pages mode
+  const fetchJsonWithStaticFallback = async (apiUrl: string, staticUrl: string) => {
+    if (!staticModeRef.current) {
+      try {
+        const res = await fetch(apiUrl);
+        const contentType = res.headers.get('content-type') || '';
+        if (res.ok && contentType.includes('application/json')) {
+          return await res.json();
+        }
+      } catch {
+        // Fall through to static mode
+      }
+      staticModeRef.current = true;
+      setIsReadOnly(true);
+    }
+    const staticRes = await fetch(staticUrl);
+    if (!staticRes.ok) {
+      throw new Error(`Failed to load ${staticUrl}`);
+    }
+    return await staticRes.json();
+  };
 
   // Fetch initial sutras
   useEffect(() => {
-    fetch('/api/sutras')
-      .then((res) => res.json())
+    fetchJsonWithStaticFallback('/api/sutras', './static-data/sutras.json')
       .then((data) => {
+        if (data.readonly) {
+          staticModeRef.current = true;
+          setIsReadOnly(true);
+        }
         setSutras(data.sutras || []);
         setLoading(false);
       })
@@ -162,8 +191,10 @@ export default function App() {
   useEffect(() => {
     if (!selectedSutraId) return;
     setDetailLoading(true);
-    fetch(`/api/sutras/${selectedSutraId}`)
-      .then((res) => res.json())
+    fetchJsonWithStaticFallback(
+      `/api/sutras/${selectedSutraId}`,
+      `./static-data/sutras/${selectedSutraId}.json`
+    )
       .then((data) => {
         setSutraDetail(data.sutra);
         setDetailLoading(false);
@@ -176,24 +207,21 @@ export default function App() {
 
   // Fetch tags
   useEffect(() => {
-    fetch('/api/tags')
-      .then((res) => res.json())
+    fetchJsonWithStaticFallback('/api/tags', './static-data/tags.json')
       .then((data) => setTags(data.tags || []))
       .catch(console.error);
   }, []);
 
   // Fetch graph
   useEffect(() => {
-    fetch('/api/graph')
-      .then((res) => res.json())
+    fetchJsonWithStaticFallback('/api/graph', './static-data/graph.json')
       .then((data) => setGraphData(data))
       .catch(console.error);
   }, []);
 
   // Fetch tagging progress
   useEffect(() => {
-    fetch('/api/tagging-progress')
-      .then((res) => res.json())
+    fetchJsonWithStaticFallback('/api/tagging-progress', './static-data/tagging-progress.json')
       .then((data) => setTaggingProgress(data))
       .catch(console.error);
   }, []);
@@ -202,12 +230,15 @@ export default function App() {
   useEffect(() => {
     let docKey = 'about';
     if (activeDocTab === 'changelog') docKey = 'changelog';
+    else if (activeDocTab === 'changelog_2') docKey = 'changelog_2';
     else if (activeDocTab === 'relation_types') docKey = '关系类型';
     else if (activeDocTab === 'rules') docKey = '标注规范';
     else if (activeDocTab === 'agents') docKey = 'agents';
 
-    fetch(`/api/docs/${encodeURIComponent(docKey)}`)
-      .then((res) => res.json())
+    fetchJsonWithStaticFallback(
+      `/api/docs/${encodeURIComponent(docKey)}`,
+      `./static-data/docs/${encodeURIComponent(docKey)}.json`
+    )
       .then((data) => setDocContent(data.content || ''))
       .catch(() => setDocContent('暂无文档内容'));
   }, [activeDocTab]);
@@ -643,7 +674,7 @@ export default function App() {
                     className="px-2 py-1 rounded-md border border-amber-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300"
                   >
                     <option value="all">全部经文</option>
-                    <option value="annotated">已标注 (100条)</option>
+                    <option value="annotated">已标注 ({sutras.filter((s) => s.isAnnotated).length}条)</option>
                     <option value="todo">待标注</option>
                   </select>
                 </div>
@@ -806,14 +837,16 @@ export default function App() {
                     ))}
                   </div>
 
-                  {/* Edit Tags Button */}
-                  <button
-                    onClick={handleOpenEdit}
-                    className="flex items-center gap-1 text-xs px-2.5 py-1 rounded bg-amber-700 hover:bg-amber-800 text-white font-medium shadow-xs transition"
-                  >
-                    <Sliders className="w-3 h-3" />
-                    <span className="hidden sm:inline">编辑标签</span>
-                  </button>
+                  {/* Edit Tags Button (hidden in static public read-only mode) */}
+                  {!isReadOnly && (
+                    <button
+                      onClick={handleOpenEdit}
+                      className="flex items-center gap-1 text-xs px-2.5 py-1 rounded bg-amber-700 hover:bg-amber-800 text-white font-medium shadow-xs transition"
+                    >
+                      <Sliders className="w-3 h-3" />
+                      <span className="hidden sm:inline">编辑标签</span>
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -870,25 +903,27 @@ export default function App() {
                           )}
                         </div>
 
-                        <div className="flex items-center gap-1.5">
-                          {sutraDetail.canUndoTags && (
+                        {!isReadOnly && (
+                          <div className="flex items-center gap-1.5">
+                            {sutraDetail.canUndoTags && (
+                              <button
+                                onClick={handleUndoTags}
+                                className="flex items-center gap-1 text-xs px-2 py-1 rounded border border-amber-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100/60 transition font-medium"
+                                title="撤销上一次标签修改"
+                              >
+                                <RotateCcw className="w-3 h-3" />
+                                <span>撤销修改</span>
+                              </button>
+                            )}
                             <button
-                              onClick={handleUndoTags}
-                              className="flex items-center gap-1 text-xs px-2 py-1 rounded border border-amber-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100/60 transition font-medium"
-                              title="撤销上一次标签修改"
+                              onClick={handleOpenEdit}
+                              className="flex items-center gap-1 text-xs px-2.5 py-1 rounded bg-amber-700/90 hover:bg-amber-800 text-white font-medium transition shadow-2xs"
                             >
-                              <RotateCcw className="w-3 h-3" />
-                              <span>撤销修改</span>
+                              <Sliders className="w-3 h-3" />
+                              <span>{sutraDetail.isAnnotated ? '编辑标签' : '+ 新增标签'}</span>
                             </button>
-                          )}
-                          <button
-                            onClick={handleOpenEdit}
-                            className="flex items-center gap-1 text-xs px-2.5 py-1 rounded bg-amber-700/90 hover:bg-amber-800 text-white font-medium transition shadow-2xs"
-                          >
-                            <Sliders className="w-3 h-3" />
-                            <span>{sutraDetail.isAnnotated ? '编辑标签' : '+ 新增标签'}</span>
-                          </button>
-                        </div>
+                          </div>
+                        )}
                       </div>
 
                       {/* Display tags without duplicate names */}
@@ -956,7 +991,9 @@ export default function App() {
                           )}
                         </div>
                       ) : (
-                        <div className="text-xs text-stone-400 italic">_尚未标注。可点击右上角「编辑标签」进行录入。_</div>
+                        <div className="text-xs text-stone-400 italic">
+                          {isReadOnly ? '_尚未标注。_' : '_尚未标注。可点击右上角「编辑标签」进行录入。_'}
+                        </div>
                       )}
                     </div>
 
@@ -1016,25 +1053,27 @@ export default function App() {
                           <span>学习笔记与脉络</span>
                         </h3>
 
-                        <div className="flex items-center gap-1.5">
-                          {sutraDetail.canUndoNote && (
+                        {!isReadOnly && (
+                          <div className="flex items-center gap-1.5">
+                            {sutraDetail.canUndoNote && (
+                              <button
+                                onClick={handleUndoNote}
+                                className="flex items-center gap-1 text-xs px-2.5 py-1 rounded border border-amber-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100/60 transition font-medium"
+                                title="撤销上一次学习笔记修改"
+                              >
+                                <RotateCcw className="w-3 h-3" />
+                                <span>撤销笔记修改</span>
+                              </button>
+                            )}
                             <button
-                              onClick={handleUndoNote}
-                              className="flex items-center gap-1 text-xs px-2.5 py-1 rounded border border-amber-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100/60 transition font-medium"
-                              title="撤销上一次学习笔记修改"
+                              onClick={handleOpenEditNote}
+                              className="flex items-center gap-1 text-xs px-2.5 py-1 rounded bg-amber-700 hover:bg-amber-800 text-white font-medium transition shadow-2xs"
                             >
-                              <RotateCcw className="w-3 h-3" />
-                              <span>撤销笔记修改</span>
+                              <FileText className="w-3 h-3" />
+                              <span>{sutraDetail.studyNotes ? '编辑笔记' : '+ 新增笔记'}</span>
                             </button>
-                          )}
-                          <button
-                            onClick={handleOpenEditNote}
-                            className="flex items-center gap-1 text-xs px-2.5 py-1 rounded bg-amber-700 hover:bg-amber-800 text-white font-medium transition shadow-2xs"
-                          >
-                            <FileText className="w-3 h-3" />
-                            <span>{sutraDetail.studyNotes ? '编辑笔记' : '+ 新增笔记'}</span>
-                          </button>
-                        </div>
+                          </div>
+                        )}
                       </div>
 
                       {sutraDetail.studyNotes ? (
@@ -1043,7 +1082,9 @@ export default function App() {
                         </div>
                       ) : (
                         <div className="p-4 rounded-xl bg-amber-50/20 dark:bg-stone-900/40 border border-dashed border-amber-200/70 dark:border-stone-800 text-xs text-stone-400 italic">
-                          _尚未撰写学习笔记。点击右上方「+ 新增笔记」可记录本经要旨、次第与个人研读体会。_
+                          {isReadOnly
+                            ? '_尚未撰写学习笔记。_'
+                            : '_尚未撰写学习笔记。点击右上方「+ 新增笔记」可记录本经要旨、次第与个人研读体会。_'}
                         </div>
                       )}
                     </div>
@@ -1359,10 +1400,10 @@ export default function App() {
                     {taggingProgress.annotated} 条
                   </div>
                   <div className="text-xs text-emerald-600 mt-0.5 flex items-center justify-between">
-                    <span>T99-0001 ~ T99-0100</span>
+                    <span>T99-0001 ~ T99-0200</span>
                     <button
                       onClick={() => {
-                        setActiveDocTab('changelog');
+                        setActiveDocTab('changelog_2');
                         setTab('about');
                       }}
                       className="underline hover:text-amber-800"
@@ -1445,7 +1486,7 @@ export default function App() {
                         }}
                         className="text-xs px-2.5 py-1 rounded bg-amber-100 text-amber-900 dark:bg-stone-800 dark:text-amber-300 hover:bg-amber-200 transition font-medium"
                       >
-                        阅读并打标 →
+                        {isReadOnly ? '阅读经文 →' : '阅读并打标 →'}
                       </button>
                     </div>
                   </div>
@@ -1481,6 +1522,12 @@ export default function App() {
                   className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
                 >
                   修改记录 (0001-0100)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_2')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_2' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (0101-0200)
                 </button>
                 <button
                   onClick={() => setActiveDocTab('relation_types')}

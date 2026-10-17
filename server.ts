@@ -258,6 +258,13 @@ function loadAllData() {
         }
       }
 
+      if (!rawText) {
+        const txtPath = path.resolve(__dirname, 'pipeline', 'out', 'sutras', `${id}.txt`);
+        if (fs.existsSync(txtPath)) {
+          rawText = fs.readFileSync(txtPath, 'utf-8').trim();
+        }
+      }
+
       // Check standalone note/table in data/notes and data/tables (takes precedence over generated md)
       const standaloneNote = path.resolve(__dirname, 'data', 'notes', `${id}.md`);
       if (fs.existsSync(standaloneNote)) {
@@ -787,6 +794,8 @@ app.get('/api/docs/:name', (req, res) => {
     filePath = path.resolve(__dirname, 'AGENTS.md');
   } else if (name === 'changelog' || name === '修改记录_0001-0100') {
     filePath = path.resolve(__dirname, '修改记录_0001-0100.md');
+  } else if (name === 'changelog_2' || name === '修改记录_0101-0200') {
+    filePath = path.resolve(__dirname, '修改记录_0101-0200.md');
   } else {
     // Check in docs/
     const candidate = path.resolve(__dirname, 'docs', `${name}.md`);
