@@ -1,0 +1,7 @@
+{
+  "name": "阿含名相图谱",
+  "description": "以《杂阿含经》为主线的名相图谱与个人研读笔记系统，支持逐经研读、名相检索、关系图谱与打标管理。",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
