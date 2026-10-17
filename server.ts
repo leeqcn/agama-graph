@@ -238,21 +238,23 @@ function loadAllData() {
         }
 
         // Extract rawText
-        const rawTextMatch = md.match(/## 原文([\s\S]*?)(?:## 学习笔记|## 整理表|---|$)/);
+        const rawTextMatch = md.match(/## 原文([\s\S]*?)(?:## 学习笔记|## 整理表|\n---\n|$)/);
         if (rawTextMatch) {
           rawText = rawTextMatch[1].trim();
         }
 
         // Extract study notes from md as fallback
-        const notesMatch = md.match(/## 学习笔记([\s\S]*?)(?:## 整理表|---|$)/);
+        const notesMatch = md.match(/## 学习笔记([\s\S]*?)(?:## 整理表|\n---\n|$)/);
         if (notesMatch) {
           studyNotes = notesMatch[1].trim();
         }
 
-        // Extract tables
-        const tableMatch = md.match(/## 整理表([\s\S]*?)(?:---|$)/);
+        // Extract tables from md as fallback
+        const tableMatch = md.match(/## 整理表([\s\S]*?)(?:\n---\n|$)/);
         if (tableMatch) {
-          tableContent = tableMatch[1].trim();
+          tableContent = tableMatch[1]
+            .replace(/_此表由我根据原文整理[^_\n]*_/g, '')
+            .trim();
         }
       }
 
@@ -261,11 +263,9 @@ function loadAllData() {
       if (fs.existsSync(standaloneNote)) {
         studyNotes = fs.readFileSync(standaloneNote, 'utf-8').trim();
       }
-      if (!tableContent) {
-        const standaloneTable = path.resolve(__dirname, 'data', 'tables', `${id}.md`);
-        if (fs.existsSync(standaloneTable)) {
-          tableContent = fs.readFileSync(standaloneTable, 'utf-8').trim();
-        }
+      const standaloneTable = path.resolve(__dirname, 'data', 'tables', `${id}.md`);
+      if (fs.existsSync(standaloneTable)) {
+        tableContent = fs.readFileSync(standaloneTable, 'utf-8').trim();
       }
 
       const isAnnotated = tags.length > 0 || unsortedTags.length > 0 || coreTags.length > 0;
@@ -339,15 +339,43 @@ app.get('/api/sutras/:id', (req, res) => {
   });
 });
 
-// All aggregated tags
+// All aggregated tags + canonical terms from terms.csv
 app.get('/api/tags', (req, res) => {
-  const tagStats = new Map<string, { name: string; count: number; coreCount: number; sutras: string[] }>();
+  const termsMap = new Map<string, { pali: string; matchLevel: string; samyukta: string; status: string }>();
+  const termsCsvPath = path.resolve(__dirname, 'data', 'terms.csv');
+  if (fs.existsSync(termsCsvPath)) {
+    const tRows = parseCsv(fs.readFileSync(termsCsvPath, 'utf-8'));
+    for (const r of tRows) {
+      const name = r['名相']?.trim();
+      if (name) {
+        termsMap.set(name, {
+          pali: r['巴利']?.trim() || '',
+          matchLevel: r['对等程度']?.trim() || '',
+          samyukta: r['所属相应']?.trim() || '',
+          status: r['状态']?.trim() || '',
+        });
+      }
+    }
+  }
+
+  const tagStats = new Map<
+    string,
+    { name: string; count: number; coreCount: number; sutras: string[]; pali?: string; samyukta?: string }
+  >();
 
   for (const s of sutraList) {
     const allForSutra = new Set([...s.tags, ...s.coreTags, ...s.unsortedTags]);
     for (const tag of allForSutra) {
       if (!tag) continue;
-      const entry = tagStats.get(tag) || { name: tag, count: 0, coreCount: 0, sutras: [] };
+      const termMeta = termsMap.get(tag);
+      const entry = tagStats.get(tag) || {
+        name: tag,
+        count: 0,
+        coreCount: 0,
+        sutras: [],
+        pali: termMeta?.pali,
+        samyukta: termMeta?.samyukta,
+      };
       entry.count += 1;
       if (s.coreTags.includes(tag)) {
         entry.coreCount += 1;
@@ -757,6 +785,8 @@ app.get('/api/docs/:name', (req, res) => {
     filePath = path.resolve(__dirname, 'README.md');
   } else if (name === 'agents') {
     filePath = path.resolve(__dirname, 'AGENTS.md');
+  } else if (name === 'changelog' || name === '修改记录_0001-0100') {
+    filePath = path.resolve(__dirname, '修改记录_0001-0100.md');
   } else {
     // Check in docs/
     const candidate = path.resolve(__dirname, 'docs', `${name}.md`);

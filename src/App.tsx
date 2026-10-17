@@ -59,6 +59,8 @@ interface TagStat {
   count: number;
   coreCount: number;
   sutras: string[];
+  pali?: string;
+  samyukta?: string;
 }
 
 interface GraphNode {
@@ -140,7 +142,7 @@ export default function App() {
 
   // Documentation
   const [docContent, setDocContent] = useState<string>('');
-  const [activeDocTab, setActiveDocTab] = useState<'about' | 'relation_types' | 'rules' | 'agents'>('about');
+  const [activeDocTab, setActiveDocTab] = useState<'about' | 'changelog' | 'relation_types' | 'rules' | 'agents'>('about');
 
   // Fetch initial sutras
   useEffect(() => {
@@ -199,7 +201,8 @@ export default function App() {
   // Fetch docs when activeDocTab changes
   useEffect(() => {
     let docKey = 'about';
-    if (activeDocTab === 'relation_types') docKey = '关系类型';
+    if (activeDocTab === 'changelog') docKey = 'changelog';
+    else if (activeDocTab === 'relation_types') docKey = '关系类型';
     else if (activeDocTab === 'rules') docKey = '标注规范';
     else if (activeDocTab === 'agents') docKey = 'agents';
 
@@ -640,7 +643,7 @@ export default function App() {
                     className="px-2 py-1 rounded-md border border-amber-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300"
                   >
                     <option value="all">全部经文</option>
-                    <option value="annotated">已标注 (50条)</option>
+                    <option value="annotated">已标注 (100条)</option>
                     <option value="todo">待标注</option>
                   </select>
                 </div>
@@ -1035,10 +1038,8 @@ export default function App() {
                       </div>
 
                       {sutraDetail.studyNotes ? (
-                        <div className="p-4 rounded-xl bg-amber-50/50 dark:bg-stone-900 border border-amber-200/50 dark:border-stone-800 text-sm space-y-3">
-                          <div className="whitespace-pre-line leading-relaxed text-stone-700 dark:text-stone-300">
-                            {sutraDetail.studyNotes}
-                          </div>
+                        <div className="p-4 sm:p-5 rounded-xl bg-amber-50/50 dark:bg-stone-900 border border-amber-200/50 dark:border-stone-800 text-sm">
+                          <MarkdownContent content={sutraDetail.studyNotes} />
                         </div>
                       ) : (
                         <div className="p-4 rounded-xl bg-amber-50/20 dark:bg-stone-900/40 border border-dashed border-amber-200/70 dark:border-stone-800 text-xs text-stone-400 italic">
@@ -1050,14 +1051,15 @@ export default function App() {
                     {/* Section 4: Table Content (if present) */}
                     {sutraDetail.tableContent && (
                       <div className="space-y-3 pt-6 border-t border-amber-200/50 dark:border-stone-800">
-                        <h3 className="font-serif-sc font-bold text-lg text-stone-900 dark:text-stone-100 flex items-center gap-2">
-                          <Layers className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-                          <span>整理表</span>
-                        </h3>
-                        <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-sm overflow-x-auto">
-                          <pre className="font-mono text-xs whitespace-pre-wrap text-stone-700 dark:text-stone-300">
-                            {sutraDetail.tableContent}
-                          </pre>
+                        <div className="flex items-center justify-between flex-wrap gap-2">
+                          <h3 className="font-serif-sc font-bold text-lg text-stone-900 dark:text-stone-100 flex items-center gap-2">
+                            <Layers className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                            <span>整理表</span>
+                          </h3>
+                          <span className="text-xs text-stone-400">此表由我根据原文整理</span>
+                        </div>
+                        <div className="p-4 sm:p-5 rounded-xl bg-stone-50/80 dark:bg-stone-900 border border-amber-200/50 dark:border-stone-800 text-sm">
+                          <MarkdownContent content={sutraDetail.tableContent} />
                         </div>
                       </div>
                     )}
@@ -1171,16 +1173,23 @@ export default function App() {
                       }`}
                     >
                       <div className="flex items-start justify-between">
-                        <button
-                          onClick={() => {
-                            setSelectedTagFilter(t.name);
-                            setTab('sutras');
-                            setMobileView('list');
-                          }}
-                          className="font-serif-sc font-bold text-base text-stone-900 dark:text-stone-100 hover:text-amber-700 text-left transition"
-                        >
-                          {t.name}
-                        </button>
+                        <div>
+                          <button
+                            onClick={() => {
+                              setSelectedTagFilter(t.name);
+                              setTab('sutras');
+                              setMobileView('list');
+                            }}
+                            className="font-serif-sc font-bold text-base text-stone-900 dark:text-stone-100 hover:text-amber-700 text-left transition"
+                          >
+                            {t.name}
+                          </button>
+                          {t.pali && (
+                            <div className="text-[11px] italic text-stone-500 dark:text-stone-400 mt-0.5">
+                              {t.pali} {t.samyukta ? `· ${t.samyukta}` : ''}
+                            </div>
+                          )}
+                        </div>
                         <div className="flex items-center gap-1">
                           {isCore && (
                             <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-800 text-white font-semibold">
@@ -1349,7 +1358,18 @@ export default function App() {
                   <div className="text-xl sm:text-2xl font-bold font-serif-sc text-amber-800 dark:text-amber-400 mt-1">
                     {taggingProgress.annotated} 条
                   </div>
-                  <div className="text-xs text-emerald-600 mt-0.5">T99-0001 ~ T99-0050</div>
+                  <div className="text-xs text-emerald-600 mt-0.5 flex items-center justify-between">
+                    <span>T99-0001 ~ T99-0100</span>
+                    <button
+                      onClick={() => {
+                        setActiveDocTab('changelog');
+                        setTab('about');
+                      }}
+                      className="underline hover:text-amber-800"
+                    >
+                      查看修改记录
+                    </button>
+                  </div>
                 </div>
 
                 <div className="p-3 sm:p-4 rounded-xl border border-amber-200 dark:border-stone-800 bg-white dark:bg-stone-900 shadow-xs">
@@ -1457,6 +1477,12 @@ export default function App() {
                   关于与授权
                 </button>
                 <button
+                  onClick={() => setActiveDocTab('changelog')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (0001-0100)
+                </button>
+                <button
                   onClick={() => setActiveDocTab('relation_types')}
                   className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'relation_types' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
                 >
@@ -1478,8 +1504,8 @@ export default function App() {
             </div>
 
             {/* Doc Markdown content */}
-            <div className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/60 dark:border-stone-800 prose dark:prose-invert max-w-none text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-sans">
-              {docContent}
+            <div className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200/60 dark:border-stone-800 text-xs sm:text-sm leading-relaxed font-sans">
+              <MarkdownContent content={docContent} />
             </div>
           </div>
         )}
@@ -1697,6 +1723,289 @@ export default function App() {
       )}
     </div>
   );
+}
+
+// Helper to split a Markdown table row by '|' while respecting inline code backticks
+function splitMarkdownTableRow(line: string): string[] {
+  const trimmed = line.trim().replace(/^\|/, '').replace(/\|$/, '');
+  const cells: string[] = [];
+  let current = '';
+  let inCode = false;
+  for (let i = 0; i < trimmed.length; i++) {
+    const ch = trimmed[i];
+    if (ch === '`') {
+      inCode = !inCode;
+      current += ch;
+    } else if (ch === '|' && !inCode && (i === 0 || trimmed[i - 1] !== '\\')) {
+      cells.push(current.trim());
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+  cells.push(current.trim());
+  return cells;
+}
+
+function isTableSeparatorRow(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed.startsWith('|') || !trimmed.endsWith('|')) return false;
+  const cells = splitMarkdownTableRow(trimmed);
+  return cells.length > 0 && cells.every((c) => /^:?-{2,}:?$/.test(c.trim()));
+}
+
+function renderInlineMarkdown(text: string): React.ReactNode {
+  if (!text) return null;
+  // Handle <br> tags first
+  const brParts = text.split(/<br\s*\/?>/gi);
+  if (brParts.length > 1) {
+    return brParts.map((part, idx) => (
+      <React.Fragment key={idx}>
+        {idx > 0 && <br />}
+        {renderInlineMarkdown(part)}
+      </React.Fragment>
+    ));
+  }
+
+  // Tokenize inline code `...` and bold **...**
+  const tokens = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g);
+  return tokens.map((tok, i) => {
+    if (tok.startsWith('`') && tok.endsWith('`') && tok.length >= 2) {
+      return (
+        <code
+          key={i}
+          className="px-1.5 py-0.5 mx-0.5 rounded bg-amber-100/80 dark:bg-stone-800 text-amber-900 dark:text-amber-300 font-mono text-[0.9em]"
+        >
+          {tok.slice(1, -1)}
+        </code>
+      );
+    }
+    if (tok.startsWith('**') && tok.endsWith('**') && tok.length >= 4) {
+      return (
+        <strong key={i} className="font-bold text-stone-900 dark:text-stone-100">
+          {tok.slice(2, -2)}
+        </strong>
+      );
+    }
+    return tok;
+  });
+}
+
+function MarkdownContent({ content }: { content: string }) {
+  if (!content) return null;
+
+  const lines = content.replace(/\r\n/g, '\n').split('\n');
+  const blocks: React.ReactNode[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const rawLine = lines[i];
+    const trimmed = rawLine.trim();
+
+    // Skip empty lines
+    if (!trimmed) {
+      i++;
+      continue;
+    }
+
+    // 1. Fenced code block ```
+    if (trimmed.startsWith('```')) {
+      const codeLines: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i].trim().startsWith('```')) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+      if (i < lines.length) i++; // skip closing ```
+      blocks.push(
+        <pre
+          key={`code-${i}`}
+          className="my-2.5 p-3 rounded-lg bg-stone-100 dark:bg-stone-800/90 border border-stone-200 dark:border-stone-700 font-mono text-xs overflow-x-auto whitespace-pre-wrap text-stone-800 dark:text-stone-200"
+        >
+          {codeLines.join('\n')}
+        </pre>
+      );
+      continue;
+    }
+
+    // 2. Markdown Table (starts with | and ends with |)
+    if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      const tableLines: string[] = [];
+      while (i < lines.length) {
+        const t = lines[i].trim();
+        if (t.startsWith('|') && t.endsWith('|')) {
+          tableLines.push(t);
+          i++;
+        } else {
+          break;
+        }
+      }
+
+      if (tableLines.length >= 2 && isTableSeparatorRow(tableLines[1])) {
+        const headers = splitMarkdownTableRow(tableLines[0]);
+        const bodyRows = tableLines.slice(2).filter((l) => !isTableSeparatorRow(l)).map(splitMarkdownTableRow);
+
+        blocks.push(
+          <div
+            key={`table-${i}`}
+            className="my-3 overflow-x-auto rounded-lg border border-amber-200/90 dark:border-stone-700 bg-white dark:bg-stone-900 shadow-2xs"
+          >
+            <table className="w-full border-collapse text-left text-xs sm:text-sm">
+              <thead>
+                <tr className="bg-amber-100/70 dark:bg-stone-800 border-b border-amber-200 dark:border-stone-700">
+                  {headers.map((h, hIdx) => (
+                    <th
+                      key={hIdx}
+                      className="py-2.5 px-3 font-serif-sc font-bold text-stone-900 dark:text-amber-200 border-r last:border-r-0 border-amber-200/60 dark:border-stone-700 whitespace-nowrap"
+                    >
+                      {renderInlineMarkdown(h)}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-amber-200/50 dark:divide-stone-800">
+                {bodyRows.map((row, rIdx) => (
+                  <tr
+                    key={rIdx}
+                    className="odd:bg-white even:bg-amber-50/25 dark:odd:bg-stone-900 dark:even:bg-stone-800/40 hover:bg-amber-50/70 dark:hover:bg-stone-800/80 transition-colors"
+                  >
+                    {headers.map((_, cIdx) => {
+                      const cellText = row[cIdx] ?? '';
+                      return (
+                        <td
+                          key={cIdx}
+                          className={`py-2 px-3 border-r last:border-r-0 border-amber-100/80 dark:border-stone-800 align-top leading-relaxed ${
+                            cIdx === 0
+                              ? 'font-medium text-stone-900 dark:text-stone-100 whitespace-nowrap'
+                              : 'text-stone-700 dark:text-stone-300 min-w-[110px]'
+                          }`}
+                        >
+                          {renderInlineMarkdown(cellText)}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+        continue;
+      } else {
+        // Fallback if single-row pipe text
+        const rows = tableLines.map(splitMarkdownTableRow);
+        blocks.push(
+          <div
+            key={`table-raw-${i}`}
+            className="my-3 overflow-x-auto rounded-lg border border-amber-200/90 dark:border-stone-700 bg-white dark:bg-stone-900"
+          >
+            <table className="w-full border-collapse text-left text-xs sm:text-sm">
+              <tbody className="divide-y divide-amber-200/50 dark:divide-stone-800">
+                {rows.map((row, rIdx) => (
+                  <tr key={rIdx}>
+                    {row.map((cell, cIdx) => (
+                      <td
+                        key={cIdx}
+                        className="py-2 px-3 border-r last:border-r-0 border-amber-100 dark:border-stone-800 text-stone-700 dark:text-stone-300"
+                      >
+                        {renderInlineMarkdown(cell)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+        continue;
+      }
+    }
+
+    // 3. Horizontal Rule ---
+    if (/^-{3,}$/.test(trimmed)) {
+      blocks.push(<hr key={`hr-${i}`} className="my-4 border-amber-200/60 dark:border-stone-800" />);
+      i++;
+      continue;
+    }
+
+    // 4. Headings (#, ##, ###, ####)
+    const headingMatch = trimmed.match(/^(#{1,4})\s+(.+)$/);
+    if (headingMatch) {
+      const level = headingMatch[1].length;
+      const text = headingMatch[2];
+      const cls =
+        level === 1
+          ? 'font-serif-sc text-lg sm:text-xl font-bold text-stone-900 dark:text-stone-100 mt-4 mb-2 pb-1 border-b border-amber-200/60 dark:border-stone-800'
+          : level === 2
+          ? 'font-serif-sc text-base sm:text-lg font-bold text-stone-900 dark:text-stone-100 mt-4 mb-1.5'
+          : 'font-serif-sc text-sm sm:text-base font-bold text-amber-900 dark:text-amber-300 mt-3 mb-1';
+      blocks.push(
+        <div key={`h-${i}`} className={cls}>
+          {renderInlineMarkdown(text)}
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    // 5. Blockquote (> ...)
+    if (trimmed.startsWith('>')) {
+      const quoteLines: string[] = [];
+      while (i < lines.length && lines[i].trim().startsWith('>')) {
+        quoteLines.push(lines[i].trim().replace(/^>\s?/, ''));
+        i++;
+      }
+      blocks.push(
+        <blockquote
+          key={`quote-${i}`}
+          className="my-2 px-3 py-2 rounded-r-lg border-l-3 border-amber-600 dark:border-amber-500 bg-amber-100/40 dark:bg-stone-800/70 text-xs sm:text-sm text-stone-600 dark:text-stone-300 italic leading-relaxed"
+        >
+          {quoteLines.map((ql, qIdx) => (
+            <div key={qIdx}>{renderInlineMarkdown(ql)}</div>
+          ))}
+        </blockquote>
+      );
+      continue;
+    }
+
+    // 6. Unordered or Ordered Lists (- ..., * ..., 1. ...)
+    if (/^([-*]|\d+\.)\s+/.test(trimmed)) {
+      const listItems: { marker: string; text: string }[] = [];
+      while (i < lines.length) {
+        const lTrim = lines[i].trim();
+        const m = lTrim.match(/^([-*]|\d+\.)\s+(.+)$/);
+        if (m) {
+          listItems.push({ marker: m[1], text: m[2] });
+          i++;
+        } else {
+          break;
+        }
+      }
+      blocks.push(
+        <ul key={`list-${i}`} className="my-2 space-y-1.5 pl-1">
+          {listItems.map((item, idx) => (
+            <li key={idx} className="flex items-start gap-2 text-stone-700 dark:text-stone-300 leading-relaxed">
+              <span className="text-amber-800 dark:text-amber-400 font-semibold select-none shrink-0">
+                {item.marker === '-' || item.marker === '*' ? '•' : item.marker}
+              </span>
+              <span className="flex-1">{renderInlineMarkdown(item.text)}</span>
+            </li>
+          ))}
+        </ul>
+      );
+      continue;
+    }
+
+    // 7. Standard paragraph
+    blocks.push(
+      <p key={`p-${i}`} className="my-2 leading-relaxed text-stone-700 dark:text-stone-300">
+        {renderInlineMarkdown(trimmed)}
+      </p>
+    );
+    i++;
+  }
+
+  return <div className="space-y-2">{blocks}</div>;
 }
 
 // GraphCanvas Component for rendering interactive node-link network
