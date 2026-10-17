@@ -9,6 +9,7 @@
     data/sutras.csv            经文清单（01_split.py 生成）
     data/tags_raw.csv          你自己填的标签（经号、标签、备注）
     data/tables/T99-xxxx.md    可选：某条经的整理表（一张 Markdown 表），有就显示在原文之后
+    data/notes/T99-xxxx.md     可选：某条经的学习笔记（自由格式的 Markdown），有就显示在原文之后、整理表之前
     data/T99_teiHeader.xml     CBETA 文件头（01_split.py 保存）
     pipeline/out/sutras/*.txt  每经正文（01_split.py 生成）
 
@@ -180,6 +181,15 @@ def read_table(sid):
     return None
 
 
+def read_note(sid):
+    """data/notes/T99-xxxx.md：某条经的学习笔记（自由格式的 Markdown，可含列表、表格）。"""
+    path = ROOT / "data" / "notes" / f"{sid}.md"
+    if path.exists():
+        text = path.read_text(encoding="utf-8").strip()
+        return text or None
+    return None
+
+
 def render_tags(entry):
     if not entry or not any(entry.values()):
         return "_尚未标注。_"
@@ -226,6 +236,9 @@ def build_sutras():
         if r.get("备注"):
             parts += [f"> 备注：{r['备注']}", ""]
         parts += ["## 标签（个人标注）", "", render_tags(tags.get(sid)), "", "## 原文", "", body, ""]
+        note = read_note(sid)
+        if note:
+            parts += ["## 学习笔记", "", note, ""]
         table = read_table(sid)
         if table:
             parts += ["## 整理表", "", table, "", TABLE_NOTE, ""]
@@ -367,6 +380,10 @@ def validate(rows):
     tabs = sorted(p.stem for p in tdir.glob("*.md")) if tdir.exists() else []
     unknown = [t for t in tabs if t not in ids]
     check(not unknown, f"整理表文件的经号都存在（共 {len(tabs)} 张）" + (f"：{unknown[:3]}" if unknown else ""))
+    ndir = ROOT / "data" / "notes"
+    notes = sorted(p.stem for p in ndir.glob("*.md")) if ndir.exists() else []
+    nunknown = [t for t in notes if t not in ids]
+    check(not nunknown, f"学习笔记文件的经号都存在（共 {len(notes)} 篇）" + (f"：{nunknown[:3]}" if nunknown else ""))
     if problems:
         sys.exit(f"\n有 {problems} 项校验未通过。")
 
