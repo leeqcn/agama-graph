@@ -101,9 +101,45 @@ function parseCsv(content: string): Record<string, string>[] {
   return records;
 }
 
+function cnNum(n: number): string {
+  const d = '零一二三四五六七八九';
+  if (n < 10) return d[n];
+  if (n < 20) return '十' + (n % 10 ? d[n % 10] : '');
+  return d[Math.floor(n / 10)] + '十' + (n % 10 ? d[n % 10] : '');
+}
+
+function formatSutraTitle(sid: string): string {
+  const part = sid.split('-')[1] || '';
+  const nums = (part.match(/\d+/g) || []).map((x) => parseInt(x, 10));
+  if (nums.length === 1) return `杂阿含经 第${nums[0]}经`;
+  if (nums.length >= 2) return `杂阿含经 第${nums[0]}～${nums[1]}经`;
+  return `杂阿含经 ${sid}`;
+}
+
 function exportStaticData() {
   fs.mkdirSync(path.join(DIST_DATA_DIR, 'sutras'), { recursive: true });
   fs.mkdirSync(path.join(DIST_DATA_DIR, 'docs'), { recursive: true });
+
+  // 0. Load bundled sutras_text.json and notes_bundle.json if present
+  const sutrasTextPath = path.resolve(ROOT_DIR, 'data', 'sutras_text.json');
+  let sutrasTextBundle: Record<string, string> = {};
+  if (fs.existsSync(sutrasTextPath)) {
+    try {
+      sutrasTextBundle = JSON.parse(fs.readFileSync(sutrasTextPath, 'utf-8'));
+    } catch (e) {
+      console.error('Error parsing sutras_text.json:', e);
+    }
+  }
+
+  const notesBundlePath = path.resolve(ROOT_DIR, 'data', 'notes_bundle.json');
+  let notesBundle: Record<string, string> = {};
+  if (fs.existsSync(notesBundlePath)) {
+    try {
+      notesBundle = JSON.parse(fs.readFileSync(notesBundlePath, 'utf-8'));
+    } catch (e) {
+      console.error('Error parsing notes_bundle.json:', e);
+    }
+  }
 
   // 1. Load tags_raw.csv
   const tagsRawPath = path.resolve(ROOT_DIR, 'data', 'tags_raw.csv');
@@ -150,14 +186,15 @@ function exportStaticData() {
     if (!id) continue;
 
     const order = parseInt(r['顺序'] || '0', 10) || i + 1;
-    let juan = r['卷'] ? `卷${r['卷']}` : '卷一';
+    const juanNum = parseInt(r['卷'] || '1', 10);
+    let juan = !isNaN(juanNum) ? `卷${cnNum(juanNum)}` : r['卷'] ? `卷${r['卷']}` : '卷一';
     const wordCount = parseInt(r['字数'] || '0', 10);
     const remarks = r['备注'] || '';
 
     const mdPath = path.join(pagesDir, `${id}.md`);
-    let title = `杂阿含经 ${id}`;
-    let rawText = '';
-    let studyNotes = '';
+    let title = formatSutraTitle(id);
+    let rawText = sutrasTextBundle[id] || '';
+    let studyNotes = notesBundle[id] || '';
     let tableContent = '';
 
     let tags: string[] = [];
@@ -217,7 +254,7 @@ function exportStaticData() {
       }
 
       const notesMatch = md.match(/## 学习笔记([\s\S]*?)(?:## 整理表|\n---\n|$)/);
-      if (notesMatch) {
+      if (notesMatch && !studyNotes) {
         studyNotes = notesMatch[1].trim();
       }
 
@@ -484,6 +521,10 @@ function exportStaticData() {
     agents: path.resolve(ROOT_DIR, 'AGENTS.md'),
     changelog: path.resolve(ROOT_DIR, '修改记录_0001-0100.md'),
     changelog_2: path.resolve(ROOT_DIR, '修改记录_0101-0200.md'),
+    changelog_3: path.resolve(ROOT_DIR, '修改记录_0201-0250.md'),
+    changelog_4: path.resolve(ROOT_DIR, '修改记录_0251-0300.md'),
+    changelog_5: path.resolve(ROOT_DIR, '修改记录_0301-0400.md'),
+    changelog_6: path.resolve(ROOT_DIR, '修改记录_0401-0500.md'),
     关系类型: path.resolve(ROOT_DIR, 'docs', '关系类型.md'),
     标注规范: path.resolve(ROOT_DIR, 'docs', '标注规范.md'),
   };

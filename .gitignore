@@ -13,3 +13,14 @@ __pycache__/
 *.pyc
 .venv/
 .DS_Store
+
+# 前端依赖与构建产物
+node_modules/
+dist/
+public/static-data/
+
+# 单经生成页与解包笔记（由 data/sutras_text.json 与 data/notes_bundle.json 承载，运行 python3 pipeline/04_build.py 自动还原）
+pages/sutras/T99-*.md
+data/notes/T99-*.md
+
+

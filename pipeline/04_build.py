@@ -33,6 +33,7 @@
 """
 
 import csv
+import json
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -211,7 +212,43 @@ def render_tags(entry):
 
 
 # ---------- 经文页 ----------
+def _ensure_unpacked():
+    """若存在合并数据包（notes_bundle.json / sutras_text.json），自动解包缺失的单文件。"""
+    notes_bundle_path = ROOT / "data" / "notes_bundle.json"
+    if notes_bundle_path.exists():
+        notes_dir = ROOT / "data" / "notes"
+        notes_dir.mkdir(parents=True, exist_ok=True)
+        bundle = json.loads(notes_bundle_path.read_text(encoding="utf-8"))
+        restored_notes = 0
+        for sid, content in bundle.items():
+            target = notes_dir / f"{sid}.md"
+            if not target.exists() and content.strip():
+                target.write_text(content.strip() + "\n", encoding="utf-8")
+                restored_notes += 1
+        if restored_notes:
+            print(f"提示：已从 data/notes_bundle.json 还原 {restored_notes} 篇学习笔记到 data/notes/")
+
+    sutras_bundle_path = ROOT / "data" / "sutras_text.json"
+    if sutras_bundle_path.exists():
+        TXT.mkdir(parents=True, exist_ok=True)
+        sbundle = json.loads(sutras_bundle_path.read_text(encoding="utf-8"))
+        restored_txt = 0
+        for sid, body_md in sbundle.items():
+            target = TXT / f"{sid}.txt"
+            if not target.exists() and body_md:
+                lines = []
+                for block in body_md.split("\n\n"):
+                    for vline in block.split("  \n"):
+                        unescaped = re.sub(r"\\([\\`*_\[\]<>|#])", r"\1", vline.strip())
+                        lines.append(unescaped)
+                target.write_text("\n".join(lines) + "\n", encoding="utf-8")
+                restored_txt += 1
+        if restored_txt:
+            print(f"提示：已从 data/sutras_text.json 还原 {restored_txt} 篇经文正文到 pipeline/out/sutras/")
+
+
 def build_sutras():
+    _ensure_unpacked()
     csv_path = ROOT / "data" / "sutras.csv"
     if not csv_path.exists():
         sys.exit("找不到 data/sutras.csv，请先运行 01_split.py")

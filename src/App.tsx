@@ -146,7 +146,7 @@ export default function App() {
 
   // Documentation
   const [docContent, setDocContent] = useState<string>('');
-  const [activeDocTab, setActiveDocTab] = useState<'about' | 'changelog' | 'changelog_2' | 'relation_types' | 'rules' | 'agents'>('about');
+  const [activeDocTab, setActiveDocTab] = useState<'about' | 'changelog' | 'changelog_2' | 'changelog_3' | 'changelog_4' | 'changelog_5' | 'changelog_6' | 'relation_types' | 'rules' | 'agents'>('about');
 
   // Helper: fetch from live Express API in local/AI Studio mode, or automatically fall back to static JSON in Vercel/GitHub Pages mode
   const fetchJsonWithStaticFallback = async (apiUrl: string, staticUrl: string) => {
@@ -231,6 +231,10 @@ export default function App() {
     let docKey = 'about';
     if (activeDocTab === 'changelog') docKey = 'changelog';
     else if (activeDocTab === 'changelog_2') docKey = 'changelog_2';
+    else if (activeDocTab === 'changelog_3') docKey = 'changelog_3';
+    else if (activeDocTab === 'changelog_4') docKey = 'changelog_4';
+    else if (activeDocTab === 'changelog_5') docKey = 'changelog_5';
+    else if (activeDocTab === 'changelog_6') docKey = 'changelog_6';
     else if (activeDocTab === 'relation_types') docKey = '关系类型';
     else if (activeDocTab === 'rules') docKey = '标注规范';
     else if (activeDocTab === 'agents') docKey = 'agents';
@@ -1400,10 +1404,10 @@ export default function App() {
                     {taggingProgress.annotated} 条
                   </div>
                   <div className="text-xs text-emerald-600 mt-0.5 flex items-center justify-between">
-                    <span>T99-0001 ~ T99-0200</span>
+                    <span>T99-0001 ~ T99-0500</span>
                     <button
                       onClick={() => {
-                        setActiveDocTab('changelog_2');
+                        setActiveDocTab('changelog_6');
                         setTab('about');
                       }}
                       className="underline hover:text-amber-800"
@@ -1528,6 +1532,30 @@ export default function App() {
                   className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_2' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
                 >
                   修改记录 (0101-0200)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_3')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_3' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (0201-0250)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_4')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_4' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (0251-0300)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_5')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_5' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (0301-0400)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_6')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_6' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (0401-0500)
                 </button>
                 <button
                   onClick={() => setActiveDocTab('relation_types')}

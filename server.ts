@@ -125,8 +125,44 @@ interface NoteSnapshot {
 const tagHistoryMap = new Map<string, TagSnapshot[]>();
 const noteHistoryMap = new Map<string, NoteSnapshot[]>();
 
+function cnNum(n: number): string {
+  const d = '零一二三四五六七八九';
+  if (n < 10) return d[n];
+  if (n < 20) return '十' + (n % 10 ? d[n % 10] : '');
+  return d[Math.floor(n / 10)] + '十' + (n % 10 ? d[n % 10] : '');
+}
+
+function formatSutraTitle(sid: string): string {
+  const part = sid.split('-')[1] || '';
+  const nums = (part.match(/\d+/g) || []).map((x) => parseInt(x, 10));
+  if (nums.length === 1) return `杂阿含经 第${nums[0]}经`;
+  if (nums.length >= 2) return `杂阿含经 第${nums[0]}～${nums[1]}经`;
+  return `杂阿含经 ${sid}`;
+}
+
 function loadAllData() {
   try {
+    // 0. Load bundled sutras_text.json and notes_bundle.json if present
+    const sutrasTextPath = path.resolve(__dirname, 'data', 'sutras_text.json');
+    let sutrasTextBundle: Record<string, string> = {};
+    if (fs.existsSync(sutrasTextPath)) {
+      try {
+        sutrasTextBundle = JSON.parse(fs.readFileSync(sutrasTextPath, 'utf-8'));
+      } catch (e) {
+        console.error('Error parsing sutras_text.json:', e);
+      }
+    }
+
+    const notesBundlePath = path.resolve(__dirname, 'data', 'notes_bundle.json');
+    let notesBundle: Record<string, string> = {};
+    if (fs.existsSync(notesBundlePath)) {
+      try {
+        notesBundle = JSON.parse(fs.readFileSync(notesBundlePath, 'utf-8'));
+      } catch (e) {
+        console.error('Error parsing notes_bundle.json:', e);
+      }
+    }
+
     // 1. Load tags_raw.csv
     const tagsRawPath = path.resolve(__dirname, 'data', 'tags_raw.csv');
     tagsRawMap.clear();
@@ -172,14 +208,15 @@ function loadAllData() {
       if (!id) continue;
 
       const order = parseInt(r['顺序'] || '0', 10) || i + 1;
-      let juan = r['卷'] ? `卷${r['卷']}` : '卷一';
+      const juanNum = parseInt(r['卷'] || '1', 10);
+      let juan = !isNaN(juanNum) ? `卷${cnNum(juanNum)}` : r['卷'] ? `卷${r['卷']}` : '卷一';
       const wordCount = parseInt(r['字数'] || '0', 10);
       const remarks = r['备注'] || '';
 
       const mdPath = path.join(pagesDir, `${id}.md`);
-      let title = `杂阿含经 ${id}`;
-      let rawText = '';
-      let studyNotes = '';
+      let title = formatSutraTitle(id);
+      let rawText = sutrasTextBundle[id] || '';
+      let studyNotes = notesBundle[id] || '';
       let tableContent = '';
 
       let tags: string[] = [];
@@ -245,7 +282,7 @@ function loadAllData() {
 
         // Extract study notes from md as fallback
         const notesMatch = md.match(/## 学习笔记([\s\S]*?)(?:## 整理表|\n---\n|$)/);
-        if (notesMatch) {
+        if (notesMatch && !studyNotes) {
           studyNotes = notesMatch[1].trim();
         }
 
@@ -265,7 +302,7 @@ function loadAllData() {
         }
       }
 
-      // Check standalone note/table in data/notes and data/tables (takes precedence over generated md)
+      // Check standalone note/table in data/notes and data/tables (takes precedence over bundle/generated md)
       const standaloneNote = path.resolve(__dirname, 'data', 'notes', `${id}.md`);
       if (fs.existsSync(standaloneNote)) {
         studyNotes = fs.readFileSync(standaloneNote, 'utf-8').trim();
@@ -684,7 +721,7 @@ app.post('/api/undo-tags', (req, res) => {
   }
 });
 
-// Save or update study notes for a sutra (data/notes/T99-xxxx.md)
+// Save or update study notes for a sutra (data/notes_bundle.json & optional data/notes/T99-xxxx.md)
 app.post('/api/save-note', (req, res) => {
   const { sutraId, studyNotes } = req.body;
   if (!sutraId || !sutraMap.has(sutraId)) {
@@ -692,15 +729,23 @@ app.post('/api/save-note', (req, res) => {
   }
 
   try {
-    const notesDir = path.resolve(__dirname, 'data', 'notes');
-    fs.mkdirSync(notesDir, { recursive: true });
-    const notePath = path.join(notesDir, `${sutraId}.md`);
+    const notesBundlePath = path.resolve(__dirname, 'data', 'notes_bundle.json');
+    let bundle: Record<string, string> = {};
+    if (fs.existsSync(notesBundlePath)) {
+      try {
+        bundle = JSON.parse(fs.readFileSync(notesBundlePath, 'utf-8'));
+      } catch {
+        bundle = {};
+      }
+    }
 
+    const notesDir = path.resolve(__dirname, 'data', 'notes');
+    const notePath = path.join(notesDir, `${sutraId}.md`);
     const currentDetail = sutraMap.get(sutraId);
-    const existed = fs.existsSync(notePath);
-    const prevContent = existed
+    const existed = fs.existsSync(notePath) || Boolean(bundle[sutraId]);
+    const prevContent = fs.existsSync(notePath)
       ? fs.readFileSync(notePath, 'utf-8')
-      : currentDetail?.studyNotes || '';
+      : bundle[sutraId] || currentDetail?.studyNotes || '';
 
     const stack = noteHistoryMap.get(sutraId) || [];
     stack.push({ existed, content: prevContent });
@@ -708,10 +753,17 @@ app.post('/api/save-note', (req, res) => {
 
     const trimmed = (studyNotes || '').trim();
     if (trimmed) {
-      fs.writeFileSync(notePath, trimmed + '\n', 'utf-8');
-    } else if (fs.existsSync(notePath)) {
-      fs.writeFileSync(notePath, '', 'utf-8');
+      bundle[sutraId] = trimmed;
+      if (fs.existsSync(notePath)) {
+        fs.writeFileSync(notePath, trimmed + '\n', 'utf-8');
+      }
+    } else {
+      delete bundle[sutraId];
+      if (fs.existsSync(notePath)) {
+        fs.unlinkSync(notePath);
+      }
     }
+    fs.writeFileSync(notesBundlePath, JSON.stringify(bundle, null, 2), 'utf-8');
 
     loadAllData();
 
@@ -749,17 +801,36 @@ app.post('/api/undo-note', (req, res) => {
     const prev = stack.pop()!;
     noteHistoryMap.set(sutraId, stack);
 
+    const notesBundlePath = path.resolve(__dirname, 'data', 'notes_bundle.json');
+    let bundle: Record<string, string> = {};
+    if (fs.existsSync(notesBundlePath)) {
+      try {
+        bundle = JSON.parse(fs.readFileSync(notesBundlePath, 'utf-8'));
+      } catch {
+        bundle = {};
+      }
+    }
+
     const notesDir = path.resolve(__dirname, 'data', 'notes');
     const notePath = path.join(notesDir, `${sutraId}.md`);
 
     if (!prev.existed && !prev.content.trim()) {
+      delete bundle[sutraId];
       if (fs.existsSync(notePath)) {
         fs.unlinkSync(notePath);
       }
     } else {
-      fs.mkdirSync(notesDir, { recursive: true });
-      fs.writeFileSync(notePath, prev.content ? prev.content.trim() + '\n' : '', 'utf-8');
+      const restored = prev.content ? prev.content.trim() : '';
+      if (restored) {
+        bundle[sutraId] = restored;
+      } else {
+        delete bundle[sutraId];
+      }
+      if (fs.existsSync(notePath)) {
+        fs.writeFileSync(notePath, restored ? restored + '\n' : '', 'utf-8');
+      }
     }
+    fs.writeFileSync(notesBundlePath, JSON.stringify(bundle, null, 2), 'utf-8');
 
     loadAllData();
 
@@ -796,6 +867,14 @@ app.get('/api/docs/:name', (req, res) => {
     filePath = path.resolve(__dirname, '修改记录_0001-0100.md');
   } else if (name === 'changelog_2' || name === '修改记录_0101-0200') {
     filePath = path.resolve(__dirname, '修改记录_0101-0200.md');
+  } else if (name === 'changelog_3' || name === '修改记录_0201-0250') {
+    filePath = path.resolve(__dirname, '修改记录_0201-0250.md');
+  } else if (name === 'changelog_4' || name === '修改记录_0251-0300') {
+    filePath = path.resolve(__dirname, '修改记录_0251-0300.md');
+  } else if (name === 'changelog_5' || name === '修改记录_0301-0400') {
+    filePath = path.resolve(__dirname, '修改记录_0301-0400.md');
+  } else if (name === 'changelog_6' || name === '修改记录_0401-0500') {
+    filePath = path.resolve(__dirname, '修改记录_0401-0500.md');
   } else {
     // Check in docs/
     const candidate = path.resolve(__dirname, 'docs', `${name}.md`);
