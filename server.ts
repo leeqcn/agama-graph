@@ -879,6 +879,10 @@ app.get('/api/docs/:name', (req, res) => {
     filePath = path.resolve(__dirname, '修改记录_0501-0600.md');
   } else if (name === 'changelog_8' || name === '修改记录_0601-0700') {
     filePath = path.resolve(__dirname, '修改记录_0601-0700.md');
+  } else if (name === 'changelog_9' || name === '修改记录_0701-0800') {
+    filePath = path.resolve(__dirname, '修改记录_0701-0800.md');
+  } else if (name === 'changelog_10' || name === '修改记录_0801-0900') {
+    filePath = path.resolve(__dirname, '修改记录_0801-0900.md');
   } else {
     // Check in docs/
     const candidate = path.resolve(__dirname, 'docs', `${name}.md`);
