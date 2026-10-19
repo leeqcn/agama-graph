@@ -16,5 +16,7 @@ jobs:
         with:
           python-version: "3.x"
       - run: python3 pipeline/04_build.py
+      - run: cp vercel.json pages/vercel.json
       - run: pip install mkdocs-material
       - run: mkdocs gh-deploy --force
+
