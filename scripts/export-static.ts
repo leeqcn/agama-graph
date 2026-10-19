@@ -338,26 +338,76 @@ function exportStaticData() {
   );
 
   // 4. Build tags.json
-  const termsMap = new Map<string, { pali: string; matchLevel: string; samyukta: string; status: string }>();
+  const termsMap = new Map<
+    string,
+    {
+      pali: string;
+      matchLevel: string;
+      samyukta: string;
+      status: string;
+      definition: string;
+      aspect: string;
+      hierarchy: string;
+      aliases: string;
+    }
+  >();
   const termsCsvPath = path.resolve(ROOT_DIR, 'data', 'terms.csv');
   if (fs.existsSync(termsCsvPath)) {
     const tRows = parseCsv(fs.readFileSync(termsCsvPath, 'utf-8'));
     for (const r of tRows) {
       const name = r['名相']?.trim();
       if (name) {
-        termsMap.set(name, {
+        const meta = {
           pali: r['巴利']?.trim() || '',
-          matchLevel: r['对等程度']?.trim() || '',
+          matchLevel: r['对应类型']?.trim() || r['对等程度']?.trim() || '',
           samyukta: r['所属相应']?.trim() || '',
           status: r['状态']?.trim() || '',
-        });
+          definition: r['定义']?.trim() || '',
+          aspect: r['面向']?.trim() || '',
+          hierarchy: r['层级']?.trim() || '',
+          aliases: r['异称']?.trim() || '',
+        };
+        termsMap.set(name, meta);
+        const aliasList = (r['异称'] || '')
+          .split(/[、，,;；/]/)
+          .map((s) => s.trim())
+          .filter(Boolean);
+        for (const al of aliasList) {
+          if (!termsMap.has(al)) {
+            termsMap.set(al, meta);
+          }
+        }
       }
+    }
+  }
+
+  let taxonomyMap: Record<string, { category: string; subCategory: string; attribute: string }> = {};
+  const taxonomyPath = path.resolve(ROOT_DIR, 'data', 'tag_taxonomy.json');
+  if (fs.existsSync(taxonomyPath)) {
+    try {
+      taxonomyMap = JSON.parse(fs.readFileSync(taxonomyPath, 'utf-8'));
+    } catch (e) {
+      console.error('Error reading tag_taxonomy.json:', e);
     }
   }
 
   const tagStats = new Map<
     string,
-    { name: string; count: number; coreCount: number; sutras: string[]; pali?: string; samyukta?: string }
+    {
+      name: string;
+      count: number;
+      coreCount: number;
+      sutras: string[];
+      category: string;
+      subCategory: string;
+      attribute: string;
+      pali?: string;
+      samyukta?: string;
+      definition?: string;
+      aspect?: string;
+      hierarchy?: string;
+      aliases?: string;
+    }
   >();
 
   for (const s of sutraList) {
@@ -365,13 +415,21 @@ function exportStaticData() {
     for (const tag of allForSutra) {
       if (!tag) continue;
       const termMeta = termsMap.get(tag);
+      const taxMeta = taxonomyMap[tag] || { category: '法义', subCategory: '四谛·道谛', attribute: '因' };
       const entry = tagStats.get(tag) || {
         name: tag,
         count: 0,
         coreCount: 0,
         sutras: [],
+        category: taxMeta.category,
+        subCategory: taxMeta.subCategory,
+        attribute: taxMeta.attribute || '',
         pali: termMeta?.pali,
         samyukta: termMeta?.samyukta,
+        definition: termMeta?.definition,
+        aspect: termMeta?.aspect,
+        hierarchy: termMeta?.hierarchy,
+        aliases: termMeta?.aliases,
       };
       entry.count += 1;
       if (s.coreTags.includes(tag)) {
@@ -530,6 +588,10 @@ function exportStaticData() {
     changelog_9: path.resolve(ROOT_DIR, '修改记录_0701-0800.md'),
     changelog_10: path.resolve(ROOT_DIR, '修改记录_0801-0900.md'),
     changelog_11: path.resolve(ROOT_DIR, '修改记录_0901-1000.md'),
+    changelog_12: path.resolve(ROOT_DIR, '修改记录_1001-1100.md'),
+    changelog_13: path.resolve(ROOT_DIR, '修改记录_1101-1200.md'),
+    changelog_14: path.resolve(ROOT_DIR, '修改记录_1201-1300.md'),
+    changelog_15: path.resolve(ROOT_DIR, '修改记录_1301-1362.md'),
     关系类型: path.resolve(ROOT_DIR, 'docs', '关系类型.md'),
     标注规范: path.resolve(ROOT_DIR, 'docs', '标注规范.md'),
   };

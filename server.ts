@@ -383,28 +383,78 @@ app.get('/api/sutras/:id', (req, res) => {
   });
 });
 
-// All aggregated tags + canonical terms from terms.csv
+// All aggregated tags + canonical terms from terms.csv + taxonomy from tag_taxonomy.json
 app.get('/api/tags', (req, res) => {
-  const termsMap = new Map<string, { pali: string; matchLevel: string; samyukta: string; status: string }>();
+  const termsMap = new Map<
+    string,
+    {
+      pali: string;
+      matchLevel: string;
+      samyukta: string;
+      status: string;
+      definition: string;
+      aspect: string;
+      hierarchy: string;
+      aliases: string;
+    }
+  >();
   const termsCsvPath = path.resolve(__dirname, 'data', 'terms.csv');
   if (fs.existsSync(termsCsvPath)) {
     const tRows = parseCsv(fs.readFileSync(termsCsvPath, 'utf-8'));
     for (const r of tRows) {
       const name = r['名相']?.trim();
       if (name) {
-        termsMap.set(name, {
+        const meta = {
           pali: r['巴利']?.trim() || '',
-          matchLevel: r['对等程度']?.trim() || '',
+          matchLevel: r['对应类型']?.trim() || r['对等程度']?.trim() || '',
           samyukta: r['所属相应']?.trim() || '',
           status: r['状态']?.trim() || '',
-        });
+          definition: r['定义']?.trim() || '',
+          aspect: r['面向']?.trim() || '',
+          hierarchy: r['层级']?.trim() || '',
+          aliases: r['异称']?.trim() || '',
+        };
+        termsMap.set(name, meta);
+        const aliasList = (r['异称'] || '')
+          .split(/[、，,;；/]/)
+          .map((s) => s.trim())
+          .filter(Boolean);
+        for (const al of aliasList) {
+          if (!termsMap.has(al)) {
+            termsMap.set(al, meta);
+          }
+        }
       }
+    }
+  }
+
+  let taxonomyMap: Record<string, { category: string; subCategory: string; attribute: string }> = {};
+  const taxonomyPath = path.resolve(__dirname, 'data', 'tag_taxonomy.json');
+  if (fs.existsSync(taxonomyPath)) {
+    try {
+      taxonomyMap = JSON.parse(fs.readFileSync(taxonomyPath, 'utf-8'));
+    } catch (e) {
+      console.error('Error reading tag_taxonomy.json:', e);
     }
   }
 
   const tagStats = new Map<
     string,
-    { name: string; count: number; coreCount: number; sutras: string[]; pali?: string; samyukta?: string }
+    {
+      name: string;
+      count: number;
+      coreCount: number;
+      sutras: string[];
+      category: string;
+      subCategory: string;
+      attribute: string;
+      pali?: string;
+      samyukta?: string;
+      definition?: string;
+      aspect?: string;
+      hierarchy?: string;
+      aliases?: string;
+    }
   >();
 
   for (const s of sutraList) {
@@ -412,13 +462,21 @@ app.get('/api/tags', (req, res) => {
     for (const tag of allForSutra) {
       if (!tag) continue;
       const termMeta = termsMap.get(tag);
+      const taxMeta = taxonomyMap[tag] || { category: '法义', subCategory: '四谛·道谛', attribute: '因' };
       const entry = tagStats.get(tag) || {
         name: tag,
         count: 0,
         coreCount: 0,
         sutras: [],
+        category: taxMeta.category,
+        subCategory: taxMeta.subCategory,
+        attribute: taxMeta.attribute || '',
         pali: termMeta?.pali,
         samyukta: termMeta?.samyukta,
+        definition: termMeta?.definition,
+        aspect: termMeta?.aspect,
+        hierarchy: termMeta?.hierarchy,
+        aliases: termMeta?.aliases,
       };
       entry.count += 1;
       if (s.coreTags.includes(tag)) {
@@ -885,6 +943,14 @@ app.get('/api/docs/:name', (req, res) => {
     filePath = path.resolve(__dirname, '修改记录_0801-0900.md');
   } else if (name === 'changelog_11' || name === '修改记录_0901-1000') {
     filePath = path.resolve(__dirname, '修改记录_0901-1000.md');
+  } else if (name === 'changelog_12' || name === '修改记录_1001-1100') {
+    filePath = path.resolve(__dirname, '修改记录_1001-1100.md');
+  } else if (name === 'changelog_13' || name === '修改记录_1101-1200') {
+    filePath = path.resolve(__dirname, '修改记录_1101-1200.md');
+  } else if (name === 'changelog_14' || name === '修改记录_1201-1300') {
+    filePath = path.resolve(__dirname, '修改记录_1201-1300.md');
+  } else if (name === 'changelog_15' || name === '修改记录_1301-1362') {
+    filePath = path.resolve(__dirname, '修改记录_1301-1362.md');
   } else {
     // Check in docs/
     const candidate = path.resolve(__dirname, 'docs', `${name}.md`);
@@ -906,6 +972,11 @@ const isProd = process.env.NODE_ENV === 'production';
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
 async function startServer() {
+  const staticDataDir = path.resolve(__dirname, 'dist', 'static-data');
+  if (fs.existsSync(staticDataDir)) {
+    app.use('/static-data', express.static(staticDataDir));
+  }
+
   if (!isProd) {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({

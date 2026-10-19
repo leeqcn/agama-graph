@@ -59,8 +59,15 @@ interface TagStat {
   count: number;
   coreCount: number;
   sutras: string[];
+  category?: string;
+  subCategory?: string;
+  attribute?: string;
   pali?: string;
   samyukta?: string;
+  definition?: string;
+  aspect?: string;
+  hierarchy?: string;
+  aliases?: string;
 }
 
 interface GraphNode {
@@ -105,10 +112,12 @@ export default function App() {
   const [fontSerif, setFontSerif] = useState<boolean>(true);
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
-  // Tags list
+  // Tags list & Taxonomy filters
   const [tags, setTags] = useState<TagStat[]>([]);
   const [tagSearch, setTagSearch] = useState('');
   const [tagCategoryFilter, setTagCategoryFilter] = useState<'all' | 'core' | 'frequent'>('all');
+  const [tagMainCategory, setTagMainCategory] = useState<'all' | '人物' | '地点' | '法义'>('all');
+  const [tagSubCategory, setTagSubCategory] = useState<string>('all');
 
   // Graph state
   const [graphData, setGraphData] = useState<{ nodes: GraphNode[]; links: GraphLink[] }>({ nodes: [], links: [] });
@@ -146,28 +155,36 @@ export default function App() {
 
   // Documentation
   const [docContent, setDocContent] = useState<string>('');
-  const [activeDocTab, setActiveDocTab] = useState<'about' | 'changelog' | 'changelog_2' | 'changelog_3' | 'changelog_4' | 'changelog_5' | 'changelog_6' | 'changelog_7' | 'changelog_8' | 'changelog_9' | 'changelog_10' | 'changelog_11' | 'relation_types' | 'rules' | 'agents'>('about');
+  const [activeDocTab, setActiveDocTab] = useState<'about' | 'changelog' | 'changelog_2' | 'changelog_3' | 'changelog_4' | 'changelog_5' | 'changelog_6' | 'changelog_7' | 'changelog_8' | 'changelog_9' | 'changelog_10' | 'changelog_11' | 'changelog_12' | 'changelog_13' | 'changelog_14' | 'changelog_15' | 'relation_types' | 'rules' | 'agents'>('about');
 
   // Helper: fetch from live Express API in local/AI Studio mode, or automatically fall back to static JSON in Vercel/GitHub Pages mode
   const fetchJsonWithStaticFallback = async (apiUrl: string, staticUrl: string) => {
     if (!staticModeRef.current) {
-      try {
-        const res = await fetch(apiUrl);
-        const contentType = res.headers.get('content-type') || '';
-        if (res.ok && contentType.includes('application/json')) {
-          return await res.json();
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const res = await fetch(apiUrl);
+          const contentType = res.headers.get('content-type') || '';
+          if (res.ok && contentType.includes('application/json')) {
+            return await res.json();
+          }
+          if (res.status === 404) break;
+        } catch {
+          // Transient error (e.g. dev server restarting); wait and retry
         }
-      } catch {
-        // Fall through to static mode
+        if (attempt < 2) {
+          await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+        }
       }
-      staticModeRef.current = true;
-      setIsReadOnly(true);
     }
     const staticRes = await fetch(staticUrl);
-    if (!staticRes.ok) {
-      throw new Error(`Failed to load ${staticUrl}`);
+    const staticContentType = staticRes.headers.get('content-type') || '';
+    if (!staticRes.ok || !staticContentType.includes('application/json')) {
+      throw new Error(`Failed to load JSON from ${apiUrl}`);
     }
-    return await staticRes.json();
+    const data = await staticRes.json();
+    staticModeRef.current = true;
+    setIsReadOnly(true);
+    return data;
   };
 
   // Fetch initial sutras
@@ -240,6 +257,10 @@ export default function App() {
     else if (activeDocTab === 'changelog_9') docKey = 'changelog_9';
     else if (activeDocTab === 'changelog_10') docKey = 'changelog_10';
     else if (activeDocTab === 'changelog_11') docKey = 'changelog_11';
+    else if (activeDocTab === 'changelog_12') docKey = 'changelog_12';
+    else if (activeDocTab === 'changelog_13') docKey = 'changelog_13';
+    else if (activeDocTab === 'changelog_14') docKey = 'changelog_14';
+    else if (activeDocTab === 'changelog_15') docKey = 'changelog_15';
     else if (activeDocTab === 'relation_types') docKey = '关系类型';
     else if (activeDocTab === 'rules') docKey = '标注规范';
     else if (activeDocTab === 'agents') docKey = 'agents';
@@ -1155,18 +1176,18 @@ export default function App() {
 
         {/* VIEW 2: TAGS DIRECTORY */}
         {tab === 'tags' && (
-          <div className="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 overflow-y-auto">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+          <div className="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 overflow-y-auto space-y-5">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <h2 className="font-serif-sc text-xl sm:text-2xl font-bold text-stone-900 dark:text-stone-100">
-                  名相与标签索引
+                  名相与标签分类索引
                 </h2>
                 <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">
-                  从已标注的经文中汇总的名相、概念、人物与地点列表，点击可穿透检索相关经文
+                  全藏标签已清理规整为 <strong>{tags.length}</strong> 个标准标签，按「1. 人物 · 2. 地点 · 3. 法义（四谛因果 / 蕴处界 / 譬喻 / 法数）」分级检索
                 </p>
               </div>
 
-              {/* Tag Search & Filter */}
+              {/* Tag Search & Frequency Filter */}
               <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                 <div className="relative flex-1 sm:w-64">
                   <Search className="w-4 h-4 absolute left-3 top-2.5 text-stone-400" />
@@ -1174,9 +1195,17 @@ export default function App() {
                     type="text"
                     value={tagSearch}
                     onChange={(e) => setTagSearch(e.target.value)}
-                    placeholder="搜索名相（五蕴、无常、苦）..."
+                    placeholder="搜索名相、异称或释义..."
                     className="w-full pl-9 pr-3 py-1.5 text-sm rounded-lg border border-amber-200 dark:border-stone-700 bg-white dark:bg-stone-800 focus:outline-none focus:ring-1 focus:ring-amber-500"
                   />
+                  {tagSearch && (
+                    <button
+                      onClick={() => setTagSearch('')}
+                      className="absolute right-2.5 top-2 text-xs text-stone-400 hover:text-stone-600"
+                    >
+                      ✕
+                    </button>
+                  )}
                 </div>
 
                 <div className="flex items-center rounded-lg border border-amber-200 dark:border-stone-700 bg-white dark:bg-stone-800 p-0.5 text-xs">
@@ -1202,11 +1231,242 @@ export default function App() {
               </div>
             </div>
 
+            {/* Primary Category Cards: 全部 / 1.人物 / 2.地点 / 3.法义 */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                {
+                  key: 'all' as const,
+                  title: '全部标准标签',
+                  desc: '人物 · 地点 · 法义全集',
+                  count: tags.length,
+                },
+                {
+                  key: '人物' as const,
+                  title: '1. 人物',
+                  desc: '佛与圣弟子 · 王臣居士 · 外道 · 诸天鬼神',
+                  count: tags.filter((t) => t.category === '人物').length,
+                },
+                {
+                  key: '地点' as const,
+                  title: '2. 地点',
+                  desc: '国城聚落 · 园苑精舍 · 山林水岸',
+                  count: tags.filter((t) => t.category === '地点').length,
+                },
+                {
+                  key: '法义' as const,
+                  title: '3. 法义',
+                  desc: '四谛(苦果/集因/灭果/道因) · 蕴处界 · 譬喻 · 法数',
+                  count: tags.filter((t) => t.category === '法义').length,
+                },
+              ].map((c) => {
+                const active = tagMainCategory === c.key;
+                return (
+                  <button
+                    key={c.key}
+                    onClick={() => {
+                      setTagMainCategory(c.key);
+                      setTagSubCategory('all');
+                    }}
+                    className={`text-left p-3 rounded-xl border transition-all ${
+                      active
+                        ? 'border-amber-700 bg-amber-800 text-white shadow-sm'
+                        : 'border-amber-200/80 dark:border-stone-800 bg-amber-50/40 dark:bg-stone-900/60 hover:border-amber-400'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-serif-sc font-bold text-sm sm:text-base">{c.title}</span>
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-full font-mono font-semibold ${
+                          active
+                            ? 'bg-amber-950/50 text-amber-100'
+                            : 'bg-amber-200/70 dark:bg-stone-800 text-amber-900 dark:text-amber-300'
+                        }`}
+                      >
+                        {c.count}
+                      </span>
+                    </div>
+                    <p
+                      className={`text-[11px] mt-1 truncate ${
+                        active ? 'text-amber-100/90' : 'text-stone-500 dark:text-stone-400'
+                      }`}
+                    >
+                      {c.desc}
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Subcategory Filter Bar */}
+            <div className="rounded-xl border border-amber-200/70 dark:border-stone-800 bg-white dark:bg-stone-900 p-3 space-y-3">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="text-xs font-semibold text-stone-500 mr-1">细分体系：</span>
+                <button
+                  onClick={() => setTagSubCategory('all')}
+                  className={`text-xs px-2.5 py-1 rounded-lg font-medium transition ${
+                    tagSubCategory === 'all'
+                      ? 'bg-amber-800 text-white'
+                      : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-amber-100/60'
+                  }`}
+                >
+                  全部子类
+                </button>
+                {(tagMainCategory === 'all' || tagMainCategory === '法义') &&
+                  [
+                    { sub: '四谛·苦谛', label: '四谛·苦谛【果】' },
+                    { sub: '四谛·集谛', label: '四谛·集谛【因】' },
+                    { sub: '四谛·灭谛', label: '四谛·灭谛【果】' },
+                    { sub: '四谛·道谛', label: '四谛·道谛【因】' },
+                    { sub: '蕴、处、界', label: '蕴、处、界' },
+                    { sub: '譬喻', label: '譬喻' },
+                    { sub: '法数', label: '法数' },
+                  ].map((item) => {
+                    const cnt = tags.filter((t) => t.subCategory === item.sub).length;
+                    const active = tagSubCategory === item.sub;
+                    return (
+                      <button
+                        key={item.sub}
+                        onClick={() => {
+                          setTagMainCategory('法义');
+                          setTagSubCategory(item.sub);
+                        }}
+                        className={`text-xs px-2.5 py-1 rounded-lg font-medium transition flex items-center gap-1 ${
+                          active
+                            ? 'bg-amber-800 text-white shadow-2xs'
+                            : 'bg-amber-50 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-amber-200/60 dark:border-stone-700 hover:border-amber-400'
+                        }`}
+                      >
+                        <span>{item.label}</span>
+                        <span className={`font-mono text-[10px] ${active ? 'text-amber-200' : 'text-stone-400'}`}>
+                          ({cnt})
+                        </span>
+                      </button>
+                    );
+                  })}
+                {(tagMainCategory === 'all' || tagMainCategory === '人物') &&
+                  ['佛与圣弟子', '在家众与王臣', '外道与梵志', '诸天与鬼神魔众'].map((sub) => {
+                    const cnt = tags.filter((t) => t.subCategory === sub).length;
+                    const active = tagSubCategory === sub;
+                    return (
+                      <button
+                        key={sub}
+                        onClick={() => {
+                          setTagMainCategory('人物');
+                          setTagSubCategory(sub);
+                        }}
+                        className={`text-xs px-2.5 py-1 rounded-lg font-medium transition flex items-center gap-1 ${
+                          active
+                            ? 'bg-amber-800 text-white shadow-2xs'
+                            : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-amber-100/60'
+                        }`}
+                      >
+                        <span>{sub}</span>
+                        <span className={`font-mono text-[10px] ${active ? 'text-amber-200' : 'text-stone-400'}`}>
+                          ({cnt})
+                        </span>
+                      </button>
+                    );
+                  })}
+                {(tagMainCategory === 'all' || tagMainCategory === '地点') &&
+                  ['国城与聚落', '园苑与精舍讲堂', '山林与水岸自然'].map((sub) => {
+                    const cnt = tags.filter((t) => t.subCategory === sub).length;
+                    const active = tagSubCategory === sub;
+                    return (
+                      <button
+                        key={sub}
+                        onClick={() => {
+                          setTagMainCategory('地点');
+                          setTagSubCategory(sub);
+                        }}
+                        className={`text-xs px-2.5 py-1 rounded-lg font-medium transition flex items-center gap-1 ${
+                          active
+                            ? 'bg-amber-800 text-white shadow-2xs'
+                            : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-amber-100/60'
+                        }`}
+                      >
+                        <span>{sub}</span>
+                        <span className={`font-mono text-[10px] ${active ? 'text-amber-200' : 'text-stone-400'}`}>
+                          ({cnt})
+                        </span>
+                      </button>
+                    );
+                  })}
+              </div>
+
+              {/* Four Noble Truths Cause/Effect Summary Strip when viewing 法义 or Four Noble Truths */}
+              {(tagMainCategory === '法义' || tagSubCategory.startsWith('四谛')) && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-2 border-t border-amber-100 dark:border-stone-800 text-xs">
+                  {[
+                    {
+                      sub: '四谛·苦谛',
+                      title: '苦谛',
+                      attr: '果（世间苦果）',
+                      desc: '业报、异熟果、身心五蕴苦患、器界无常、三苦/八苦、恶趣生死等',
+                      badgeCls: 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300',
+                    },
+                    {
+                      sub: '四谛·集谛',
+                      title: '集谛',
+                      attr: '因（流转苦因）',
+                      desc: '烦恼、惑、无明、爱取、有漏业、业因、五盖、诸结/使/邪见等',
+                      badgeCls: 'bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300',
+                    },
+                    {
+                      sub: '四谛·灭谛',
+                      title: '灭谛',
+                      attr: '果（出世善果）',
+                      desc: '涅槃、烦恼与苦的止息、离欲、灭尽、四沙门果、心解脱、慧解脱',
+                      badgeCls: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300',
+                    },
+                    {
+                      sub: '四谛·道谛',
+                      title: '道谛',
+                      attr: '因（还灭正因）',
+                      desc: '戒定慧三学、八圣道、三十七道品、四禅八定、三昧、止观修证方法',
+                      badgeCls: 'bg-sky-100 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300',
+                    },
+                  ].map((card) => {
+                    const isSelected = tagSubCategory === card.sub;
+                    return (
+                      <button
+                        key={card.sub}
+                        onClick={() => setTagSubCategory(isSelected ? 'all' : card.sub)}
+                        className={`text-left p-2.5 rounded-lg border transition ${
+                          isSelected
+                            ? 'border-amber-700 bg-amber-50/90 dark:bg-stone-800 ring-1 ring-amber-600'
+                            : 'border-stone-200/80 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-900/40 hover:border-amber-300'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-serif-sc font-bold text-stone-900 dark:text-stone-100">
+                            {card.title}
+                          </span>
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold ${card.badgeCls}`}>
+                            {card.attr}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-stone-500 dark:text-stone-400 leading-snug">{card.desc}</p>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
             {/* Tag Cards Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {tags
                 .filter((t) => {
-                  if (tagSearch.trim() && !t.name.toLowerCase().includes(tagSearch.toLowerCase().trim())) return false;
+                  if (tagMainCategory !== 'all' && t.category !== tagMainCategory) return false;
+                  if (tagSubCategory !== 'all' && t.subCategory !== tagSubCategory) return false;
+                  if (tagSearch.trim()) {
+                    const q = tagSearch.toLowerCase().trim();
+                    const matchName = t.name.toLowerCase().includes(q);
+                    const matchAlias = (t.aliases || '').toLowerCase().includes(q);
+                    const matchDef = (t.definition || '').toLowerCase().includes(q);
+                    const matchSub = (t.subCategory || '').toLowerCase().includes(q);
+                    if (!matchName && !matchAlias && !matchDef && !matchSub) return false;
+                  }
                   if (tagCategoryFilter === 'core' && t.coreCount === 0) return false;
                   if (tagCategoryFilter === 'frequent' && t.count < 3) return false;
                   return true;
@@ -1216,40 +1476,81 @@ export default function App() {
                   return (
                     <div
                       key={t.name}
-                      className={`p-3.5 rounded-xl border transition-all ${
+                      className={`p-3.5 rounded-xl border transition-all flex flex-col justify-between ${
                         isCore
                           ? 'border-amber-300/80 bg-amber-50/60 dark:bg-stone-900/60 dark:border-amber-900/50 hover:shadow-md'
                           : 'border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 hover:shadow-xs'
                       }`}
                     >
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <button
-                            onClick={() => {
-                              setSelectedTagFilter(t.name);
-                              setTab('sutras');
-                              setMobileView('list');
-                            }}
-                            className="font-serif-sc font-bold text-base text-stone-900 dark:text-stone-100 hover:text-amber-700 text-left transition"
-                          >
-                            {t.name}
-                          </button>
-                          {t.pali && (
-                            <div className="text-[11px] italic text-stone-500 dark:text-stone-400 mt-0.5">
-                              {t.pali} {t.samyukta ? `· ${t.samyukta}` : ''}
-                            </div>
-                          )}
+                      <div>
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <button
+                              onClick={() => {
+                                setSelectedTagFilter(t.name);
+                                setTab('sutras');
+                                setMobileView('list');
+                              }}
+                              className="font-serif-sc font-bold text-base text-stone-900 dark:text-stone-100 hover:text-amber-700 text-left transition"
+                            >
+                              {t.name}
+                            </button>
+                            {t.aliases && (
+                              <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">
+                                异称：{t.aliases}
+                              </div>
+                            )}
+                            {t.pali && (
+                              <div className="text-[11px] italic text-stone-500 dark:text-stone-400 mt-0.5">
+                                {t.pali} {t.samyukta ? `· ${t.samyukta}` : ''}
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1 shrink-0">
+                            {isCore && (
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-800 text-white font-semibold">
+                                核心 ×{t.coreCount}
+                              </span>
+                            )}
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 font-mono">
+                              {t.count}
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-1">
-                          {isCore && (
-                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-800 text-white font-semibold">
-                              核心 ×{t.coreCount}
+
+                        {/* Category & Subcategory & Cause/Effect Attribute Badges */}
+                        <div className="flex flex-wrap items-center gap-1 mt-2">
+                          {t.category && (
+                            <span
+                              className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
+                                t.category === '人物'
+                                  ? 'bg-indigo-100/80 text-indigo-900 dark:bg-indigo-950/60 dark:text-indigo-300'
+                                  : t.category === '地点'
+                                  ? 'bg-teal-100/80 text-teal-900 dark:bg-teal-950/60 dark:text-teal-300'
+                                  : 'bg-amber-100/90 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300'
+                              }`}
+                            >
+                              {t.category} · {t.subCategory}
                             </span>
                           )}
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 font-mono">
-                            {t.count}
-                          </span>
+                          {t.attribute && (
+                            <span
+                              className={`text-[10px] px-1.5 py-0.5 rounded font-semibold ${
+                                t.attribute === '果'
+                                  ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+                                  : 'bg-sky-100 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300'
+                              }`}
+                            >
+                              属性：{t.attribute}
+                            </span>
+                          )}
                         </div>
+
+                        {t.definition && (
+                          <p className="text-xs text-stone-600 dark:text-stone-400 mt-2 line-clamp-2 leading-relaxed">
+                            {t.definition}
+                          </p>
+                        )}
                       </div>
 
                       {/* Associated sutras pills */}
@@ -1409,10 +1710,10 @@ export default function App() {
                     {taggingProgress.annotated} 条
                   </div>
                   <div className="text-xs text-emerald-600 mt-0.5 flex items-center justify-between">
-                    <span>T99-0001 ~ T99-1000</span>
+                    <span>T99-0001 ~ T99-1362</span>
                     <button
                       onClick={() => {
-                        setActiveDocTab('changelog_11');
+                        setActiveDocTab('changelog_15');
                         setTab('about');
                       }}
                       className="underline hover:text-amber-800"
@@ -1433,9 +1734,13 @@ export default function App() {
                 <div className="p-3 sm:p-4 rounded-xl border border-amber-200 dark:border-stone-800 bg-white dark:bg-stone-900 shadow-xs">
                   <div className="text-xs text-stone-500">当前批次</div>
                   <div className="text-base sm:text-lg font-bold font-serif-sc text-amber-700 dark:text-amber-300 mt-1">
-                    {taggingProgress.nextBatch[0]} ~ {taggingProgress.nextBatch[taggingProgress.nextBatch.length - 1]}
+                    {taggingProgress.nextBatch.length > 0
+                      ? `${taggingProgress.nextBatch[0]} ~ ${taggingProgress.nextBatch[taggingProgress.nextBatch.length - 1]}`
+                      : '全藏已圆满完成'}
                   </div>
-                  <div className="text-xs text-stone-500 mt-0.5">下批顺序 10 条</div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    {taggingProgress.nextBatch.length > 0 ? '下批顺序 10 条' : '五十卷 1355 区块全部完成'}
+                  </div>
                 </div>
 
                 <div className="p-3 sm:p-4 rounded-xl border border-amber-200 dark:border-stone-800 bg-white dark:bg-stone-900 shadow-xs">
@@ -1463,44 +1768,55 @@ export default function App() {
                 <span className="text-xs text-stone-500">点击进入研读并录入标签</span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-                {taggingProgress?.nextBatchDetails.map((sutra) => (
-                  <div
-                    key={sutra.id}
-                    className="p-4 rounded-xl border border-amber-200/80 dark:border-stone-800 bg-white dark:bg-stone-900 space-y-2 hover:border-amber-400 transition"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-amber-800 dark:text-amber-400">
-                        {sutra.id}
-                      </span>
-                      <span className="text-xs text-stone-400">
-                        {sutra.juan} · {sutra.wordCount}字
-                      </span>
+              {taggingProgress?.nextBatchDetails && taggingProgress.nextBatchDetails.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                  {taggingProgress.nextBatchDetails.map((sutra) => (
+                    <div
+                      key={sutra.id}
+                      className="p-4 rounded-xl border border-amber-200/80 dark:border-stone-800 bg-white dark:bg-stone-900 space-y-2 hover:border-amber-400 transition"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs font-bold text-amber-800 dark:text-amber-400">
+                          {sutra.id}
+                        </span>
+                        <span className="text-xs text-stone-400">
+                          {sutra.juan} · {sutra.wordCount}字
+                        </span>
+                      </div>
+
+                      <h4 className="font-serif-sc font-bold text-sm text-stone-900 dark:text-stone-100">
+                        {sutra.title}
+                      </h4>
+
+                      <p className="text-xs text-stone-600 dark:text-stone-400 line-clamp-3 leading-relaxed font-serif-sc">
+                        {sutra.rawText}
+                      </p>
+
+                      <div className="pt-2 flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => {
+                            setSelectedSutraId(sutra.id);
+                            setTab('sutras');
+                            setMobileView('detail');
+                          }}
+                          className="text-xs px-2.5 py-1 rounded bg-amber-100 text-amber-900 dark:bg-stone-800 dark:text-amber-300 hover:bg-amber-200 transition font-medium"
+                        >
+                          {isReadOnly ? '阅读经文 →' : '阅读并打标 →'}
+                        </button>
+                      </div>
                     </div>
-
-                    <h4 className="font-serif-sc font-bold text-sm text-stone-900 dark:text-stone-100">
-                      {sutra.title}
-                    </h4>
-
-                    <p className="text-xs text-stone-600 dark:text-stone-400 line-clamp-3 leading-relaxed font-serif-sc">
-                      {sutra.rawText}
-                    </p>
-
-                    <div className="pt-2 flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => {
-                          setSelectedSutraId(sutra.id);
-                          setTab('sutras');
-                          setMobileView('detail');
-                        }}
-                        className="text-xs px-2.5 py-1 rounded bg-amber-100 text-amber-900 dark:bg-stone-800 dark:text-amber-300 hover:bg-amber-200 transition font-medium"
-                      >
-                        {isReadOnly ? '阅读经文 →' : '阅读并打标 →'}
-                      </button>
-                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-6 rounded-xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/60 dark:bg-emerald-950/20 text-center space-y-2">
+                  <div className="font-serif-sc font-bold text-base text-emerald-900 dark:text-emerald-300">
+                    《杂阿含经》五十卷（T99-0001 ～ T99-1362，共 1355 个经文区块）已全部完成标签与学习笔记！
                   </div>
-                ))}
-              </div>
+                  <p className="text-xs text-stone-600 dark:text-stone-400">
+                    您可在「经文阅读」中按卷次或标签检索全藏经文与笔记，或在「名相图谱」中浏览概念网络。
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -1591,6 +1907,30 @@ export default function App() {
                   className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_11' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
                 >
                   修改记录 (0901-1000)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_12')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_12' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (1001-1100)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_13')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_13' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (1101-1200)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_14')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_14' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (1201-1300)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_15')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_15' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (1301-1362)
                 </button>
                 <button
                   onClick={() => setActiveDocTab('relation_types')}
