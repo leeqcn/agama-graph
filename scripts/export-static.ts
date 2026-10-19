@@ -529,6 +529,7 @@ function exportStaticData() {
     changelog_8: path.resolve(ROOT_DIR, '修改记录_0601-0700.md'),
     changelog_9: path.resolve(ROOT_DIR, '修改记录_0701-0800.md'),
     changelog_10: path.resolve(ROOT_DIR, '修改记录_0801-0900.md'),
+    changelog_11: path.resolve(ROOT_DIR, '修改记录_0901-1000.md'),
     关系类型: path.resolve(ROOT_DIR, 'docs', '关系类型.md'),
     标注规范: path.resolve(ROOT_DIR, 'docs', '标注规范.md'),
   };

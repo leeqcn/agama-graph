@@ -146,7 +146,7 @@ export default function App() {
 
   // Documentation
   const [docContent, setDocContent] = useState<string>('');
-  const [activeDocTab, setActiveDocTab] = useState<'about' | 'changelog' | 'changelog_2' | 'changelog_3' | 'changelog_4' | 'changelog_5' | 'changelog_6' | 'changelog_7' | 'changelog_8' | 'changelog_9' | 'changelog_10' | 'relation_types' | 'rules' | 'agents'>('about');
+  const [activeDocTab, setActiveDocTab] = useState<'about' | 'changelog' | 'changelog_2' | 'changelog_3' | 'changelog_4' | 'changelog_5' | 'changelog_6' | 'changelog_7' | 'changelog_8' | 'changelog_9' | 'changelog_10' | 'changelog_11' | 'relation_types' | 'rules' | 'agents'>('about');
 
   // Helper: fetch from live Express API in local/AI Studio mode, or automatically fall back to static JSON in Vercel/GitHub Pages mode
   const fetchJsonWithStaticFallback = async (apiUrl: string, staticUrl: string) => {
@@ -239,6 +239,7 @@ export default function App() {
     else if (activeDocTab === 'changelog_8') docKey = 'changelog_8';
     else if (activeDocTab === 'changelog_9') docKey = 'changelog_9';
     else if (activeDocTab === 'changelog_10') docKey = 'changelog_10';
+    else if (activeDocTab === 'changelog_11') docKey = 'changelog_11';
     else if (activeDocTab === 'relation_types') docKey = '关系类型';
     else if (activeDocTab === 'rules') docKey = '标注规范';
     else if (activeDocTab === 'agents') docKey = 'agents';
@@ -1408,10 +1409,10 @@ export default function App() {
                     {taggingProgress.annotated} 条
                   </div>
                   <div className="text-xs text-emerald-600 mt-0.5 flex items-center justify-between">
-                    <span>T99-0001 ~ T99-0900</span>
+                    <span>T99-0001 ~ T99-1000</span>
                     <button
                       onClick={() => {
-                        setActiveDocTab('changelog_10');
+                        setActiveDocTab('changelog_11');
                         setTab('about');
                       }}
                       className="underline hover:text-amber-800"
@@ -1584,6 +1585,12 @@ export default function App() {
                   className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_10' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
                 >
                   修改记录 (0801-0900)
+                </button>
+                <button
+                  onClick={() => setActiveDocTab('changelog_11')}
+                  className={`px-2.5 py-1 rounded whitespace-nowrap ${activeDocTab === 'changelog_11' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
+                >
+                  修改记录 (0901-1000)
                 </button>
                 <button
                   onClick={() => setActiveDocTab('relation_types')}
