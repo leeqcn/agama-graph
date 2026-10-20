@@ -3,7 +3,7 @@ import json
 import re
 import shutil
 from pathlib import Path
-from collections import Counter
+from collections import Counter, defaultdict
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 TAGS_RAW_PATH = ROOT_DIR / "data" / "tags_raw.csv"
@@ -2119,16 +2119,143 @@ MASTER_TAXONOMY = {}
 MASTER_TAXONOMY.update(EXPLICIT_TAXONOMY)
 MASTER_TAXONOMY.update(DOCTRINAL_TAXONOMY)
 
-# Ensure 100% of terms in data/terms.csv are in MASTER_TAXONOMY and their aliases map properly
+# Canonical name unification: redirect duplicate synonyms to terms.csv canonical names
+CANONICAL_UNIFY_MAP = {
+    "阐陀": "尊者阐陀",
+    "阐陀比丘": "尊者阐陀",
+    "跋迦梨": "尊者跋迦梨",
+    "跋迦梨比丘": "尊者跋迦梨",
+    "那提迦": "尊者那提迦",
+    "那提伽": "尊者那提迦",
+    "尼拘律想": "尊者尼拘律想",
+    "尼拘律相": "尊者尼拘律想",
+    "婆耆舍": "尊者婆耆舍",
+    "莲华色比丘尼": "优钵罗色比丘尼",
+    "末利夫人": "摩利夫人",
+    "富兰那迦叶": "富楼那迦叶",
+    "不兰迦叶": "富楼那迦叶",
+    "末迦梨瞿舍利子": "末伽梨瞿舍利子",
+    "末伽梨拘赊梨子": "末伽梨瞿舍利子",
+    "罗睺罗阿修罗王": "罗睺阿修罗王",
+    "毗摩质多罗阿修罗王": "毘摩质多罗阿修罗王",
+    "大木聚喻": "大木聚随水漂流喻",
+    "众材合为车喻": "合材为车喻",
+    "弹琴喻": "琴声喻",
+    "四方箭喻": "接四方箭喻",
+    "木枕喻": "离车子木枕喻",
+    "火灭无所至喻": "前火灭去向何方喻",
+    "阿能诃鼓喻": "阿能诃鼓",
+    "阿能呵鼓喻": "阿能诃鼓",
+    "五处系缚喻": "五种系缚",
+    "帝释胜幢喻": "胜幢",
+    "满月入家喻": "月譬",
+    "芭蕉生果即死喻": "芭蕉、竹、苇、骡",
+    "蚁垤喻": "丘塚喻",
+    "丘塚": "丘塚喻",
+    "金翅鸟巢喻": "帝释护金翅鸟子回车喻",
+    "金翅鸟子": "帝释护金翅鸟子回车喻",
+    "缘幢伎师师徒相护喻": "护己则护他，护他则护己",
+    "日出明相喻": "东方日出先相",
+    "日出前相：明相初光喻": "东方日出先相",
+    "六随念": "六念",
+    "有貪有喜": "有贪有喜",
+    "无貪无喜": "无贪无喜",
+    "见貪": "见贪",
+    "四念处集、四念处没": "四念处集与四念处没",
+    "三芦立于空地，展转相依譬": "识、名色互缘",
+    "二束芦喻": "识、名色互缘",
+    "名色缘识生，识缘名色生": "识、名色互缘",
+    "非眼系色，非色系眼，中间欲贪是其系也": "结、系",
+    "结所系法": "结、系",
+    "空村": "空塔、空聚落",
+    "空村群贼": "空塔、空聚落",
+    "无为法": "无为法、无为道迹",
+    "无为道迹": "无为法、无为道迹",
+    "离于二边": "离有无二边之中道",
+    "说于中道": "离有无二边之中道",
+    "五盖之十、七觉之十四": "十四心",
+    "心与慈俱修七觉分": "四无量心俱七觉支",
+    "二十种想与七觉分俱修": "不净观俱七觉支",
+    "世间正见与出世间正见": ["世俗正见", "第一义正见"],
+    "身苦患、心不苦患": "身苦心不苦",
+    "于苦患身，常当修学不苦患心": "身苦心不苦",
+    "阎浮车所问四十经": "阎浮车问舍利弗",
+    "己自护时即是护他，他自护时亦是护己": "护己则护他，护他则护己",
+    "自护护他": "护己则护他，护他则护己",
+    "拘迦尼天女": "拘迦那娑天女",
+    "光明天女": "拘迦那娑天女",
+    "四断": "四正断",
+}
+
+# Negated phrase explicit mappings to prevent positive/affliction inversion
+NEGATED_PHRASE_MAP = {
+    "不杀生": "十善业道",
+    "不杀、不盗、不邪淫、不妄语、不两舌、不恶口、不绮语、无贪、无恚、正见": ["十善业道", "正见"],
+    "不杀得长寿、不盗钱财不难、不邪婬人不起念、不妄语不被讥论、不两舌亲友坚固、不恶口常闻美音、不绮语言有信用、不贪不增欲、不恚不增恚、正见不增痴": ["十善业道", "正见"],
+    "不杀生、不盗、不婬、不妄语、不饮酒界": "五戒",
+    "不杀生与不杀生相习近，乃至正见与正见更相习近": ["十善业道", "正见"],
+    "不杀生出于杀生，乃至正见出于邪见": ["十善业道", "正见", "邪见"],
+    "不杀生，乃至正见者": ["十善业道", "正见"],
+    "不杀生，教人不杀，口常赞叹不杀功德，见不杀者心随欢喜；乃至自行正见，教人令行，亦常赞叹正见功德，见人行者心随欢喜": ["十善业道", "正见"],
+    "不伤一切物，亦不盗他财，不淫不妄语，信施除悭垢，于斯而洗浴": ["十善业道", "布施"],
+    "不染著": "无所著",
+    "心不染著": "无所著",
+    "不起诸漏、心不染著、心得解脱": ["不起诸漏", "无所著", "心解脱"],
+    "不爱乐、不赞叹、不染著、不留住": "不欣悦、不赞叹、不系著",
+    "不思量、不妄想": "不思量、无妄想",
+    "不善法聚": "不善聚",
+    "不知、不见、不无间等、愚、闇、不明": ["不如实知", "无明"],
+    "不知、不见、不无间等、愚闇、无明、大冥": ["不如实知", "无明"],
+    "不知、不见、无无间等、愚、闇、不明": ["不如实知", "无明"],
+    "不如实见、不无间等、若闇、若愚": "不如实知",
+    "不离贪、不离欲、不离爱、不离念、不离渴": "欲贪",
+    "未离贪欲故色变异生忧悲恼苦": ["欲贪", "忧、悲、恼、苦"],
+    "断欲贪福利": "欲贪断",
+    "无贪欲": "离贪",
+    "一切诸法（有为、无为）离贪欲为第一": ["有为法", "无为法、无为道迹", "离贪"],
+    "不见五阴是我、异我、相在，何故变悔？不正思惟故": ["不是我、不异我、不相在", "不正思惟"],
+    "不恐怖他、不违他、不害他，慈心哀彼": "慈心",
+    "不能动如来、应、等正觉一毛发也，如来、应、等正觉久离恐怖": "如来",
+    "不解脱": "系缚",
+    "不解脱于苦": "纯大苦聚",
+    "不堕地狱、畜生、饿鬼": "四不坏净",
+}
+
+# Redirect any old target values in VARIANT_MAP through CANONICAL_UNIFY_MAP
+for k, v in list(VARIANT_MAP.items()):
+    if isinstance(v, str) and v in CANONICAL_UNIFY_MAP:
+        VARIANT_MAP[k] = CANONICAL_UNIFY_MAP[v]
+    elif isinstance(v, list):
+        new_list = []
+        for item in v:
+            mapped_item = CANONICAL_UNIFY_MAP.get(item, item)
+            if isinstance(mapped_item, list):
+                new_list.extend(mapped_item)
+            else:
+                new_list.append(mapped_item)
+        VARIANT_MAP[k] = new_list
+
+for k, v in CANONICAL_UNIFY_MAP.items():
+    VARIANT_MAP[k] = v
+    if k in MASTER_TAXONOMY and k != v:
+        if isinstance(v, str) and v not in MASTER_TAXONOMY:
+            MASTER_TAXONOMY[v] = MASTER_TAXONOMY[k]
+        del MASTER_TAXONOMY[k]
+
+for k, v in NEGATED_PHRASE_MAP.items():
+    VARIANT_MAP[k] = v
+
+# Ensure 100% of terms in data/terms.csv are in MASTER_TAXONOMY and never redirected away
 if TERMS_CSV_PATH.exists():
     with open(TERMS_CSV_PATH, encoding="utf-8-sig") as f:
         for tr in csv.DictReader(f):
             t_name = tr["名相"].strip()
             t_hier = tr["层级"].strip()
             t_aspect = tr["面向"].strip()
-            t_aliases = [a.strip() for a in re.split(r"[、，,;；/]", tr["异称"] or "") if a.strip()]
+            # Ensure t_name is not redirected to something else in VARIANT_MAP
+            if t_name in VARIANT_MAP and VARIANT_MAP[t_name] != t_name:
+                del VARIANT_MAP[t_name]
             if t_name and t_name not in MASTER_TAXONOMY:
-                # Infer category & subCategory from hierarchy & aspect
                 if any(k in t_hier for k in ["声闻", "比丘", "佛陀尊号", "辟支佛"]):
                     MASTER_TAXONOMY[t_name] = ("人物", "佛与圣弟子")
                 elif any(k in t_hier for k in ["王臣", "居士", "其他人物"]):
@@ -2156,7 +2283,45 @@ if TERMS_CSV_PATH.exists():
                 else:
                     MASTER_TAXONOMY[t_name] = ("法义", "法数")
 
+# Remove speculative non-T99 entries that do not appear in CBETA T99
+for non_t99 in [
+    "须菩提", "周利槃特", "尸婆罗", "大爱道瞿昙弥", "优填王",
+    "郁伽长者", "郁阇迦婆罗门", "象头山聚落主", "憍慢婆罗豆婆遮",
+    "毗舍佉鹿母", "摩纳", "难提迦", "那伽", "病", "死", "患",
+]:
+    if non_t99 in MASTER_TAXONOMY:
+        del MASTER_TAXONOMY[non_t99]
+
 print("Total curated canonical tags in MASTER_TAXONOMY:", len(MASTER_TAXONOMY))
+
+NEG_CHARS = set("不无非离断未莫除灭舍尽止背")
+
+
+def is_valid_match_in_text(tag, text):
+    """
+    Returns True if `tag` appears in `text` without being negated by preceding context.
+    """
+    pos = 0
+    tag_starts_neg = tag[0] in NEG_CHARS
+    while True:
+        idx = text.find(tag, pos)
+        if idx == -1:
+            return False
+        pos = idx + 1
+        prefix1 = text[idx - 1] if idx >= 1 else ""
+        prefix3 = text[max(0, idx - 3) : idx]
+        if tag_starts_neg:
+            if prefix1 in set("不未无非莫"):
+                continue
+            if len(prefix3) >= 2 and any(
+                p in prefix3 for p in ["不复", "不能", "不得", "未曾", "不名"]
+            ):
+                continue
+        else:
+            if any(c in prefix3 for c in set("不无非离断未莫除灭舍尽")):
+                continue
+        return True
+
 
 # Keyword-based extraction from unmapped long phrases/verses
 # Ordered by specificity (longest canonical terms first)
@@ -2169,7 +2334,7 @@ SORTED_CANONICAL_TERMS = sorted(
         not in {
             "佛", "色", "受", "想", "行", "识", "有", "生", "病", "死",
             "苦", "知", "明", "断", "厌", "魔", "爱", "取", "触", "使",
-            "缚", "空", "患",
+            "缚", "空", "患", "天", "人", "王", "集", "灭", "道", "界",
         }
     ],
     key=len,
@@ -2181,12 +2346,22 @@ def clean_and_extract_tags_for_list(raw_list, is_user_confirmed=False):
     """
     Given a list of raw tags from a sutra column:
     - If is_user_confirmed (T99-0001..0010), keep exact tags and ensure all are in MASTER_TAXONOMY.
-    - Otherwise, map via VARIANT_MAP, keep if in MASTER_TAXONOMY, or extract canonical terms from long phrases.
+    - Otherwise, map via VARIANT_MAP, keep if in MASTER_TAXONOMY, or extract canonical terms from long phrases
+      with negation-inversion protection and span-masking to prevent overlapping substring extraction.
     """
     result = []
     seen = set()
 
     def add_tag(t):
+        if isinstance(t, list):
+            for sub_t in t:
+                add_tag(sub_t)
+            return
+        t = CANONICAL_UNIFY_MAP.get(t, t)
+        if isinstance(t, list):
+            for sub_t in t:
+                add_tag(sub_t)
+            return
         if t and t not in seen and t in MASTER_TAXONOMY:
             seen.add(t)
             result.append(t)
@@ -2208,12 +2383,7 @@ def clean_and_extract_tags_for_list(raw_list, is_user_confirmed=False):
 
         # Direct variant map
         if t in VARIANT_MAP:
-            mapped = VARIANT_MAP[t]
-            if isinstance(mapped, list):
-                for m in mapped:
-                    add_tag(m)
-            else:
-                add_tag(mapped)
+            add_tag(VARIANT_MAP[t])
             continue
 
         # Direct master taxonomy match
@@ -2221,22 +2391,37 @@ def clean_and_extract_tags_for_list(raw_list, is_user_confirmed=False):
             add_tag(t)
             continue
 
-        # Parenthetical prefix match: e.g. X（Y）
-        m = re.match(r"^([^（(]{2,8})[（(].+[）)]$", t)
+        # Parenthetical prefix + inner items match: e.g. X（Y1、Y2...）
+        m = re.match(r"^([^（(]{2,10})[（(](.+)[）)]$", t)
         if m:
             prefix = m.group(1).strip()
+            inner = m.group(2).strip()
             if prefix.endswith("譬"):
                 prefix = prefix[:-1] + "喻"
-            prefix = VARIANT_MAP.get(prefix, prefix)
-            if prefix in MASTER_TAXONOMY:
-                add_tag(prefix)
+            prefix_mapped = VARIANT_MAP.get(prefix, prefix)
+            matched_paren = False
+            if isinstance(prefix_mapped, list) or prefix_mapped in MASTER_TAXONOMY:
+                add_tag(prefix_mapped)
+                matched_paren = True
+            for part in re.split(r"[、，,;；/]", inner):
+                part = part.strip()
+                if not part:
+                    continue
+                part_mapped = VARIANT_MAP.get(part, part)
+                if isinstance(part_mapped, list) or part_mapped in MASTER_TAXONOMY:
+                    add_tag(part_mapped)
+                    matched_paren = True
+            if matched_paren:
                 continue
 
         # Extract canonical terms embedded inside the phrase/verse
+        # Mask matched spans to avoid extracting overlapping substrings (e.g. 如实知 inside 不如实知)
+        working_t = t
         extracted_any = False
         for cand in SORTED_CANONICAL_TERMS:
-            if cand in t:
+            if cand in working_t and is_valid_match_in_text(cand, working_t):
                 add_tag(cand)
+                working_t = working_t.replace(cand, "｜")
                 extracted_any = True
                 if len(result) >= 10:
                     break
@@ -2246,17 +2431,220 @@ def clean_and_extract_tags_for_list(raw_list, is_user_confirmed=False):
                 ("无常", "无常"), ("涅槃", "涅槃"), ("阿罗汉", "阿罗汉"),
                 ("解脱", "解脱"), ("离欲", "离欲"), ("正念", "正念"),
                 ("正受", "一心善正受"), ("三昧", "三昧"), ("持戒", "持戒"),
-                ("布施", "信惠财法施，以法立一切"), ("精进", "精进"),
+                ("布施", "布施"), ("精进", "精进"),
                 ("忍辱", "忍辱"), ("智慧", "正慧"), ("烦恼", "断烦恼"),
                 ("爱欲", "断爱欲"), ("无明", "无明"), ("贪", "贪欲"),
                 ("瞋", "瞋恚"), ("痴", "愚痴"), ("慢", "我慢"),
                 ("地狱", "地狱"), ("生天", "生天"), ("五蕴", "五蕴"),
                 ("四圣谛", "四圣谛"), ("八圣道", "八圣道分"), ("苦", "苦"),
             ]:
-                if short_k in t and canon_k in MASTER_TAXONOMY:
+                if short_k in working_t and is_valid_match_in_text(short_k, working_t) and canon_k in MASTER_TAXONOMY:
                     add_tag(canon_k)
 
     return result
+
+
+# Build Traditional-to-Simplified normalizer for CBETA sutra full-text re-indexing
+SUTRAS_TEXT_PATH = ROOT_DIR / "data" / "sutras_text.json"
+SIMP_TO_TRAD = {
+    '与': '與', '丑': '醜', '专': '專', '业': '業', '东': '東', '两': '兩', '为': '為', '举': '舉',
+    '义': '義', '乌': '烏', '乐': '樂', '习': '習', '亲': '親', '亿': '億', '从': '從', '仪': '儀',
+    '众': '眾', '优': '優', '会': '會', '余': '餘', '侧': '側', '倾': '傾', '储': '儲', '儿': '兒',
+    '党': '黨', '兰': '蘭', '养': '養', '内': '內', '军': '軍', '冢': '塚', '决': '決', '净': '淨',
+    '则': '則', '刚': '剛', '剥': '剝', '动': '動', '华': '華', '卖': '賣', '卢': '盧', '卧': '臥',
+    '卫': '衛', '压': '壓', '厌': '厭', '发': '發', '变': '變', '叶': '葉', '号': '號', '叹': '嘆',
+    '听': '聽', '园': '園', '国': '國', '圣': '聖', '坏': '壞', '坚': '堅', '堕': '墮', '声': '聲',
+    '处': '處', '复': '復', '头': '頭', '妇': '婦', '婴': '嬰', '孙': '孫', '学': '學', '宝': '寶',
+    '实': '實', '宾': '賓', '对': '對', '寻': '尋', '尘': '塵', '尽': '盡', '屡': '屢', '岁': '歲',
+    '岩': '巖', '师': '師', '庵': '菴', '异': '異', '弃': '棄', '张': '張', '弥': '彌', '弦': '絃',
+    '弹': '彈', '强': '強', '归': '歸', '当': '當', '忧': '憂', '怀': '懷', '恶': '惡', '恼': '惱',
+    '悦': '悅', '惭': '慚', '戏': '戲', '战': '戰', '执': '執', '扫': '掃', '扬': '揚', '抟': '摶',
+    '护': '護', '报': '報', '择': '擇', '掷': '擲', '摄': '攝', '摇': '搖', '擞': '擻', '敌': '敵',
+    '斋': '齋', '斩': '斬', '断': '斷', '无': '無', '旷': '曠', '昙': '曇', '昼': '晝', '显': '顯',
+    '暗': '闇', '杀': '殺', '来': '來', '枪': '槍', '栋': '棟', '树': '樹', '楼': '樓', '欢': '歡',
+    '毕': '畢', '气': '氣', '汉': '漢', '沉': '沈', '没': '沒', '浊': '濁', '涂': '塗', '淫': '婬',
+    '渐': '漸', '渔': '漁', '满': '滿', '灭': '滅', '灯': '燈', '点': '點', '炽': '熾', '烦': '煩',
+    '烧': '燒', '热': '熱', '爱': '愛', '犊': '犢', '独': '獨', '狱': '獄', '猎': '獵', '猕': '獼',
+    '现': '現', '画': '畫', '疮': '瘡', '痈': '癰', '痴': '癡', '盖': '蓋', '盗': '盜', '禅': '禪',
+    '离': '離', '种': '種', '窗': '牕', '筑': '築', '简': '簡', '类': '類', '粪': '糞', '系': '繫',
+    '紧': '緊', '纯': '純', '纳': '納', '纽': '紐', '练': '練', '细': '細', '经': '經', '结': '結',
+    '给': '給', '绳': '繩', '绵': '綿', '缀': '綴', '缓': '緩', '缕': '縷', '缘': '緣', '缚': '縛',
+    '缠': '纏', '网': '網', '罗': '羅', '聪': '聰', '胜': '勝', '胶': '膠', '脱': '脫', '节': '節',
+    '芦': '蘆', '苇': '葦', '苏': '蘇', '药': '藥', '莲': '蓮', '萨': '薩', '蓝': '藍', '蕴': '蘊',
+    '薮': '藪', '虚': '虛', '补': '補', '见': '見', '观': '觀', '觉': '覺', '触': '觸', '记': '記',
+    '讲': '講', '论': '論', '证': '證', '诃': '訶', '识': '識', '诈': '詐', '诣': '詣', '语': '語',
+    '说': '說', '诸': '諸', '调': '調', '谓': '謂', '谛': '諦', '贝': '貝', '贞': '貞', '负': '負',
+    '财': '財', '责': '責', '贤': '賢', '败': '敗', '质': '質', '贪': '貪', '贯': '貫', '贼': '賊',
+    '赊': '賒', '赞': '讚', '车': '車', '转': '轉', '轭': '軛', '轮': '輪', '轻': '輕', '输': '輸',
+    '边': '邊', '达': '達', '过': '過', '还': '還', '进': '進', '远': '遠', '连': '連', '迹': '跡',
+    '邻': '鄰', '释': '釋', '錬': '鍊', '针': '針', '钓': '釣', '钦': '欽', '钩': '鉤', '钵': '鉢',
+    '钻': '鑽', '铁': '鐵', '铜': '銅', '银': '銀', '铸': '鑄', '锁': '鎖', '错': '錯', '锯': '鋸',
+    '镜': '鏡', '长': '長', '门': '門', '问': '問', '闲': '閑', '间': '間', '闻': '聞', '阁': '閣',
+    '阇': '闍', '阎': '閻', '阐': '闡', '阳': '陽', '阴': '陰', '阶': '階', '际': '際', '随': '隨',
+    '隐': '隱', '难': '難', '静': '靜', '顶': '頂', '顺': '順', '须': '須', '顾': '顧', '颈': '頸',
+    '频': '頻', '颠': '顛', '风': '風', '饥': '飢', '饮': '飲', '饵': '餌', '饶': '饒', '饿': '餓',
+    '马': '馬', '驰': '馳', '驴': '驢', '驶': '駛', '骂': '罵', '骠': '驃', '骡': '騾', '鱼': '魚',
+    '鸟': '鳥', '鸠': '鳩', '鸡': '雞', '鸽': '鴿', '龙': '龍', '龟': '龜',
+}
+TRAD_TO_SIMP = {v: k for k, v in SIMP_TO_TRAD.items()}
+TRAD_TO_SIMP.update({
+    '於': '于', '後': '后', '時': '时', '爾': '尔', '毘': '毗', '揵': '揵', '犍': '揵',
+    '栴': '栴', '旃': '栴', '鉢': '钵', '缽': '钵', '婬': '淫', '闇': '暗', '沈': '沉',
+    '讚': '赞', '讃': '赞', '歎': '叹', '嘆': '叹', '繫': '系', '係': '系', '捨': '舍',
+    '髮': '发', '發': '发', '穀': '谷', '鬥': '斗', '鬪': '斗', '眾': '众', '衆': '众',
+    '裡': '里', '裏': '里', '祇': '祇', '祗': '祇', '薗': '园', '菴': '庵', '囉': '罗',
+    '陁': '陀', '盤': '槃', '腦': '脑', '嗔': '瞋', '萬': '万', '與': '与', '並': '并',
+    '竝': '并', '來': '来', '歲': '岁', '歷': '历', '歸': '归', '殘': '残',
+})
+
+
+def to_simp(s):
+    return "".join(TRAD_TO_SIMP.get(ch, ch) for ch in s)
+
+
+simp_texts = {}
+if SUTRAS_TEXT_PATH.exists():
+    raw_texts = json.load(open(SUTRAS_TEXT_PATH, encoding="utf-8"))
+    simp_texts = {k: to_simp(v) for k, v in raw_texts.items()}
+
+# Build exact sutra anchors for specialized terms in terms.csv & MASTER_TAXONOMY
+SUTRA_SPECIFIC_ANCHORS = {
+    "色蕴": ["T99-0046", "T99-0055", "T99-0058", "T99-0061", "T99-0103", "T99-1307"],
+    "受蕴": ["T99-0046", "T99-0055", "T99-0058", "T99-0061", "T99-1307"],
+    "想蕴": ["T99-0046", "T99-0055", "T99-0058", "T99-0061", "T99-1307"],
+    "行蕴": ["T99-0046", "T99-0055", "T99-0058", "T99-0061", "T99-1307"],
+    "识蕴": ["T99-0046", "T99-0055", "T99-0058", "T99-0061", "T99-0103", "T99-1175", "T99-1307"],
+    "三使": ["T99-0468", "T99-0470", "T99-0490"],
+    "结、系": ["T99-0250", "T99-0251", "T99-0252", "T99-0253", "T99-0254", "T99-0255"],
+    "空塔、空聚落": ["T99-1172"],
+    "识、名色互缘": ["T99-0288"],
+    "离有无二边之中道": ["T99-0301", "T99-0262"],
+    "阎浮车问舍利弗": ["T99-0490"],
+    "千比丘修四念处": ["T99-0537", "T99-0538"],
+    "阿那律修四念处": ["T99-0535", "T99-0536", "T99-0537", "T99-0538", "T99-0539", "T99-0540", "T99-0541", "T99-0542", "T99-0543", "T99-0544", "T99-0545"],
+    "四念处集与四念处没": ["T99-0609"],
+    "护己则护他，护他则护己": ["T99-0619"],
+    "精进根": ["T99-0180", "T99-0643", "T99-0644", "T99-0646", "T99-0647"],
+    "定根": ["T99-0180", "T99-0643", "T99-0644", "T99-0646", "T99-0647"],
+    "三无漏根": ["T99-0642", "T99-0659"],
+    "阿育王因缘错简卷": ["T99-0604", "T99-0640", "T99-0641"],
+    "十四心": ["T99-0713", "T99-0718"],
+    "东方日出先相": ["T99-0748", "T99-0750", "T99-0782"],
+    "四无量心俱七觉支": ["T99-0744"],
+    "不净观俱七觉支": ["T99-0745", "T99-0746", "T99-0747"],
+    "世俗正见": ["T99-0785"],
+    "第一义正见": ["T99-0785", "T99-0484"],
+    "安那般那念十六胜行": ["T99-0803", "T99-0804", "T99-0806", "T99-0810", "T99-0813", "T99-0814"],
+    "无为法、无为道迹": ["T99-0890"],
+    "信行、法行": ["T99-0061", "T99-0642", "T99-0653", "T99-0892"],
+    "七圣人": ["T99-0642", "T99-0653", "T99-0821", "T99-0823", "T99-0936"],
+    "身苦心不苦": ["T99-0107", "T99-0470"],
+    "丘塚喻": ["T99-1079"],
+    "天及世间大人": ["T99-1102"],
+    "真陀罗鬼": ["T99-1105"],
+    "紧那罗女": ["T99-1105"],
+    "苏摩": ["T99-1106"],
+    "修跋罗阿修罗女": ["T99-1107"],
+    "五种系缚": ["T99-1110"],
+    "摩得伽梨": ["T99-1110", "T99-1111", "T99-1115"],
+    "胜幢": ["T99-1114"],
+    "伊赊那": ["T99-1114"],
+    "千眼": ["T99-1106", "T99-1116", "T99-1119"],
+    "本生七善法": ["T99-1117", "T99-1118", "T99-1119"],
+    "富楼那迦叶": ["T99-0105", "T99-0979", "T99-1122", "T99-1226"],
+    "末伽梨瞿舍利子": ["T99-0105", "T99-1122", "T99-1226"],
+    "阿耆多翅舍钦婆罗": ["T99-0105", "T99-0154", "T99-0156", "T99-1226"],
+    "先阇那毗罗胝子": ["T99-0105", "T99-1226"],
+    "迦罗拘陀迦栴延": ["T99-0105", "T99-0154", "T99-0161", "T99-0978", "T99-1226"],
+    "有因有缘世间众生垢净": ["T99-1122"],
+    "日天子": ["T99-1127"],
+    "罗睺阿修罗王": ["T99-1126", "T99-1127"],
+    "月譬": ["T99-0276", "T99-1136", "T99-1137"],
+    "芭蕉、竹、苇、骡": ["T99-1138"],
+    "阿兰若、乞食、粪扫衣": ["T99-1067", "T99-1141"],
+    "偷兰难陀比丘尼": ["T99-1144"],
+    "粪扫大衣": ["T99-1144"],
+    "五王": ["T99-1145"],
+    "四法不可轻": ["T99-1147"],
+    "摩利夫人": ["T99-1149", "T99-1153", "T99-1231"],
+    "外护、内护": ["T99-1150"],
+    "四种类人": ["T99-0272", "T99-1155"],
+    "罗婆那富": ["T99-1160", "T99-1161", "T99-1232"],
+    "大木聚随水漂流喻": ["T99-1169"],
+    "此岸、彼岸、沉没等八障": ["T99-1169"],
+    "琴声喻": ["T99-1173"],
+    "前火灭去向何方喻": ["T99-0962", "T99-1177"],
+    "孙陀利迦婆罗豆婆遮": ["T99-1184", "T99-1185"],
+    "阿罗毗比丘尼": ["T99-1198"],
+    "企师瞿昙弥比丘尼": ["T99-1200"],
+    "合材为车喻": ["T99-1202"],
+    "尊者尼拘律想": ["T99-1213", "T99-1221"],
+    "帝释护金翅鸟子回车喻": ["T99-1222"],
+    "给孤独长者三归五戒家风": ["T99-1241"],
+    "尊者那提迦": ["T99-1250", "T99-1251"],
+    "离车子木枕喻": ["T99-1252"],
+    "接四方箭喻": ["T99-1257"],
+    "阿能诃鼓": ["T99-1258"],
+    "尊者跋迦梨": ["T99-1265", "T99-1024"],
+    "尊者阐陀": ["T99-1266"],
+    "无所攀缘亦无所住度驶流": ["T99-1267"],
+    "阿浮陀至摩诃钵昙摩八地狱": ["T99-1278"],
+    "非世间众事是欲，心法驰觉想名士夫欲": ["T99-1286", "T99-0490"],
+    "世间四最难": ["T99-1293"],
+    "魔女": ["T99-1092"],
+    "萨罗聚落": ["T99-0053", "T99-0244"],
+    "有为法": ["T99-0293", "T99-0890", "T99-1356"],
+    "喜贪": ["T99-0035", "T99-0069", "T99-0344", "T99-0483", "T99-0869"],
+    "非因生": ["T99-0081", "T99-0162"],
+    "见贪": ["T99-1308"],
+    "六十二见": ["T99-0166", "T99-0212", "T99-0570"],
+    "四随念": ["T99-0848", "T99-1334"],
+    "四圣种": ["T99-1351"],
+    "相似正法": ["T99-0906"],
+}
+
+# Build reverse map from sutra_id -> anchored canonical tags
+sutra_to_anchors = defaultdict(list)
+for canon_t, sids in SUTRA_SPECIFIC_ANCHORS.items():
+    if canon_t in MASTER_TAXONOMY:
+        for sid in sids:
+            sutra_to_anchors[sid].append(canon_t)
+
+# Also parse sutra IDs mentioned in terms.csv definitions
+if TERMS_CSV_PATH.exists():
+    with open(TERMS_CSV_PATH, encoding="utf-8-sig") as f:
+        for tr in csv.DictReader(f):
+            t_name = tr["名相"].strip()
+            if t_name in MASTER_TAXONOMY:
+                for sid in re.findall(r"T99-\d{4}", tr["定义"] or ""):
+                    if t_name not in sutra_to_anchors[sid]:
+                        sutra_to_anchors[sid].append(t_name)
+
+# Generic filler phrases that should NOT be auto-injected into every sutra by full-text scan
+SKIP_FULLTEXT_AUTOINJECT = {
+    "善男子", "婆罗门", "比丘尼", "沙门、婆罗门", "独一静处",
+    "永超世恩爱", "一切怖已过", "不受后有", "起增上欲",
+    "精勤方便", "专精思惟", "修梵行", "如实知", "不如实知",
+    "无间等", "正方便", "示、教、照、喜", "法根、法眼、法依",
+    "老、病、死", "圣弟子", "沙门瞿昙", "舍卫国", "王舍城",
+    "波罗㮈国", "毗舍离", "拘睒弥", "舍卫城", "迦毗罗卫国",
+}
+
+# Candidate canonical tags for full-text CBETA verification & re-indexing
+FULLTEXT_INDEX_CANDIDATES = [
+    t for t in MASTER_TAXONOMY
+    if len(t) >= 3 and t not in SKIP_FULLTEXT_AUTOINJECT
+]
+
+CAT_ORDER = {"法义": 0, "人物": 1, "地点": 2}
+
+
+def sort_tags_by_rule_5_2(tag_list):
+    """Order tags per AGENTS.md Rule 5.2: 法义 -> 人物 -> 地点 (preserving relative order within each group)."""
+    return sorted(
+        tag_list,
+        key=lambda x: CAT_ORDER.get(MASTER_TAXONOMY.get(x, ("法义", ""))[0], 0),
+    )
 
 
 ATTRIBUTE_MAP = {
@@ -2271,6 +2659,8 @@ empty_sorted = 0
 empty_core = 0
 used_tags = Counter()
 raw_to_canonical_audit = {}
+supplemented_by_fulltext_count = 0
+supplemented_sutra_count = 0
 
 for idx, r in enumerate(raw_rows):
     sid = r["经号"]
@@ -2290,6 +2680,38 @@ for idx, r in enumerate(raw_rows):
     clean_s = clean_and_extract_tags_for_list(raw_s, is_user)
     clean_c = clean_and_extract_tags_for_list(raw_c, is_user)
 
+    # Full-text CBETA re-indexing & anchor verification for non-user-locked sutras
+    if not is_user:
+        sutra_added = []
+        # 1. Add curated sutra-specific anchors (from terms.csv & SUTRA_SPECIFIC_ANCHORS)
+        for anc in sutra_to_anchors.get(sid, []):
+            if anc not in clean_u:
+                clean_u.append(anc)
+                sutra_added.append(anc)
+            if anc not in clean_s and MASTER_TAXONOMY.get(anc, ("", ""))[0] == "法义":
+                clean_s.append(anc)
+
+        # 2. Scan CBETA full text (simp_texts[sid]) for omitted canonical tags
+        stext = simp_texts.get(sid, "")
+        if stext:
+            cur_all = set(clean_u + clean_s + clean_c)
+            for cand in FULLTEXT_INDEX_CANDIDATES:
+                if cand in cur_all:
+                    continue
+                # Skip if already covered by a superstring or substring (>=3 chars) in cur_all
+                if any(cand in ct or (len(ct) >= 3 and ct in cand) for ct in cur_all):
+                    continue
+                if cand in stext and is_valid_match_in_text(cand, stext):
+                    clean_u.append(cand)
+                    cur_all.add(cand)
+                    sutra_added.append(cand)
+                    if MASTER_TAXONOMY.get(cand, ("", ""))[0] == "法义" and len(clean_s) < 8:
+                        clean_s.append(cand)
+
+        if sutra_added:
+            supplemented_by_fulltext_count += len(sutra_added)
+            supplemented_sutra_count += 1
+
     if not clean_s:
         doctrinal_u = [t for t in clean_u if MASTER_TAXONOMY.get(t, ("", ""))[0] == "法义"]
         clean_s = doctrinal_u[:5] if doctrinal_u else clean_u[:4]
@@ -2304,6 +2726,9 @@ for idx, r in enumerate(raw_rows):
     for t in reversed(clean_s):
         if t not in clean_u:
             clean_u.insert(0, t)
+
+    if not is_user:
+        clean_u = sort_tags_by_rule_5_2(clean_u)
 
     if not clean_s:
         empty_sorted += 1
@@ -2320,6 +2745,16 @@ for idx, r in enumerate(raw_rows):
         "核心": "\n".join(clean_c),
         "备注": r["备注"],
     })
+
+# Prune any unused non-term tags from MASTER_TAXONOMY so tag_taxonomy.json has 0 ghost tags
+term_names_set = set()
+if TERMS_CSV_PATH.exists():
+    with open(TERMS_CSV_PATH, encoding="utf-8-sig") as f:
+        term_names_set = {tr["名相"].strip() for tr in csv.DictReader(f) if tr["名相"].strip()}
+
+for k in list(MASTER_TAXONOMY.keys()):
+    if used_tags.get(k, 0) == 0 and k not in term_names_set:
+        del MASTER_TAXONOMY[k]
 
 # 1. Write cleaned tags_raw.csv
 with open(TAGS_RAW_PATH, "w", encoding="utf-8", newline="\n") as f:
@@ -2345,7 +2780,7 @@ with open(MAPPING_CSV_PATH, "w", encoding="utf-8", newline="\n") as f:
     writer = csv.writer(f, lineterminator="\n")
     writer.writerow(["原始标签", "处理动作", "标准标签", "一级分类", "二级分类", "四谛属性"])
     for rt in sorted(raw_to_canonical_audit.keys()):
-        mapped = raw_to_canonical_audit[rt]
+        mapped = [m for m in raw_to_canonical_audit[rt] if m in MASTER_TAXONOMY]
         if not mapped:
             writer.writerow([rt, "清理移除（套话/散句/指代词）", "", "", "", ""])
         elif len(mapped) == 1 and mapped[0] == rt:
@@ -2357,8 +2792,10 @@ with open(MAPPING_CSV_PATH, "w", encoding="utf-8", newline="\n") as f:
             attrs = " / ".join(filter(None, (ATTRIBUTE_MAP.get(MASTER_TAXONOMY[m][1], "") for m in mapped)))
             writer.writerow([rt, "归一/提炼", "、".join(mapped), cats, subcats, attrs])
 
+zero_count_tags = [k for k, v in taxonomy_json.items() if v["count"] == 0]
 print(f"Processed {len(cleaned_rows)} sutras. Empty sorted: {empty_sorted}, Empty core: {empty_core}")
-print(f"Total unique active canonical tags across all 1355 sutras: {len(used_tags)}")
+print(f"Supplemented {supplemented_by_fulltext_count} omitted tag-sutra associations across {supplemented_sutra_count} sutras via CBETA full-text re-indexing.")
+print(f"Total unique active canonical tags across all 1355 sutras: {len(used_tags)} (zero-count tags remaining: {len(zero_count_tags)})")
 
 cat_counts = Counter()
 subcat_counts = Counter()
@@ -2370,3 +2807,4 @@ for t in used_tags:
 print("Category breakdown (unique active tags):", dict(cat_counts))
 for k, v in sorted(subcat_counts.items()):
     print(f"  {k}: {v}")
+

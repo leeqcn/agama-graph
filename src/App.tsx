@@ -28,6 +28,7 @@ import {
   AlignLeft,
   ArrowLeft
 } from 'lucide-react';
+import KnowledgeGraphView, { GraphDataPayload } from './components/KnowledgeGraphView';
 
 interface SutraMeta {
   id: string;
@@ -70,26 +71,6 @@ interface TagStat {
   aliases?: string;
 }
 
-interface GraphNode {
-  id: string;
-  name: string;
-  category: string;
-  value: number;
-  coreCount: number;
-  x?: number;
-  y?: number;
-  vx?: number;
-  vy?: number;
-}
-
-interface GraphLink {
-  source: string;
-  target: string;
-  type: string;
-  value: number;
-  label?: string;
-}
-
 export default function App() {
   const [tab, setTab] = useState<'sutras' | 'tags' | 'graph' | 'workbench' | 'about'>('sutras');
   const [sutras, setSutras] = useState<SutraMeta[]>([]);
@@ -120,9 +101,7 @@ export default function App() {
   const [tagSubCategory, setTagSubCategory] = useState<string>('all');
 
   // Graph state
-  const [graphData, setGraphData] = useState<{ nodes: GraphNode[]; links: GraphLink[] }>({ nodes: [], links: [] });
-  const [selectedGraphNode, setSelectedGraphNode] = useState<GraphNode | null>(null);
-  const [relationTypeFilter, setRelationTypeFilter] = useState<string>('all');
+  const [graphData, setGraphData] = useState<GraphDataPayload>({ nodes: [], links: [] });
 
   // Tagging progress
   const [taggingProgress, setTaggingProgress] = useState<{
@@ -1589,104 +1568,22 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 3: RELATIONAL GRAPH */}
+        {/* VIEW 3: RELATIONAL GRAPH (3-Tier Architecture & 3 Core Charts) */}
         {tab === 'graph' && (
-          <div className="flex-1 flex flex-col h-[calc(100vh-3.5rem)] overflow-hidden">
-            <div className="p-3 sm:p-4 border-b border-amber-200/50 dark:border-stone-800 bg-amber-50/30 dark:bg-stone-900/40 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h2 className="font-serif-sc font-bold text-base sm:text-lg text-stone-900 dark:text-stone-100 flex items-center gap-2">
-                  <Network className="w-5 h-5 text-amber-700 dark:text-amber-400" />
-                  <span>阿含名相关系图谱</span>
-                </h2>
-                <p className="text-xs text-stone-500 dark:text-stone-400">
-                  基于六大关系法则（开合、缘起序、修证、异译同实）与核心名相共现网络
-                </p>
-              </div>
-
-              {/* Relation type filters */}
-              <div className="flex items-center gap-2 text-xs">
-                <span className="text-stone-500">关系:</span>
-                <select
-                  value={relationTypeFilter}
-                  onChange={(e) => setRelationTypeFilter(e.target.value)}
-                  className="px-2.5 py-1 rounded border border-amber-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-xs"
-                >
-                  <option value="all">全部关系 ({graphData.links.length})</option>
-                  <option value="开合">开合（总摄别）</option>
-                  <option value="缘起序">缘起序（次第依待）</option>
-                  <option value="修证">修证（观法/所断/所证）</option>
-                  <option value="异译同实">异译同实</option>
-                  <option value="共现">同经共现</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Interactive Graph Canvas */}
-            <div className="flex-1 relative bg-[#fdfbf7] dark:bg-stone-950 flex">
-              <GraphCanvas
-                data={graphData}
-                filterType={relationTypeFilter}
-                onSelectNode={(node) => setSelectedGraphNode(node)}
-                selectedNode={selectedGraphNode}
-              />
-
-              {/* Node Inspector Drawer */}
-              {selectedGraphNode && (
-                <div className="absolute right-3 top-3 w-72 sm:w-80 bg-white/95 dark:bg-stone-900/95 backdrop-blur-md rounded-xl border border-amber-200 dark:border-stone-800 p-4 shadow-xl space-y-3 z-10">
-                  <div className="flex items-center justify-between border-b border-amber-100 dark:border-stone-800 pb-2">
-                    <span className="font-serif-sc font-bold text-base sm:text-lg text-stone-900 dark:text-stone-100">
-                      {selectedGraphNode.name}
-                    </span>
-                    <button onClick={() => setSelectedGraphNode(null)} className="text-xs text-stone-400 hover:text-stone-600">
-                      ✕
-                    </button>
-                  </div>
-
-                  <div className="text-xs space-y-1.5 text-stone-600 dark:text-stone-300">
-                    <div>分类：<strong>{selectedGraphNode.category}</strong></div>
-                    <div>权重与度数：<strong>{selectedGraphNode.value}</strong></div>
-                    {selectedGraphNode.coreCount > 0 && (
-                      <div className="text-amber-700 dark:text-amber-400 font-semibold">
-                        ★ 标记为核心概念 {selectedGraphNode.coreCount} 次
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Connected Relations */}
-                  <div className="space-y-1.5 pt-2 border-t border-amber-100 dark:border-stone-800">
-                    <div className="text-xs font-semibold text-stone-500">直连关系：</div>
-                    <div className="max-h-36 overflow-y-auto space-y-1 text-xs">
-                      {graphData.links
-                        .filter((l) => l.source === selectedGraphNode.id || l.target === selectedGraphNode.id)
-                        .map((l, idx) => (
-                          <div key={idx} className="p-1.5 rounded bg-amber-50/60 dark:bg-stone-800/60 flex items-center justify-between">
-                            <span>
-                              {l.source} → {l.target}
-                            </span>
-                            <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-200/60 dark:bg-stone-700 text-amber-900 dark:text-amber-200">
-                              {l.type}
-                            </span>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-
-                  {/* Jump to Sutras with this tag */}
-                  <button
-                    onClick={() => {
-                      setSelectedTagFilter(selectedGraphNode.name);
-                      setTab('sutras');
-                      setMobileView('list');
-                    }}
-                    className="w-full mt-2 py-1.5 px-3 rounded-lg bg-amber-800 hover:bg-amber-900 text-white text-xs font-medium flex items-center justify-center gap-1 shadow-xs"
-                  >
-                    <span>研读含此名相的经文</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+          <KnowledgeGraphView
+            graphData={graphData}
+            tags={tags}
+            onSelectTagFilter={(tag) => {
+              setSelectedTagFilter(tag);
+              setTab('sutras');
+              setMobileView('list');
+            }}
+            onSelectSutra={(sid) => {
+              setSelectedSutraId(sid);
+              setTab('sutras');
+              setMobileView('detail');
+            }}
+          />
         )}
 
         {/* VIEW 4: AGENTS ANNOTATION WORKBENCH */}
@@ -2458,205 +2355,3 @@ function MarkdownContent({ content }: { content: string }) {
   return <div className="space-y-2">{blocks}</div>;
 }
 
-// GraphCanvas Component for rendering interactive node-link network
-function GraphCanvas({
-  data,
-  filterType,
-  onSelectNode,
-  selectedNode,
-}: {
-  data: { nodes: GraphNode[]; links: GraphLink[] };
-  filterType: string;
-  onSelectNode: (node: GraphNode) => void;
-  selectedNode: GraphNode | null;
-}) {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  const activeLinks = useMemo(() => {
-    if (filterType === 'all') return data.links;
-    return data.links.filter((l) => l.type === filterType);
-  }, [data.links, filterType]);
-
-  const activeNodes = useMemo(() => {
-    if (filterType === 'all') return data.nodes;
-    const connectedIds = new Set<string>();
-    for (const l of activeLinks) {
-      connectedIds.add(l.source);
-      connectedIds.add(l.target);
-    }
-    return data.nodes.filter((n) => connectedIds.has(n.id));
-  }, [data.nodes, activeLinks, filterType]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animId: number;
-    const width = canvas.width;
-    const height = canvas.height;
-
-    // Initialize node positions in a radial layout
-    const nodes = activeNodes.map((n, i) => {
-      const angle = (i / activeNodes.length) * 2 * Math.PI;
-      const radius = 180 + (i % 3) * 60;
-      return {
-        ...n,
-        x: n.x ?? width / 2 + Math.cos(angle) * radius,
-        y: n.y ?? height / 2 + Math.sin(angle) * radius,
-        vx: 0,
-        vy: 0,
-      };
-    });
-
-    const nodeMap = new Map(nodes.map((n) => [n.id, n]));
-
-    function step() {
-      // Force simulation
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const n1 = nodes[i];
-          const n2 = nodes[j];
-          const dx = n2.x - n1.x;
-          const dy = n2.y - n1.y;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-          if (dist < 150) {
-            const force = (150 - dist) / 150;
-            n1.x -= (dx / dist) * force * 1.5;
-            n1.y -= (dy / dist) * force * 1.5;
-            n2.x += (dx / dist) * force * 1.5;
-            n2.y += (dy / dist) * force * 1.5;
-          }
-        }
-      }
-
-      // Link attraction
-      for (const l of activeLinks) {
-        const s = nodeMap.get(l.source);
-        const t = nodeMap.get(l.target);
-        if (s && t) {
-          const dx = t.x - s.x;
-          const dy = t.y - s.y;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-          const targetDist = 120;
-          const force = (dist - targetDist) * 0.01;
-          s.x += (dx / dist) * force;
-          s.y += (dy / dist) * force;
-          t.x -= (dx / dist) * force;
-          t.y -= (dy / dist) * force;
-        }
-      }
-
-      // Center gravity
-      for (const n of nodes) {
-        n.x += (width / 2 - n.x) * 0.01;
-        n.y += (height / 2 - n.y) * 0.01;
-        n.x = Math.max(50, Math.min(width - 50, n.x));
-        n.y = Math.max(50, Math.min(height - 50, n.y));
-      }
-
-      // Draw
-      ctx.clearRect(0, 0, width, height);
-
-      // Draw links
-      for (const l of activeLinks) {
-        const s = nodeMap.get(l.source);
-        const t = nodeMap.get(l.target);
-        if (!s || !t) continue;
-
-        const isHighlight =
-          selectedNode && (selectedNode.id === s.id || selectedNode.id === t.id);
-
-        ctx.beginPath();
-        ctx.moveTo(s.x, s.y);
-        ctx.lineTo(t.x, t.y);
-
-        if (l.type === '开合') {
-          ctx.strokeStyle = isHighlight ? '#b45309' : 'rgba(180, 83, 9, 0.4)';
-          ctx.lineWidth = isHighlight ? 2.5 : 1.5;
-        } else if (l.type === '缘起序') {
-          ctx.strokeStyle = isHighlight ? '#047857' : 'rgba(4, 120, 87, 0.4)';
-          ctx.lineWidth = isHighlight ? 2.5 : 1.5;
-        } else if (l.type === '修证') {
-          ctx.strokeStyle = isHighlight ? '#4338ca' : 'rgba(67, 56, 202, 0.4)';
-          ctx.lineWidth = isHighlight ? 2.5 : 1.5;
-        } else {
-          ctx.strokeStyle = isHighlight ? '#78716c' : 'rgba(168, 162, 158, 0.3)';
-          ctx.lineWidth = 1;
-        }
-        ctx.stroke();
-
-        if (isHighlight && l.label) {
-          const midX = (s.x + t.x) / 2;
-          const midY = (s.y + t.y) / 2;
-          ctx.font = '10px sans-serif';
-          ctx.fillStyle = '#78716c';
-          ctx.fillText(l.label, midX + 4, midY - 4);
-        }
-      }
-
-      // Draw nodes
-      for (const n of nodes) {
-        const isSel = selectedNode?.id === n.id;
-        const r = Math.min(Math.max(12, n.value), 26);
-
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, r, 0, 2 * Math.PI);
-
-        if (n.coreCount > 0) {
-          ctx.fillStyle = isSel ? '#b45309' : '#d97706';
-        } else {
-          ctx.fillStyle = isSel ? '#57534e' : '#a8a29e';
-        }
-        ctx.fill();
-
-        ctx.lineWidth = isSel ? 3 : 1.5;
-        ctx.strokeStyle = '#ffffff';
-        ctx.stroke();
-
-        ctx.font = isSel ? 'bold 12px "Noto Serif SC", serif' : '11px "Noto Serif SC", serif';
-        ctx.fillStyle = '#292524';
-        ctx.textAlign = 'center';
-        ctx.fillText(n.name, n.x, n.y + r + 13);
-      }
-
-      animId = requestAnimationFrame(step);
-    }
-
-    step();
-
-    function handleClick(e: MouseEvent) {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      for (const n of nodes) {
-        const dist = Math.sqrt((n.x - x) ** 2 + (n.y - y) ** 2);
-        if (dist <= 26) {
-          onSelectNode(n);
-          return;
-        }
-      }
-      onSelectNode(null as any);
-    }
-
-    canvas.addEventListener('click', handleClick);
-
-    return () => {
-      cancelAnimationFrame(animId);
-      canvas.removeEventListener('click', handleClick);
-    };
-  }, [activeNodes, activeLinks, selectedNode, onSelectNode]);
-
-  return (
-    <div className="w-full h-full relative overflow-hidden flex items-center justify-center">
-      <canvas
-        ref={canvasRef}
-        width={950}
-        height={650}
-        className="w-full h-full object-contain cursor-pointer"
-      />
-    </div>
-  );
-}

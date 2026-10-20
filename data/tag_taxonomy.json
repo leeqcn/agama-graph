@@ -15,7 +15,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 125
+    "count": 122
   },
   "善逝": {
     "category": "人物",
@@ -33,7 +33,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 50
+    "count": 46
   },
   "沙门瞿昙": {
     "category": "人物",
@@ -93,7 +93,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 2
+    "count": 3
   },
   "多迦罗尸弃辟支佛": {
     "category": "人物",
@@ -105,13 +105,13 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 68
+    "count": 70
   },
   "大目揵连": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 53
+    "count": 54
   },
   "阿难": {
     "category": "人物",
@@ -123,7 +123,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 13
+    "count": 14
   },
   "阿那律陀": {
     "category": "人物",
@@ -147,19 +147,13 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 2
-  },
-  "须菩提": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 0
+    "count": 3
   },
   "罗睺罗": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 13
+    "count": 14
   },
   "优波离": {
     "category": "人物",
@@ -167,17 +161,11 @@
     "attribute": "",
     "count": 1
   },
-  "婆耆舍": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 16
-  },
   "尊者婆耆舍": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 1
+    "count": 16
   },
   "罗陀比丘": {
     "category": "人物",
@@ -185,17 +173,11 @@
     "attribute": "",
     "count": 19
   },
-  "阐陀": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 2
-  },
   "尊者阐陀": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "二十亿耳": {
     "category": "人物",
@@ -249,27 +231,9 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 1
-  },
-  "周利槃特": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 0
-  },
-  "跋迦梨": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 1
+    "count": 2
   },
   "尊者跋迦梨": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 0
-  },
-  "那提迦": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
@@ -279,19 +243,13 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 0
-  },
-  "尼拘律想": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 1
+    "count": 2
   },
   "尊者尼拘律想": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 0
+    "count": 2
   },
   "难陀": {
     "category": "人物",
@@ -327,7 +285,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 2
+    "count": 4
   },
   "梨犀达多比丘": {
     "category": "人物",
@@ -339,7 +297,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 7
+    "count": 10
   },
   "勒叉那": {
     "category": "人物",
@@ -351,7 +309,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 3
+    "count": 4
   },
   "三弥离提比丘": {
     "category": "人物",
@@ -381,7 +339,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 4
+    "count": 6
   },
   "陀骠摩罗子": {
     "category": "人物",
@@ -405,19 +363,13 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "焰摩迦比丘": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
     "count": 1
-  },
-  "尸婆罗": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 0
   },
   "优陀夷": {
     "category": "人物",
@@ -431,23 +383,11 @@
     "attribute": "",
     "count": 1
   },
-  "大爱道瞿昙弥": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 0
-  },
-  "莲华色比丘尼": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 1
-  },
   "优钵罗色比丘尼": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "尸罗比丘尼": {
     "category": "人物",
@@ -465,13 +405,13 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "阿罗毗比丘尼": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "叔迦罗比丘尼": {
     "category": "人物",
@@ -495,7 +435,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "毗阇耶比丘尼": {
     "category": "人物",
@@ -525,25 +465,25 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 916
+    "count": 903
   },
   "异比丘": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 89
+    "count": 95
   },
   "上座比丘": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 15
+    "count": 16
   },
   "比丘尼": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 20
+    "count": 17
   },
   "沙弥": {
     "category": "人物",
@@ -555,19 +495,19 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 57
+    "count": 55
   },
   "多闻圣弟子": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 75
+    "count": 90
   },
   "沙门": {
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 51
+    "count": 42
   },
   "四众": {
     "category": "人物",
@@ -579,7 +519,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 2
+    "count": 3
   },
   "贤圣": {
     "category": "人物",
@@ -591,7 +531,7 @@
     "category": "人物",
     "subCategory": "佛与圣弟子",
     "attribute": "",
-    "count": 4
+    "count": 5
   },
   "波斯匿王": {
     "category": "人物",
@@ -609,13 +549,7 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 2
-  },
-  "优填王": {
-    "category": "人物",
-    "subCategory": "在家众与王臣",
-    "attribute": "",
-    "count": 0
+    "count": 3
   },
   "阿育王": {
     "category": "人物",
@@ -633,7 +567,7 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "无畏王子": {
     "category": "人物",
@@ -645,19 +579,13 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 6
-  },
-  "末利夫人": {
-    "category": "人物",
-    "subCategory": "在家众与王臣",
-    "attribute": "",
-    "count": 0
+    "count": 10
   },
   "给孤独长者": {
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 10
+    "count": 12
   },
   "质多罗长者": {
     "category": "人物",
@@ -671,17 +599,11 @@
     "attribute": "",
     "count": 5
   },
-  "郁伽长者": {
-    "category": "人物",
-    "subCategory": "在家众与王臣",
-    "attribute": "",
-    "count": 0
-  },
   "罗婆那富": {
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 0
+    "count": 3
   },
   "释氏摩诃男": {
     "category": "人物",
@@ -699,7 +621,7 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 3
+    "count": 4
   },
   "难提": {
     "category": "人物",
@@ -719,17 +641,11 @@
     "attribute": "",
     "count": 1
   },
-  "难提迦": {
-    "category": "人物",
-    "subCategory": "在家众与王臣",
-    "attribute": "",
-    "count": 0
-  },
   "婆罗门长者": {
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 5
+    "count": 8
   },
   "鞞罗磨聚落婆罗门长者": {
     "category": "人物",
@@ -741,7 +657,7 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 7
+    "count": 12
   },
   "刀师氏聚落主": {
     "category": "人物",
@@ -754,12 +670,6 @@
     "subCategory": "在家众与王臣",
     "attribute": "",
     "count": 1
-  },
-  "象头山聚落主": {
-    "category": "人物",
-    "subCategory": "在家众与王臣",
-    "attribute": "",
-    "count": 0
   },
   "诃梨聚落主长者": {
     "category": "人物",
@@ -777,13 +687,7 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 6
-  },
-  "毗舍佉鹿母": {
-    "category": "人物",
-    "subCategory": "在家众与王臣",
-    "attribute": "",
-    "count": 0
+    "count": 11
   },
   "鹿住优婆夷": {
     "category": "人物",
@@ -795,13 +699,13 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 27
+    "count": 38
   },
   "优婆夷": {
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 11
+    "count": 18
   },
   "优婆夷子": {
     "category": "人物",
@@ -813,13 +717,13 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "长者子": {
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 4
+    "count": 5
   },
   "长者妇女": {
     "category": "人物",
@@ -855,13 +759,13 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 36
+    "count": 40
   },
   "凡夫": {
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 16
+    "count": 11
   },
   "愚夫": {
     "category": "人物",
@@ -879,7 +783,7 @@
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 3
+    "count": 6
   },
   "婆蹉种出家": {
     "category": "人物",
@@ -897,13 +801,13 @@
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 2
+    "count": 3
   },
   "尼揵子": {
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 3
+    "count": 5
   },
   "六师外道": {
     "category": "人物",
@@ -911,35 +815,23 @@
     "attribute": "",
     "count": 3
   },
-  "富兰那迦叶": {
-    "category": "人物",
-    "subCategory": "外道与梵志",
-    "attribute": "",
-    "count": 3
-  },
-  "末迦梨瞿舍利子": {
-    "category": "人物",
-    "subCategory": "外道与梵志",
-    "attribute": "",
-    "count": 1
-  },
   "阿耆多翅舍钦婆罗": {
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 0
+    "count": 4
   },
   "先阇那毗罗胝子": {
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 0
+    "count": 2
   },
   "迦罗拘陀迦栴延": {
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 0
+    "count": 5
   },
   "生闻婆罗门": {
     "category": "人物",
@@ -951,13 +843,13 @@
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 83
+    "count": 72
   },
   "异婆罗门": {
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 12
+    "count": 13
   },
   "年耆婆罗门": {
     "category": "人物",
@@ -969,19 +861,13 @@
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 3
+    "count": 5
   },
   "骂辱婆罗豆婆遮": {
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
     "count": 2
-  },
-  "憍慢婆罗豆婆遮": {
-    "category": "人物",
-    "subCategory": "外道与梵志",
-    "attribute": "",
-    "count": 0
   },
   "耕田婆罗豆婆遮": {
     "category": "人物",
@@ -993,25 +879,13 @@
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "孙陀利迦婆罗豆婆遮": {
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 0
-  },
-  "郁阇迦婆罗门": {
-    "category": "人物",
-    "subCategory": "外道与梵志",
-    "attribute": "",
-    "count": 0
-  },
-  "摩纳": {
-    "category": "人物",
-    "subCategory": "外道与梵志",
-    "attribute": "",
-    "count": 0
+    "count": 2
   },
   "摩摩帝": {
     "category": "人物",
@@ -1023,7 +897,7 @@
     "category": "人物",
     "subCategory": "外道与梵志",
     "attribute": "",
-    "count": 32
+    "count": 38
   },
   "尸婆外道出家": {
     "category": "人物",
@@ -1119,49 +993,49 @@
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 5
+    "count": 7
   },
   "伊赊那": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "婆留那": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 2
+    "count": 3
   },
   "苏摩": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "月天子": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 2
+    "count": 3
   },
   "日天子": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "摩得伽梨": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 0
+    "count": 3
   },
   "魔波旬": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 37
+    "count": 38
   },
   "魔": {
     "category": "人物",
@@ -1173,7 +1047,7 @@
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "魔三女": {
     "category": "人物",
@@ -1185,13 +1059,13 @@
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 91
+    "count": 90
   },
   "诸天": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 21
+    "count": 19
   },
   "天神": {
     "category": "人物",
@@ -1217,19 +1091,7 @@
     "attribute": "",
     "count": 5
   },
-  "拘迦尼天女": {
-    "category": "人物",
-    "subCategory": "诸天与鬼神魔众",
-    "attribute": "",
-    "count": 1
-  },
   "朱卢陀天女": {
-    "category": "人物",
-    "subCategory": "诸天与鬼神魔众",
-    "attribute": "",
-    "count": 1
-  },
-  "光明天女": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
@@ -1281,7 +1143,7 @@
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "阿毗浮天子": {
     "category": "人物",
@@ -1395,19 +1257,19 @@
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "真陀罗鬼": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "紧那罗女": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "毕陵伽鬼子母": {
     "category": "人物",
@@ -1497,37 +1359,19 @@
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 15
-  },
-  "毗摩质多罗阿修罗王": {
-    "category": "人物",
-    "subCategory": "诸天与鬼神魔众",
-    "attribute": "",
-    "count": 6
-  },
-  "罗睺罗阿修罗王": {
-    "category": "人物",
-    "subCategory": "诸天与鬼神魔众",
-    "attribute": "",
-    "count": 1
+    "count": 18
   },
   "修跋罗阿修罗女": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "金翅鸟": {
     "category": "人物",
     "subCategory": "诸天与鬼神魔众",
     "attribute": "",
-    "count": 1
-  },
-  "那伽": {
-    "category": "人物",
-    "subCategory": "诸天与鬼神魔众",
-    "attribute": "",
-    "count": 0
+    "count": 4
   },
   "大龙": {
     "category": "人物",
@@ -1557,25 +1401,25 @@
     "category": "地点",
     "subCategory": "国城与聚落",
     "attribute": "",
-    "count": 35
+    "count": 36
   },
   "拘萨罗国": {
     "category": "地点",
     "subCategory": "国城与聚落",
     "attribute": "",
-    "count": 48
+    "count": 52
   },
   "摩竭提国": {
     "category": "地点",
     "subCategory": "国城与聚落",
     "attribute": "",
-    "count": 15
+    "count": 17
   },
   "巴连弗邑": {
     "category": "地点",
     "subCategory": "国城与聚落",
     "attribute": "",
-    "count": 4
+    "count": 5
   },
   "毗舍离": {
     "category": "地点",
@@ -1635,19 +1479,19 @@
     "category": "地点",
     "subCategory": "国城与聚落",
     "attribute": "",
-    "count": 6
+    "count": 5
   },
   "萨罗聚落": {
     "category": "地点",
     "subCategory": "国城与聚落",
     "attribute": "",
-    "count": 0
+    "count": 2
   },
   "婆罗门聚落": {
     "category": "地点",
     "subCategory": "国城与聚落",
     "attribute": "",
-    "count": 2
+    "count": 3
   },
   "跋耆聚落": {
     "category": "地点",
@@ -1689,7 +1533,7 @@
     "category": "地点",
     "subCategory": "园苑与精舍讲堂",
     "attribute": "",
-    "count": 38
+    "count": 39
   },
   "舍卫国东园鹿子母讲堂": {
     "category": "地点",
@@ -1749,13 +1593,13 @@
     "category": "地点",
     "subCategory": "园苑与精舍讲堂",
     "attribute": "",
-    "count": 9
+    "count": 8
   },
   "王舍城山谷精舍": {
     "category": "地点",
     "subCategory": "园苑与精舍讲堂",
     "attribute": "",
-    "count": 5
+    "count": 6
   },
   "王舍城金师精舍": {
     "category": "地点",
@@ -1803,13 +1647,13 @@
     "category": "地点",
     "subCategory": "园苑与精舍讲堂",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "空塔、空聚落": {
     "category": "地点",
     "subCategory": "园苑与精舍讲堂",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "耆阇崛山": {
     "category": "地点",
@@ -1881,13 +1725,13 @@
     "category": "地点",
     "subCategory": "山林与水岸自然",
     "attribute": "",
-    "count": 8
+    "count": 9
   },
   "安陀林": {
     "category": "地点",
     "subCategory": "山林与水岸自然",
     "attribute": "",
-    "count": 14
+    "count": 15
   },
   "娑祇城安禅林": {
     "category": "地点",
@@ -1917,7 +1761,7 @@
     "category": "地点",
     "subCategory": "山林与水岸自然",
     "attribute": "",
-    "count": 4
+    "count": 6
   },
   "瞻婆国揭伽池侧": {
     "category": "地点",
@@ -1971,13 +1815,13 @@
     "category": "地点",
     "subCategory": "山林与水岸自然",
     "attribute": "",
-    "count": 3
+    "count": 7
   },
   "三十三天": {
     "category": "地点",
     "subCategory": "山林与水岸自然",
     "attribute": "",
-    "count": 19
+    "count": 40
   },
   "炎魔天": {
     "category": "地点",
@@ -1989,19 +1833,19 @@
     "category": "地点",
     "subCategory": "山林与水岸自然",
     "attribute": "",
-    "count": 5
+    "count": 10
   },
   "化乐天": {
     "category": "地点",
     "subCategory": "山林与水岸自然",
     "attribute": "",
-    "count": 4
+    "count": 9
   },
   "他化自在天": {
     "category": "地点",
     "subCategory": "山林与水岸自然",
     "attribute": "",
-    "count": 4
+    "count": 10
   },
   "小千世界": {
     "category": "地点",
@@ -2025,37 +1869,37 @@
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 57
+    "count": 59
   },
   "色蕴": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 0
+    "count": 6
   },
   "受蕴": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 0
+    "count": 5
   },
   "想蕴": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 0
+    "count": 5
   },
   "行蕴": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 0
+    "count": 5
   },
   "识蕴": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 0
+    "count": 7
   },
   "色": {
     "category": "法义",
@@ -2091,37 +1935,37 @@
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 2
+    "count": 22
   },
   "受受阴": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 1
+    "count": 3
   },
   "想受阴": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 1
+    "count": 3
   },
   "行受阴": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 1
+    "count": 3
   },
   "识受阴": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 3
+    "count": 21
   },
   "六入处": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 31
+    "count": 46
   },
   "六内入处": {
     "category": "法义",
@@ -2145,55 +1989,55 @@
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 31
+    "count": 34
   },
   "六识身": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 6
+    "count": 10
   },
   "六触身": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 5
+    "count": 7
   },
   "六受身": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 6
+    "count": 8
   },
   "六想身": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 5
+    "count": 7
   },
   "六思身": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 5
+    "count": 8
   },
   "六爱身": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 3
+    "count": 4
   },
   "眼识": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 29
+    "count": 28
   },
   "眼、色": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 14
+    "count": 19
   },
   "十八界": {
     "category": "法义",
@@ -2205,7 +2049,7 @@
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 14
+    "count": 15
   },
   "胜界、鄙界": {
     "category": "法义",
@@ -2295,31 +2139,31 @@
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 2
+    "count": 3
   },
   "一切": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 136
+    "count": 118
   },
   "一切法": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 6
+    "count": 7
   },
   "名色": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 31
+    "count": 27
   },
   "识、名色互缘": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "二因缘生识": {
     "category": "法义",
@@ -2331,13 +2175,13 @@
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 13
+    "count": 12
   },
   "心王": {
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "心、意、识": {
     "category": "法义",
@@ -2361,7 +2205,7 @@
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 12
+    "count": 10
   },
   "触": {
     "category": "法义",
@@ -2373,7 +2217,7 @@
     "category": "法义",
     "subCategory": "蕴、处、界",
     "attribute": "",
-    "count": 6
+    "count": 7
   },
   "触俱生受、想、思": {
     "category": "法义",
@@ -2385,19 +2229,19 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 99
+    "count": 100
   },
   "苦圣谛": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 23
+    "count": 68
   },
   "苦": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 139
+    "count": 135
   },
   "诸所有受悉皆是苦": {
     "category": "法义",
@@ -2415,13 +2259,13 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 120
+    "count": 116
   },
   "变易法": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 35
+    "count": 34
   },
   "无常、苦、变易法": {
     "category": "法义",
@@ -2433,7 +2277,7 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 9
+    "count": 10
   },
   "异生、异灭": {
     "category": "法义",
@@ -2445,7 +2289,7 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 0
+    "count": 4
   },
   "无常盛火当尽断": {
     "category": "法义",
@@ -2457,7 +2301,7 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 31
+    "count": 33
   },
   "生、老、病、死怖": {
     "category": "法义",
@@ -2475,25 +2319,13 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 21
+    "count": 20
   },
   "生": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
     "count": 18
-  },
-  "病": {
-    "category": "法义",
-    "subCategory": "四谛·苦谛",
-    "attribute": "果",
-    "count": 0
-  },
-  "死": {
-    "category": "法义",
-    "subCategory": "四谛·苦谛",
-    "attribute": "果",
-    "count": 0
   },
   "处胎五位": {
     "category": "法义",
@@ -2505,25 +2337,25 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 24
+    "count": 34
   },
   "纯大苦聚": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 8
+    "count": 12
   },
   "逼迫苦": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 3
+    "count": 4
   },
   "忧悲恼苦": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 4
+    "count": 3
   },
   "身心苦患": {
     "category": "法义",
@@ -2535,7 +2367,7 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 2
+    "count": 3
   },
   "给孤独长者身遭苦患": {
     "category": "法义",
@@ -2579,12 +2411,6 @@
     "attribute": "果",
     "count": 3
   },
-  "患": {
-    "category": "法义",
-    "subCategory": "四谛·苦谛",
-    "attribute": "果",
-    "count": 0
-  },
   "业报": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
@@ -2607,13 +2433,13 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 9
+    "count": 10
   },
   "地狱、畜生、饿鬼": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 14
+    "count": 18
   },
   "地狱、畜生、饿鬼、人、天": {
     "category": "法义",
@@ -2625,13 +2451,13 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 3
+    "count": 6
   },
   "地狱": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 23
+    "count": 18
   },
   "阿毗地狱": {
     "category": "法义",
@@ -2649,7 +2475,7 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 0
+    "count": 1
   },
   "百千岁堕地狱": {
     "category": "法义",
@@ -2667,7 +2493,7 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 1
+    "count": 2
   },
   "鬼神道": {
     "category": "法义",
@@ -2685,25 +2511,25 @@
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 25
+    "count": 23
   },
   "后边身": {
     "category": "法义",
     "subCategory": "四谛·苦谛",
     "attribute": "果",
-    "count": 4
+    "count": 6
   },
   "苦集圣谛": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 21
+    "count": 60
   },
   "色集": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 13
+    "count": 12
   },
   "有身集": {
     "category": "法义",
@@ -2715,7 +2541,7 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 4
+    "count": 9
   },
   "触集": {
     "category": "法义",
@@ -2733,19 +2559,19 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 3
+    "count": 4
   },
   "不知": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 30
+    "count": 28
   },
   "有无明": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 3
+    "count": 5
   },
   "爱": {
     "category": "法义",
@@ -2763,7 +2589,7 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 7
+    "count": 8
   },
   "欲爱": {
     "category": "法义",
@@ -2781,13 +2607,13 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 3
+    "count": 7
   },
   "有爱": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 6
+    "count": 2
   },
   "三有爱": {
     "category": "法义",
@@ -2799,21 +2625,15 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 10
+    "count": 8
   },
   "贪喜": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 4
+    "count": 2
   },
   "有贪有喜": {
-    "category": "法义",
-    "subCategory": "四谛·集谛",
-    "attribute": "因",
-    "count": 0
-  },
-  "有貪有喜": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
@@ -2823,19 +2643,19 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 12
+    "count": 10
   },
   "喜贪": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 0
+    "count": 5
   },
   "染著": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 26
+    "count": 16
   },
   "欣悦、赞叹、系著": {
     "category": "法义",
@@ -2847,19 +2667,19 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 2
+    "count": 3
   },
   "非世间众事是欲，心法驰觉想名士夫欲": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 0
+    "count": 2
   },
   "取": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 21
+    "count": 22
   },
   "是我、我所而取": {
     "category": "法义",
@@ -2889,13 +2709,13 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 5
+    "count": 2
   },
   "攀缘识住": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 3
+    "count": 4
   },
   "识住增长": {
     "category": "法义",
@@ -2907,19 +2727,19 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 25
+    "count": 31
   },
   "贪欲": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 81
+    "count": 62
   },
   "瞋恚": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 61
+    "count": 51
   },
   "瞋恚为毒本": {
     "category": "法义",
@@ -2931,19 +2751,19 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 43
+    "count": 33
   },
   "贪恚": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 10
+    "count": 7
   },
   "三使": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 0
+    "count": 3
   },
   "使": {
     "category": "法义",
@@ -2967,13 +2787,13 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 28
+    "count": 22
   },
   "五下分结": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 21
+    "count": 23
   },
   "五上分结": {
     "category": "法义",
@@ -2985,19 +2805,13 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 0
-  },
-  "结所系法": {
-    "category": "法义",
-    "subCategory": "四谛·集谛",
-    "attribute": "因",
-    "count": 3
+    "count": 8
   },
   "结缚": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 13
+    "count": 12
   },
   "缚": {
     "category": "法义",
@@ -3027,19 +2841,19 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 0
+    "count": 1
   },
   "身见、戒取、疑": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 9
+    "count": 15
   },
   "身见": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 6
+    "count": 4
   },
   "有身见": {
     "category": "法义",
@@ -3057,37 +2871,37 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 6
+    "count": 7
   },
   "我所见": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 2
+    "count": 4
   },
   "我慢使": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 5
+    "count": 6
   },
   "是我、异我、相在": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 19
+    "count": 26
   },
   "我慢": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 34
+    "count": 24
   },
   "增上慢": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 2
+    "count": 3
   },
   "七慢": {
     "category": "法义",
@@ -3141,13 +2955,13 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 29
+    "count": 26
   },
   "恶邪见": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 3
+    "count": 6
   },
   "宿作因论": {
     "category": "法义",
@@ -3183,7 +2997,7 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 0
+    "count": 2
   },
   "二指智": {
     "category": "法义",
@@ -3201,19 +3015,13 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 0
-  },
-  "见貪": {
-    "category": "法义",
-    "subCategory": "四谛·集谛",
-    "attribute": "因",
     "count": 1
   },
   "六十二见": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 0
+    "count": 3
   },
   "八邪道": {
     "category": "法义",
@@ -3237,7 +3045,7 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 14
+    "count": 16
   },
   "不如实知": {
     "category": "法义",
@@ -3249,25 +3057,25 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 9
+    "count": 5
   },
   "不乐": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 59
+    "count": 58
   },
   "恐怖": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 25
+    "count": 18
   },
   "觉想": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 15
+    "count": 13
   },
   "妄想": {
     "category": "法义",
@@ -3285,7 +3093,7 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 5
+    "count": 6
   },
   "色味": {
     "category": "法义",
@@ -3297,25 +3105,25 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 15
+    "count": 22
   },
   "十不善业道": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 11
+    "count": 10
   },
   "不善聚": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 3
+    "count": 4
   },
   "恶法": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 3
+    "count": 2
   },
   "负处门": {
     "category": "法义",
@@ -3333,13 +3141,13 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 21
+    "count": 14
   },
   "不与取": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 3
+    "count": 5
   },
   "盗香贼": {
     "category": "法义",
@@ -3351,13 +3159,13 @@
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 5
+    "count": 3
   },
   "妄语": {
     "category": "法义",
     "subCategory": "四谛·集谛",
     "attribute": "因",
-    "count": 22
+    "count": 14
   },
   "麁恶不善语，瞋骂呵责": {
     "category": "法义",
@@ -3387,19 +3195,19 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 21
+    "count": 60
   },
   "纯大苦聚灭": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 30
+    "count": 38
   },
   "色灭": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 13
+    "count": 11
   },
   "有身灭": {
     "category": "法义",
@@ -3411,37 +3219,37 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 5
+    "count": 7
   },
   "取灭": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 7
+    "count": 5
   },
   "有灭": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 7
+    "count": 6
   },
   "生灭": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 20
+    "count": 17
   },
   "名色灭": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 4
+    "count": 8
   },
   "触灭": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 16
+    "count": 13
   },
   "爱乐灭": {
     "category": "法义",
@@ -3465,13 +3273,13 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 99
+    "count": 65
   },
   "般涅槃": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 54
+    "count": 120
   },
   "自觉涅槃": {
     "category": "法义",
@@ -3489,7 +3297,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 11
+    "count": 13
   },
   "现法智有余涅槃": {
     "category": "法义",
@@ -3507,7 +3315,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 5
+    "count": 12
   },
   "中般涅槃": {
     "category": "法义",
@@ -3543,19 +3351,19 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 0
+    "count": 2
   },
   "阿耨多罗三藐三菩提": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 12
+    "count": 16
   },
   "离欲": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 56
+    "count": 48
   },
   "离贪": {
     "category": "法义",
@@ -3567,13 +3375,13 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 3
+    "count": 4
   },
   "欲贪断": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 6
+    "count": 7
   },
   "喜贪尽": {
     "category": "法义",
@@ -3597,7 +3405,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 17
+    "count": 16
   },
   "舍一切爱苦": {
     "category": "法义",
@@ -3615,7 +3423,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 12
+    "count": 13
   },
   "解脱于苦": {
     "category": "法义",
@@ -3627,19 +3435,19 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 2
+    "count": 7
   },
   "苦边": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 22
+    "count": 8
   },
   "断烦恼": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 20
+    "count": 14
   },
   "断除诸有，莫令增长": {
     "category": "法义",
@@ -3651,7 +3459,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 4
+    "count": 5
   },
   "三结断知": {
     "category": "法义",
@@ -3669,7 +3477,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 5
+    "count": 3
   },
   "佛、法、僧、苦、集、灭、道狐疑断": {
     "category": "法义",
@@ -3681,7 +3489,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 7
+    "count": 11
   },
   "灭除一切有": {
     "category": "法义",
@@ -3699,7 +3507,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 3
+    "count": 4
   },
   "正向灭尽": {
     "category": "法义",
@@ -3711,13 +3519,13 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 26
+    "count": 20
   },
   "离欲、灭尽": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 26
+    "count": 28
   },
   "生厌、离欲、灭尽": {
     "category": "法义",
@@ -3735,13 +3543,13 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 2
+    "count": 3
   },
   "究竟苦边": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 28
+    "count": 46
   },
   "究竟苦边，解脱于苦": {
     "category": "法义",
@@ -3765,13 +3573,13 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 18
+    "count": 13
   },
   "到彼岸": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 3
+    "count": 4
   },
   "度世间彼岸": {
     "category": "法义",
@@ -3789,7 +3597,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 0
+    "count": 1
   },
   "比丘度流": {
     "category": "法义",
@@ -3801,19 +3609,19 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 162
+    "count": 121
   },
   "心解脱": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 72
+    "count": 71
   },
   "慧解脱": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 16
+    "count": 22
   },
   "阿罗汉慧解脱": {
     "category": "法义",
@@ -3831,19 +3639,19 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 16
+    "count": 11
   },
   "心善解脱": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 28
+    "count": 52
   },
   "爱尽解脱": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 4
+    "count": 2
   },
   "无上爱尽解脱、心善解脱": {
     "category": "法义",
@@ -3879,7 +3687,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 13
+    "count": 31
   },
   "明、解脱": {
     "category": "法义",
@@ -3903,7 +3711,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 15
+    "count": 26
   },
   "安住诸漏尽": {
     "category": "法义",
@@ -3921,13 +3729,13 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 4
+    "count": 8
   },
   "漏尽": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 33
+    "count": 32
   },
   "无漏": {
     "category": "法义",
@@ -3951,21 +3759,15 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 17
+    "count": 19
   },
   "无所著": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 17
+    "count": 24
   },
   "无贪无喜": {
-    "category": "法义",
-    "subCategory": "四谛·灭谛",
-    "attribute": "果",
-    "count": 0
-  },
-  "无貪无喜": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
@@ -3975,7 +3777,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 2
+    "count": 3
   },
   "不顾过去": {
     "category": "法义",
@@ -3993,7 +3795,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 2
+    "count": 3
   },
   "心离颠倒": {
     "category": "法义",
@@ -4005,7 +3807,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 50
+    "count": 45
   },
   "无我": {
     "category": "法义",
@@ -4017,31 +3819,31 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 14
+    "count": 17
   },
   "非我、非我所": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 17
+    "count": 16
   },
   "不异我": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 3
+    "count": 4
   },
   "不相在": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 3
+    "count": 5
   },
   "不是我、不异我、不相在": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 27
+    "count": 28
   },
   "空": {
     "category": "法义",
@@ -4101,13 +3903,13 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 0
+    "count": 5
   },
   "须陀洹": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 42
+    "count": 51
   },
   "家家": {
     "category": "法义",
@@ -4125,25 +3927,25 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 16
+    "count": 32
   },
   "阿那含": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 28
+    "count": 44
   },
   "阿罗汉": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 99
+    "count": 116
   },
   "第一记": {
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 3
+    "count": 4
   },
   "受第一记": {
     "category": "法义",
@@ -4161,7 +3963,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 6
+    "count": 8
   },
   "降伏於魔军": {
     "category": "法义",
@@ -4191,7 +3993,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 8
+    "count": 14
   },
   "长夜无忧患": {
     "category": "法义",
@@ -4203,7 +4005,7 @@
     "category": "法义",
     "subCategory": "四谛·灭谛",
     "attribute": "果",
-    "count": 2
+    "count": 4
   },
   "无他世畏": {
     "category": "法义",
@@ -4215,13 +4017,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 23
+    "count": 60
   },
   "苦灭道迹": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 7
+    "count": 6
   },
   "有身灭道迹": {
     "category": "法义",
@@ -4233,7 +4035,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 3
   },
   "一乘道": {
     "category": "法义",
@@ -4245,13 +4047,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 7
+    "count": 6
   },
   "离有无二边之中道": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 2
   },
   "古仙人道": {
     "category": "法义",
@@ -4263,13 +4065,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 2
   },
   "转梵轮": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 3
+    "count": 4
   },
   "三十七道品": {
     "category": "法义",
@@ -4281,13 +4083,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 80
+    "count": 82
   },
   "身身观念处": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 16
+    "count": 25
   },
   "受受观念处": {
     "category": "法义",
@@ -4305,25 +4107,25 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 3
+    "count": 14
   },
   "四念处集与四念处没": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 1
   },
   "千比丘修四念处": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 2
   },
   "阿那律修四念处": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 11
   },
   "自洲以自依、法洲以法依": {
     "category": "法义",
@@ -4335,19 +4137,19 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 6
   },
   "四正断": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 21
+    "count": 23
   },
   "四如意足": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 10
+    "count": 8
   },
   "五根": {
     "category": "法义",
@@ -4365,7 +4167,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 14
   },
   "念根": {
     "category": "法义",
@@ -4377,7 +4179,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 5
   },
   "慧根": {
     "category": "法义",
@@ -4389,85 +4191,85 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 2
   },
   "五力": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 11
+    "count": 12
   },
   "七觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 38
+    "count": 39
   },
   "念觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 8
   },
   "择法觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 4
   },
   "精进觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 4
   },
   "喜觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 4
   },
   "猗觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 4
   },
   "定觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 4
   },
   "舍觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 8
   },
   "十四心": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 2
   },
   "四无量心俱七觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 1
   },
   "不净观俱七觉支": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 3
   },
   "八圣道分": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 69
+    "count": 70
   },
   "二种八正道": {
     "category": "法义",
@@ -4479,19 +4281,19 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 42
+    "count": 40
   },
   "世俗正见": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 1
   },
   "第一义正见": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 2
   },
   "正志": {
     "category": "法义",
@@ -4503,7 +4305,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 28
+    "count": 29
   },
   "正语": {
     "category": "法义",
@@ -4521,7 +4323,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 9
+    "count": 10
   },
   "正方便": {
     "category": "法义",
@@ -4533,43 +4335,43 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 41
+    "count": 31
   },
   "正定": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 7
+    "count": 6
   },
   "正念正智": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 16
+    "count": 20
   },
   "正念正知": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 6
+    "count": 12
   },
   "正智正念": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 6
+    "count": 13
   },
   "正系念": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 7
+    "count": 8
   },
   "正慧": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 27
+    "count": 28
   },
   "智慧为上": {
     "category": "法义",
@@ -4587,25 +4389,25 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 13
   },
   "增上意学": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 13
   },
   "增上慧学": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 13
   },
   "圣戒": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 19
+    "count": 18
   },
   "持戒": {
     "category": "法义",
@@ -4629,13 +4431,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 6
+    "count": 8
   },
   "受持学戒": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 2
+    "count": 13
   },
   "过二百五十戒": {
     "category": "法义",
@@ -4653,7 +4455,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 2
   },
   "一切戒具足": {
     "category": "法义",
@@ -4701,19 +4503,19 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 1
   },
   "自爱": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 2
   },
   "不放逸": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 31
+    "count": 64
   },
   "防护不放逸": {
     "category": "法义",
@@ -4725,13 +4527,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 40
+    "count": 39
   },
   "精勤方便": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 14
+    "count": 11
   },
   "勤方便、起增上欲": {
     "category": "法义",
@@ -4761,19 +4563,19 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 7
+    "count": 6
   },
   "初禅具足住": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 10
   },
   "第二禅": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 7
   },
   "第二禅具足住": {
     "category": "法义",
@@ -4797,13 +4599,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 11
   },
   "三昧": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 38
+    "count": 32
   },
   "火三昧": {
     "category": "法义",
@@ -4827,7 +4629,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 9
   },
   "一心善正受": {
     "category": "法义",
@@ -4839,13 +4641,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 3
+    "count": 4
   },
   "寂灭正受": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 2
+    "count": 3
   },
   "专精漏尽禅": {
     "category": "法义",
@@ -4857,7 +4659,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 14
+    "count": 13
   },
   "入昼正受": {
     "category": "法义",
@@ -4875,7 +4677,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 11
+    "count": 10
   },
   "内寂其心": {
     "category": "法义",
@@ -4905,7 +4707,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 8
+    "count": 9
   },
   "止相、举相、舍相": {
     "category": "法义",
@@ -4929,13 +4731,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 9
+    "count": 14
   },
   "无量三摩提": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 3
+    "count": 4
   },
   "四无量心": {
     "category": "法义",
@@ -4953,7 +4755,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 7
   },
   "安那般那念": {
     "category": "法义",
@@ -4965,7 +4767,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 6
   },
   "圣住、天住、梵住、学住、无学住、如来住": {
     "category": "法义",
@@ -4983,7 +4785,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 5
   },
   "明分想修习满足": {
     "category": "法义",
@@ -4995,7 +4797,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 2
   },
   "无学三明": {
     "category": "法义",
@@ -5007,7 +4809,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 6
+    "count": 10
   },
   "宿命所更智力": {
     "category": "法义",
@@ -5019,13 +4821,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 9
   },
   "天耳通": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 6
+    "count": 8
   },
   "漏尽智力": {
     "category": "法义",
@@ -5043,7 +4845,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 2
+    "count": 3
   },
   "捷疾神足": {
     "category": "法义",
@@ -5055,7 +4857,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 7
   },
   "四不坏净": {
     "category": "法义",
@@ -5091,37 +4893,37 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 1
   },
   "信行、法行": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 4
   },
   "信行": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 3
   },
   "法行": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 9
+    "count": 7
   },
   "随信行": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 3
+    "count": 4
   },
   "随法行": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 3
+    "count": 4
   },
   "学见迹": {
     "category": "法义",
@@ -5151,7 +4953,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 8
+    "count": 11
   },
   "念佛": {
     "category": "法义",
@@ -5159,29 +4961,23 @@
     "attribute": "因",
     "count": 5
   },
-  "六随念": {
-    "category": "法义",
-    "subCategory": "四谛·道谛",
-    "attribute": "因",
-    "count": 10
-  },
   "四随念": {
-    "category": "法义",
-    "subCategory": "四谛·道谛",
-    "attribute": "因",
-    "count": 0
-  },
-  "供养如来": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
     "count": 2
   },
+  "供养如来": {
+    "category": "法义",
+    "subCategory": "四谛·道谛",
+    "attribute": "因",
+    "count": 3
+  },
   "供养父母": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 9
   },
   "信、不放逸、精进、慧": {
     "category": "法义",
@@ -5193,13 +4989,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 62
+    "count": 59
   },
   "如实正观": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 15
+    "count": 16
   },
   "正观": {
     "category": "法义",
@@ -5247,13 +5043,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 46
+    "count": 40
   },
   "正无间等": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 5
   },
   "渐次无间等": {
     "category": "法义",
@@ -5265,13 +5061,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 19
   },
   "法眼净": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 23
+    "count": 25
   },
   "见法": {
     "category": "法义",
@@ -5325,19 +5121,19 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 6
   },
   "已知、已断": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 7
   },
   "已知、已修": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 7
   },
   "已知、已证": {
     "category": "法义",
@@ -5361,7 +5157,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 20
+    "count": 17
   },
   "正厌离、不乐、背舍": {
     "category": "法义",
@@ -5397,7 +5193,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 10
   },
   "法次法向": {
     "category": "法义",
@@ -5409,7 +5205,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 7
+    "count": 8
   },
   "义饶益、法饶益、梵行饶益": {
     "category": "法义",
@@ -5421,7 +5217,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 11
+    "count": 19
   },
   "示、教、照、喜": {
     "category": "法义",
@@ -5433,13 +5229,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 16
+    "count": 10
   },
   "多闻": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 18
+    "count": 16
   },
   "法师": {
     "category": "法义",
@@ -5451,37 +5247,37 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 62
+    "count": 47
   },
   "出家受具足": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 6
   },
   "出家修梵行": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 9
+    "count": 12
   },
   "修梵行": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 17
+    "count": 13
   },
   "少欲知足": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 3
+    "count": 7
   },
   "知足": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 10
+    "count": 4
   },
   "饮食知量": {
     "category": "法义",
@@ -5493,13 +5289,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 2
   },
   "阿兰若、乞食、粪扫衣": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 2
   },
   "阿练若比丘": {
     "category": "法义",
@@ -5517,7 +5313,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 1
   },
   "常行乞食": {
     "category": "法义",
@@ -5529,13 +5325,13 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 23
+    "count": 22
   },
   "夏安居": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 5
+    "count": 11
   },
   "半座": {
     "category": "法义",
@@ -5553,7 +5349,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 8
+    "count": 18
   },
   "善知识、善伴党、善随从": {
     "category": "法义",
@@ -5577,7 +5373,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 4
+    "count": 6
   },
   "离不善法，修诸善法": {
     "category": "法义",
@@ -5595,7 +5391,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 11
+    "count": 18
   },
   "十种净业迹": {
     "category": "法义",
@@ -5607,7 +5403,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 0
+    "count": 3
   },
   "四种诸天天道": {
     "category": "法义",
@@ -5625,7 +5421,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 10
+    "count": 9
   },
   "战胜增怨敌，败苦卧不安": {
     "category": "法义",
@@ -5643,7 +5439,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 1
+    "count": 3
   },
   "佛光明": {
     "category": "法义",
@@ -5655,7 +5451,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 10
+    "count": 16
   },
   "善解世名字，平等假名说": {
     "category": "法义",
@@ -5667,7 +5463,7 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 39
+    "count": 44
   },
   "内、外": {
     "category": "法义",
@@ -5697,7 +5493,7 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 9
+    "count": 5
   },
   "集、灭、味、患、离": {
     "category": "法义",
@@ -5727,7 +5523,7 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 3
+    "count": 4
   },
   "非义、正义": {
     "category": "法义",
@@ -5751,13 +5547,13 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "二法": {
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 8
+    "count": 7
   },
   "二种力": {
     "category": "法义",
@@ -5871,7 +5667,7 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "四摄事": {
     "category": "法义",
@@ -5889,7 +5685,7 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 10
+    "count": 9
   },
   "十无记": {
     "category": "法义",
@@ -5909,12 +5705,6 @@
     "attribute": "",
     "count": 1
   },
-  "四断": {
-    "category": "法义",
-    "subCategory": "法数",
-    "attribute": "",
-    "count": 0
-  },
   "四力": {
     "category": "法义",
     "subCategory": "法数",
@@ -5931,49 +5721,49 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 0
+    "count": 2
   },
   "从冥入冥": {
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 1
+    "count": 3
   },
   "从冥入明": {
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "从明入冥": {
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "从明入明": {
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "四事知人": {
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "四法不可轻": {
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "世间四最难": {
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 0
+    "count": 1
   },
   "理财四分法": {
     "category": "法义",
@@ -6057,7 +5847,7 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 5
+    "count": 4
   },
   "世间八法": {
     "category": "法义",
@@ -6069,7 +5859,7 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 2
+    "count": 3
   },
   "漏尽比丘八力": {
     "category": "法义",
@@ -6099,7 +5889,7 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
   "义品": {
     "category": "法义",
@@ -6117,13 +5907,13 @@
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 0
+    "count": 2
   },
   "阿育王因缘错简卷": {
     "category": "法义",
     "subCategory": "法数",
     "attribute": "",
-    "count": 0
+    "count": 3
   },
   "如来十力": {
     "category": "法义",
@@ -6171,7 +5961,7 @@
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
-    "count": 12
+    "count": 14
   },
   "四姓平等": {
     "category": "法义",
@@ -6215,323 +6005,17 @@
     "attribute": "",
     "count": 1
   },
-  "绵丸随风喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "群贼锯解身喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "饥乌啄石喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "大雨满池喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "众香华第一喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "老牛曳尾喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "三种水器喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "盲龟浮木喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "中涂毒箭喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "求毒得甘露喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "绳系风土障河喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "旱池乾裂喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "牛王度恒河喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "旷野井水喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "斫祇桓林木喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "屠牛解肉喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "婴儿依乳母喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "小土抟喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "调琴弦喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "渔师张网喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "丘塚喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "毛端滴水喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "空聚喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "胶漆得素喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "三种良劣田喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "罗婆鸟自界喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "大树大枝先折喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "树根不断还生喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "因陀罗柱喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "从闇入闇喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "堂阁栋首喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 7
-  },
-  "力士屈伸臂喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "日月出世喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "五河归海喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 6
-  },
-  "娑罗树唯留坚贞喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "守苗防牛喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "三芦相依喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "力马王渡海喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "大石投水不浮喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "转轮圣王最胜喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "火宅出财复投喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "火灭无所至喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "大树倾向东倒喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "斑色鸟画心喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "乳母看护婴儿喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
   "深嶮岩喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "鸽鸟储粮筑巢喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "吹贝遍闻喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "铁鉾钻水喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 3
-  },
-  "旷野食子肉喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "坚固边城六门喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 4
-  },
-  "断树扬灰喻": {
+  "四方大山压境喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
-  },
-  "駏驉怀胎死喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
   },
   "溉树增长喻": {
     "category": "法义",
@@ -6539,229 +6023,19 @@
     "attribute": "",
     "count": 2
   },
-  "舌端唾沫喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "握斧柄渐尽喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "芭蕉生果即死喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "二箭喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "良马调伏喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 3
-  },
-  "鸟羽投火喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "满月入家喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 3
-  },
-  "十六肘石柱喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "乘筏渡河喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "酥油浮水不沈喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "帝释胜幢喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "四阶昇殿喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "旷野山火喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "劫火坏世喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "干草四方火起喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "空三昧瓶对酒瓶喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "拔菅草喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "小石投山喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "世界中间闇冥喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 3
-  },
-  "画师画色喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "钻木取火喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "苦种生苦果喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "五拔刀怨贼喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "众圣王第一喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "客舍寄宿喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "申恕林握叶喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "狗绳系柱喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "猎师施网喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "大石山四风不动喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "画师画虚空喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "象迹摄众迹喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "眼药丸喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "大木聚随水漂流喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
   "风摇庵罗果喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "国王自在喻": {
+  "爪上土与大地土喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
-    "count": 1
+    "count": 4
   },
-  "日西山影喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "东窗日照西壁喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "大雨息尘喻": {
+  "明镜净水照面喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
@@ -6773,131 +6047,35 @@
     "attribute": "",
     "count": 1
   },
-  "六内贼喻": {
+  "浣衣余香喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "五种大树障小树喻": {
+  "大雨满池喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "恒河东注喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "密室火不烧喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "宝山大岩先崩喻": {
+  "十六肘石柱喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
   },
-  "合材为车喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "虚空狂风喻": {
+  "断树根则影灭喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "芭蕉无坚喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "五十由旬大池喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "伏鸡抱卵喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "大白牛法车喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "五欲如利刀喻": {
+  "苦种生苦果喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
-  },
-  "救头然喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 13
-  },
-  "帝释护金翅鸟子回车喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "射百析毛端喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "日出明相喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 4
-  },
-  "净白㲲受染喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "力士弹指喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "已烧不复烧喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "童子聚土戏喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "掷杖虚空喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
   },
   "大闇地狱喻": {
     "category": "法义",
@@ -6905,133 +6083,7 @@
     "attribute": "",
     "count": 1
   },
-  "胶手执枝喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "古仙人道喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "琴声喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "鱼决网喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "华香非根非叶喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 3
-  },
-  "添薪炽火喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "满箱衣服随取喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "物以类聚喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "深耕断草喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "油炷然灯喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 4
-  },
-  "登高山观树林喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "涂疮息苦喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "野干卡水罐喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "黐胶捕猴喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "剥皮牛喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "莲叶水珠喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "巧师解材喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "疾箭射树影喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "甜种生甘果喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "四毒蛇喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "烧铁丸灭无所归喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "猫狸吞活鼠喻": {
+  "驴随牛群自谓牛喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
@@ -7043,29 +6095,23 @@
     "attribute": "",
     "count": 5
   },
-  "持满油钵行大众喻": {
+  "猫狸吞活鼠喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "大热地狱喻": {
+  "热铁丸投水喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
-    "count": 1
+    "count": 2
   },
-  "大池一滴水喻": {
+  "铁鉾钻水喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
-    "count": 1
-  },
-  "草木贯水虫喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
+    "count": 3
   },
   "马尾灯炷喻": {
     "category": "法义",
@@ -7073,7 +6119,37 @@
     "attribute": "",
     "count": 1
   },
-  "牛犊饮乳喻": {
+  "火宅出财复投喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "莲叶水珠喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "油炷然灯喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 4
+  },
+  "旷野食子肉喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "盲龟浮木喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "树根不断还生喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
@@ -7085,23 +6161,107 @@
     "attribute": "",
     "count": 3
   },
-  "路侧毒池喻": {
+  "十五满月喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "莲华不染水喻": {
+  "缕丸掷空喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "日受三百枪喻": {
+  "铸金者、錬金师喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
-    "count": 3
+    "count": 1
+  },
+  "国王自在喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "伏鸡抱卵喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "登楼观四衢喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "掷杖虚空喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "空三昧瓶对酒瓶喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "钻木取火喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "二箭喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "罗婆鸟自界喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "热瓦器散坏喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "野干效师子吼喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "四衢土堆喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "轮王太子灌顶喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "大树大枝先折喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "力士屈伸臂喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
   },
   "执小木入海喻": {
     "category": "法义",
@@ -7109,13 +6269,607 @@
     "attribute": "",
     "count": 2
   },
-  "乳母污衣喻": {
+  "剥皮牛喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "阿能诃鼓喻": {
+  "树叶盛水喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "东窗日照西壁喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "调琴弦喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "三种良劣田喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "射百析毛端喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "琴声喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "持满油钵行大众喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "素帛墨点喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "屠牛解肉喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "众香华第一喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "画师画色喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "申恕林握叶喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "烧铁丸灭无所归喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "斑色鸟画心喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "毛端滴水喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "冢间烧尸木喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "渔师张网喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "华香非根非叶喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 3
+  },
+  "驰象去尘喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "古仙人道喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "添薪炽火喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "胶手执枝喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "涂疮息苦喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "海船藤缀渐朽喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "刈草抖擞喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "密室火不烧喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "乘船逆流喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "坚固边城六门喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 4
+  },
+  "画师画虚空喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "物以类聚喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "尼拘律树气根喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "草木贯水虫喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "诈亲怨家喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "接四方箭喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "疾箭射树影喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "野干卡水罐喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "日西山影喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "大木聚随水漂流喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "深耕断草喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "大海渐深喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "甜种生甘果喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "牛王度恒河喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "大池一滴水喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "三种水器喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "少粪亦臭喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "绵丸随风喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "五欲如利刀喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "登高山观树林喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "舌端唾沫喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "童子聚土戏喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "猎师施网喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "求毒得甘露喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "大雨息尘喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "因陀罗柱喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "握斧柄渐尽喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "旱池乾裂喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "满箱衣服随取喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "虚空狂风喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "泡沫阳焰芭蕉幻喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "五种大树障小树喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "芭蕉无坚喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "大火坑喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "客舍寄宿喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "酥油浮水不沈喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "善厨士调味喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "雨水满池喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "力马王渡海喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "绳系风土障河喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "针师前卖针喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "婴童不护根喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "诣精舍欲息喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "大白牛法车喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "执灯入暗室喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "狗绳系柱喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "五十由旬大池喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "漂流援岸草喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "魔钩饵钓鱼喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "离车子木枕喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "空聚喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "六众生系一绳喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "鸽鸟储粮筑巢喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "大热地狱喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "猕猴放一取一喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "力士弹指喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "大树倾向东倒喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "无常想八喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "黑白二牛共轭喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "转轮圣王最胜喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "五河归海喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 6
+  },
+  "空林弃枯木喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "救头然喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 13
+  },
+  "堂阁栋首喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 7
+  },
+  "戴华冠喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "白骨锁舞喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "四阶昇殿喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "劫火坏世喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "路侧毒池喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "帝释护金翅鸟子回车喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "干草四方火起喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "合材为车喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
@@ -7133,91 +6887,127 @@
     "attribute": "",
     "count": 1
   },
-  "善厨士调味喻": {
+  "乘筏渡河喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "明镜净水照面喻": {
+  "五拔刀怨贼喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "刈草抖擞喻": {
+  "小石投山喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "漂流援岸草喻": {
+  "从闇入闇喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "诣精舍欲息喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "接四方箭喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "五处系缚喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "热瓦器散坏喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "泡沫阳焰芭蕉幻喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "膏油涂车喻": {
+  "旷野井水喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
   },
-  "乘船逆流喻": {
+  "老牛曳尾喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "魔钩饵钓鱼喻": {
+  "黐胶捕猴喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "莲华不染水喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "牛犊饮乳喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "净白㲲受染喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "宝山大岩先崩喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
   },
-  "雨水满池喻": {
+  "大石投水不浮喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "少粪亦臭喻": {
+  "世界中间闇冥喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 3
+  },
+  "良马调伏喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 3
+  },
+  "四毒蛇喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "铸金者、錬金师喻": {
+  "中涂毒箭喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "六内贼喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "拔菅草喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "大石山四风不动喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "象迹摄众迹喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "守苗防牛喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
@@ -7229,299 +7019,251 @@
     "attribute": "",
     "count": 1
   },
-  "四衢土堆喻": {
+  "巧师解材喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "大火坑喻": {
+  "已烧不复烧喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "断树根则影灭喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "登楼观四衢喻": {
+  "胶漆得素喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
   },
-  "戴华冠喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "素帛墨点喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "尼拘律树气根喻": {
+  "旷野山火喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
   },
-  "缕丸掷空喻": {
+  "群贼锯解身喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "冢间烧尸木喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "针师前卖针喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "驰象去尘喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "树叶盛水喻": {
+  "斫祇桓林木喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
   },
-  "无常想八喻": {
+  "吹贝遍闻喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "驴随牛群自谓牛喻": {
+  "鱼决网喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "缘幢伎师师徒相护喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "大海渐深喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "野干效师子吼喻": {
+  "膏油涂车喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
   },
-  "轮王太子灌顶喻": {
+  "駏驉怀胎死喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "婴儿依乳母喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
   },
-  "离车子木枕喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "四方大山压境喻": {
+  "小土抟喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "十五满月喻": {
+  "鸟羽投火喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "空林弃枯木喻": {
+  "恒河东注喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "猕猴放一取一喻": {
+  "丘塚喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "饥乌啄石喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "眼药丸喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "众圣王第一喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "娑罗树唯留坚贞喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "乳母看护婴儿喻": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "断树扬灰喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 2
   },
-  "诈亲怨家喻": {
+  "日月出世喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "海船藤缀渐朽喻": {
+  "乳母污衣喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
     "count": 1
   },
-  "黑白二牛共轭喻": {
+  "日受三百枪喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
-    "count": 2
-  },
-  "六众生系一绳喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "热铁丸投水喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 2
-  },
-  "浣衣余香喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "白骨锁舞喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "婴童不护根喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "爪上土与大地土喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 4
-  },
-  "执灯入暗室喻": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 1
-  },
-  "护己则护他，护他则护己": {
-    "category": "法义",
-    "subCategory": "四谛·道谛",
-    "attribute": "因",
-    "count": 0
-  },
-  "东方日出先相": {
-    "category": "法义",
-    "subCategory": "四谛·道谛",
-    "attribute": "因",
-    "count": 0
-  },
-  "六念": {
-    "category": "法义",
-    "subCategory": "四谛·道谛",
-    "attribute": "因",
-    "count": 2
-  },
-  "天及世间大人": {
-    "category": "人物",
-    "subCategory": "佛与圣弟子",
-    "attribute": "",
-    "count": 0
-  },
-  "毘摩质多罗阿修罗王": {
-    "category": "人物",
-    "subCategory": "诸天与鬼神魔众",
-    "attribute": "",
-    "count": 2
-  },
-  "五种系缚": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "胜幢": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "千眼": {
-    "category": "人物",
-    "subCategory": "诸天与鬼神魔众",
-    "attribute": "",
-    "count": 0
-  },
-  "富楼那迦叶": {
-    "category": "人物",
-    "subCategory": "外道与梵志",
-    "attribute": "",
-    "count": 0
-  },
-  "末伽梨瞿舍利子": {
-    "category": "人物",
-    "subCategory": "外道与梵志",
-    "attribute": "",
-    "count": 0
-  },
-  "罗睺阿修罗王": {
-    "category": "人物",
-    "subCategory": "诸天与鬼神魔众",
-    "attribute": "",
-    "count": 0
-  },
-  "月譬": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
-  },
-  "芭蕉、竹、苇、骡": {
-    "category": "法义",
-    "subCategory": "譬喻",
-    "attribute": "",
-    "count": 0
+    "count": 3
   },
   "摩利夫人": {
     "category": "人物",
     "subCategory": "在家众与王臣",
     "attribute": "",
-    "count": 0
+    "count": 3
+  },
+  "富楼那迦叶": {
+    "category": "人物",
+    "subCategory": "外道与梵志",
+    "attribute": "",
+    "count": 5
+  },
+  "末伽梨瞿舍利子": {
+    "category": "人物",
+    "subCategory": "外道与梵志",
+    "attribute": "",
+    "count": 3
+  },
+  "罗睺阿修罗王": {
+    "category": "人物",
+    "subCategory": "诸天与鬼神魔众",
+    "attribute": "",
+    "count": 3
+  },
+  "毘摩质多罗阿修罗王": {
+    "category": "人物",
+    "subCategory": "诸天与鬼神魔众",
+    "attribute": "",
+    "count": 7
   },
   "前火灭去向何方喻": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
-    "count": 0
+    "count": 2
   },
   "阿能诃鼓": {
     "category": "法义",
     "subCategory": "譬喻",
     "attribute": "",
-    "count": 0
+    "count": 1
+  },
+  "五种系缚": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "胜幢": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "月譬": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 5
+  },
+  "芭蕉、竹、苇、骡": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 2
+  },
+  "护己则护他，护他则护己": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 1
+  },
+  "东方日出先相": {
+    "category": "法义",
+    "subCategory": "譬喻",
+    "attribute": "",
+    "count": 6
+  },
+  "六念": {
+    "category": "法义",
+    "subCategory": "四谛·道谛",
+    "attribute": "因",
+    "count": 11
+  },
+  "六随念": {
+    "category": "法义",
+    "subCategory": "四谛·道谛",
+    "attribute": "因",
+    "count": 3
+  },
+  "天及世间大人": {
+    "category": "人物",
+    "subCategory": "佛与圣弟子",
+    "attribute": "",
+    "count": 1
+  },
+  "千眼": {
+    "category": "人物",
+    "subCategory": "诸天与鬼神魔众",
+    "attribute": "",
+    "count": 3
   },
   "现在": {
     "category": "法义",
@@ -7529,13 +7271,13 @@
     "attribute": "因",
     "count": 1
   },
-  "未来": {
+  "过去": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
     "count": 1
   },
-  "过去": {
+  "未来": {
     "category": "法义",
     "subCategory": "四谛·道谛",
     "attribute": "因",
