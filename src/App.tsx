@@ -45,6 +45,9 @@ interface SutraMeta {
   isAnnotated: boolean;
   prevId?: string;
   nextId?: string;
+  paliParallel?: string;
+  paliMatchLevel?: string;
+  paliNote?: string;
 }
 
 interface SutraDetail extends SutraMeta {
@@ -53,6 +56,14 @@ interface SutraDetail extends SutraMeta {
   tableContent?: string;
   canUndoTags?: boolean;
   canUndoNote?: boolean;
+  paliTerms?: {
+    name: string;
+    pali: string;
+    matchLevel: string;
+    paliNote: string;
+    definition: string;
+    aspect: string;
+  }[];
 }
 
 interface TagStat {
@@ -64,6 +75,8 @@ interface TagStat {
   subCategory?: string;
   attribute?: string;
   pali?: string;
+  matchLevel?: string;
+  paliNote?: string;
   samyukta?: string;
   definition?: string;
   aspect?: string;
@@ -85,7 +98,7 @@ export default function App() {
   // Filters for Sutra list
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedJuan, setSelectedJuan] = useState<string>('all');
-  const [filterAnnotated, setFilterAnnotated] = useState<'all' | 'annotated' | 'todo'>('all');
+  const [filterAnnotated, setFilterAnnotated] = useState<'all' | 'annotated' | 'pali_exact' | 'todo'>('all');
   const [selectedTagFilter, setSelectedTagFilter] = useState<string | null>(null);
 
   // Reading settings
@@ -96,7 +109,7 @@ export default function App() {
   // Tags list & Taxonomy filters
   const [tags, setTags] = useState<TagStat[]>([]);
   const [tagSearch, setTagSearch] = useState('');
-  const [tagCategoryFilter, setTagCategoryFilter] = useState<'all' | 'core' | 'frequent'>('all');
+  const [tagCategoryFilter, setTagCategoryFilter] = useState<'all' | 'core' | 'frequent' | 'pali'>('all');
   const [tagMainCategory, setTagMainCategory] = useState<'all' | '人物' | '地点' | '法义'>('all');
   const [tagSubCategory, setTagSubCategory] = useState<string>('all');
 
@@ -270,6 +283,7 @@ export default function App() {
     return sutras.filter((s) => {
       if (selectedJuan !== 'all' && s.juan !== selectedJuan) return false;
       if (filterAnnotated === 'annotated' && !s.isAnnotated) return false;
+      if (filterAnnotated === 'pali_exact' && s.paliMatchLevel !== '严格') return false;
       if (filterAnnotated === 'todo' && s.isAnnotated) return false;
       if (selectedTagFilter) {
         const allTags = [...s.tags, ...s.coreTags, ...s.unsortedTags];
@@ -280,7 +294,9 @@ export default function App() {
         const matchId = s.id.toLowerCase().includes(q);
         const matchTitle = s.title.toLowerCase().includes(q);
         const matchTag = [...s.tags, ...s.coreTags, ...s.unsortedTags].some((t) => t.toLowerCase().includes(q));
-        if (!matchId && !matchTitle && !matchTag) return false;
+        const matchPali =
+          (s.paliParallel || '').toLowerCase().includes(q) || (s.paliNote || '').toLowerCase().includes(q);
+        if (!matchId && !matchTitle && !matchTag && !matchPali) return false;
       }
       return true;
     });
@@ -683,6 +699,9 @@ export default function App() {
                     className="px-2 py-1 rounded-md border border-amber-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300"
                   >
                     <option value="all">全部经文</option>
+                    <option value="pali_exact">
+                      含精确SN对读 ({sutras.filter((s) => s.paliMatchLevel === '严格').length}条)
+                    </option>
                     <option value="annotated">已标注 ({sutras.filter((s) => s.isAnnotated).length}条)</option>
                     <option value="todo">待标注</option>
                   </select>
@@ -701,7 +720,7 @@ export default function App() {
                 <div className="text-xs text-stone-500 dark:text-stone-400 flex items-center justify-between pt-0.5">
                   <span>共 {filteredSutras.length} 条经文</span>
                   <span className="text-[11px] text-amber-700 dark:text-amber-400">
-                    大正藏 T99 (1355经，覆盖1–1362经)
+                    支持搜经号 / 名相 / SN经号
                   </span>
                 </div>
               </div>
@@ -729,9 +748,23 @@ export default function App() {
                         }`}
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-mono text-xs font-semibold text-amber-800 dark:text-amber-400">
-                            {s.id}
-                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono text-xs font-semibold text-amber-800 dark:text-amber-400">
+                              {s.id}
+                            </span>
+                            {s.paliParallel && (
+                              <span
+                                className={`text-[10px] font-mono px-1.5 py-0.2 rounded ${
+                                  s.paliMatchLevel === '严格'
+                                    ? 'bg-emerald-100/90 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 font-semibold'
+                                    : 'bg-stone-100 text-stone-500 dark:bg-stone-800 dark:text-stone-400'
+                                }`}
+                                title={s.paliNote || s.paliParallel}
+                              >
+                                {s.paliParallel.split('(')[0].trim()}
+                              </span>
+                            )}
+                          </div>
                           <div className="flex items-center gap-1.5">
                             <span className="text-[11px] text-stone-400">{s.juan}</span>
                             <span className="text-[11px] text-stone-400">{s.wordCount}字</span>
@@ -1006,6 +1039,141 @@ export default function App() {
                       )}
                     </div>
 
+                    {/* Section 1B: 巴利与《相应部》(SN) 跨文本对读 & 本经名相汉巴词表 */}
+                    {(sutraDetail.paliParallel || (sutraDetail.paliTerms && sutraDetail.paliTerms.length > 0)) && (() => {
+                      const saNumMatch = sutraDetail.id.split('-')[1]?.match(/\d+/);
+                      const saNum = saNumMatch ? parseInt(saNumMatch[0], 10) : null;
+                      const saSuttaCentralUrl = saNum ? `https://suttacentral.net/sa${saNum}` : null;
+
+                      let paliDirectUrl: string | null = null;
+                      if (sutraDetail.paliParallel) {
+                        const m = sutraDetail.paliParallel.match(/\b(SN|MN|AN|DN|Sn|Ud)\s*(\d+(?:\.\d+)?)/);
+                        if (m) {
+                          const bookRaw = m[1];
+                          const bookCode = bookRaw === 'Sn' ? 'snp' : bookRaw.toLowerCase();
+                          paliDirectUrl = `https://suttacentral.net/${bookCode}${m[2]}`;
+                        }
+                      }
+
+                      return (
+                        <div className="rounded-xl border border-emerald-200/80 dark:border-emerald-900/50 bg-emerald-50/40 dark:bg-stone-900/60 p-3.5 sm:p-4 space-y-3">
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="text-xs font-serif-sc font-bold text-emerald-900 dark:text-emerald-300 flex items-center gap-1.5">
+                                <span>巴利与《相应部》(SN) 文献对读</span>
+                              </span>
+                              {sutraDetail.paliParallel && (
+                                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-800 text-white">
+                                  {sutraDetail.paliParallel}
+                                </span>
+                              )}
+                              {sutraDetail.paliMatchLevel && (
+                                <span
+                                  className={`text-[11px] px-2 py-0.5 rounded font-semibold ${
+                                    sutraDetail.paliMatchLevel === '严格'
+                                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 border border-emerald-300/70'
+                                      : sutraDetail.paliMatchLevel === '仅汉传'
+                                      ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300'
+                                      : 'bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-300'
+                                  }`}
+                                >
+                                  对等程度：{sutraDetail.paliMatchLevel}
+                                </span>
+                              )}
+                            </div>
+
+                            {/* External SuttaCentral comparison links */}
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              {saSuttaCentralUrl && (
+                                <a
+                                  href={saSuttaCentralUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-[11px] px-2.5 py-1 rounded-lg bg-white dark:bg-stone-800 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100/70 font-medium transition"
+                                  title="在 SuttaCentral 查看本经（SA）的南传、北传、藏传平行经文与巴利原文"
+                                >
+                                  SuttaCentral 汉巴平行总表 (SA {saNum}) ↗
+                                </a>
+                              )}
+                              {paliDirectUrl && (
+                                <a
+                                  href={paliDirectUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-[11px] px-2.5 py-1 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium transition"
+                                  title="直接打开对应巴利原典与译本"
+                                >
+                                  阅读巴利原典 ({sutraDetail.paliParallel?.split('(')[0].trim()}) ↗
+                                </a>
+                              )}
+                            </div>
+                          </div>
+
+                          {sutraDetail.paliNote && (
+                            <p className="text-xs text-stone-700 dark:text-stone-300 leading-relaxed">
+                              <strong>对读说明：</strong>
+                              {sutraDetail.paliNote}
+                            </p>
+                          )}
+
+                          {/* Per-sutra Pali terms table */}
+                          {sutraDetail.paliTerms && sutraDetail.paliTerms.length > 0 && (
+                            <div className="pt-2 border-t border-emerald-200/60 dark:border-stone-800">
+                              <div className="text-[11px] font-semibold text-emerald-900 dark:text-emerald-300 mb-2">
+                                本经核心名相·汉巴术语对读（共 {sutraDetail.paliTerms.length} 项，取自 data/terms.csv）：
+                              </div>
+                              <div className="overflow-x-auto rounded-lg border border-emerald-200/70 dark:border-stone-800 bg-white dark:bg-stone-900">
+                                <table className="w-full text-left text-xs border-collapse">
+                                  <thead>
+                                    <tr className="bg-emerald-50/80 dark:bg-stone-800/80 text-stone-600 dark:text-stone-300 border-b border-emerald-100 dark:border-stone-800">
+                                      <th className="py-1.5 px-2.5 font-semibold whitespace-nowrap">汉译名相</th>
+                                      <th className="py-1.5 px-2.5 font-semibold whitespace-nowrap">巴利语 (Pāli)</th>
+                                      <th className="py-1.5 px-2.5 font-semibold whitespace-nowrap">对应类型</th>
+                                      <th className="py-1.5 px-2.5 font-semibold">法义定义与汉巴对读说明</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-emerald-100/60 dark:divide-stone-800">
+                                    {sutraDetail.paliTerms.map((pt) => (
+                                      <tr key={pt.name} className="hover:bg-emerald-50/30 dark:hover:bg-stone-800/40">
+                                        <td className="py-1.5 px-2.5 font-serif-sc font-bold text-stone-900 dark:text-stone-100 whitespace-nowrap">
+                                          <button
+                                            onClick={() => {
+                                              setSelectedTagFilter(pt.name);
+                                              setTab('sutras');
+                                              setMobileView('list');
+                                            }}
+                                            className="hover:text-amber-700 hover:underline text-left"
+                                          >
+                                            {pt.name}
+                                          </button>
+                                        </td>
+                                        <td className="py-1.5 px-2.5 font-mono italic text-emerald-800 dark:text-emerald-400">
+                                          {pt.pali || '—'}
+                                        </td>
+                                        <td className="py-1.5 px-2.5 whitespace-nowrap">
+                                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100/80 dark:bg-stone-800 text-emerald-900 dark:text-emerald-300 font-medium">
+                                            {pt.matchLevel || '完全对应'}
+                                          </span>
+                                        </td>
+                                        <td className="py-1.5 px-2.5 text-stone-600 dark:text-stone-400 leading-snug">
+                                          {pt.definition}
+                                          {pt.paliNote ? (
+                                            <span className="block text-[11px] text-amber-800 dark:text-amber-400 mt-0.5">
+                                              注：{pt.paliNote}
+                                            </span>
+                                          ) : null}
+                                        </td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
+
                     {/* Section 2: CBETA Scripture Text (Classical, Elegant Reading Layout) */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between border-b border-amber-200/50 dark:border-stone-800 pb-2">
@@ -1174,7 +1342,7 @@ export default function App() {
                     type="text"
                     value={tagSearch}
                     onChange={(e) => setTagSearch(e.target.value)}
-                    placeholder="搜索名相、异称或释义..."
+                    placeholder="搜名相、巴利语(Pāli)、SN或释义..."
                     className="w-full pl-9 pr-3 py-1.5 text-sm rounded-lg border border-amber-200 dark:border-stone-700 bg-white dark:bg-stone-800 focus:outline-none focus:ring-1 focus:ring-amber-500"
                   />
                   {tagSearch && (
@@ -1193,6 +1361,12 @@ export default function App() {
                     className={`px-2.5 py-1 rounded ${tagCategoryFilter === 'all' ? 'bg-amber-800 text-white font-medium' : 'text-stone-600 dark:text-stone-300'}`}
                   >
                     全部 ({tags.length})
+                  </button>
+                  <button
+                    onClick={() => setTagCategoryFilter('pali')}
+                    className={`px-2.5 py-1 rounded ${tagCategoryFilter === 'pali' ? 'bg-emerald-800 text-white font-medium' : 'text-emerald-800 dark:text-emerald-400 font-medium'}`}
+                  >
+                    含巴利对读 ({tags.filter((t) => t.pali || t.paliNote).length})
                   </button>
                   <button
                     onClick={() => setTagCategoryFilter('core')}
@@ -1444,8 +1618,11 @@ export default function App() {
                     const matchAlias = (t.aliases || '').toLowerCase().includes(q);
                     const matchDef = (t.definition || '').toLowerCase().includes(q);
                     const matchSub = (t.subCategory || '').toLowerCase().includes(q);
-                    if (!matchName && !matchAlias && !matchDef && !matchSub) return false;
+                    const matchPali = (t.pali || '').toLowerCase().includes(q);
+                    const matchPaliNote = (t.paliNote || '').toLowerCase().includes(q);
+                    if (!matchName && !matchAlias && !matchDef && !matchSub && !matchPali && !matchPaliNote) return false;
                   }
+                  if (tagCategoryFilter === 'pali' && !t.pali && !t.paliNote) return false;
                   if (tagCategoryFilter === 'core' && t.coreCount === 0) return false;
                   if (tagCategoryFilter === 'frequent' && t.count < 3) return false;
                   return true;
@@ -1479,11 +1656,6 @@ export default function App() {
                                 异称：{t.aliases}
                               </div>
                             )}
-                            {t.pali && (
-                              <div className="text-[11px] italic text-stone-500 dark:text-stone-400 mt-0.5">
-                                {t.pali} {t.samyukta ? `· ${t.samyukta}` : ''}
-                              </div>
-                            )}
                           </div>
                           <div className="flex items-center gap-1 shrink-0">
                             {isCore && (
@@ -1496,6 +1668,27 @@ export default function App() {
                             </span>
                           </div>
                         </div>
+
+                        {/* Pali comparison badge box */}
+                        {(t.pali || t.paliNote || t.matchLevel) && (
+                          <div className="mt-2 p-2 rounded-lg bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/70 dark:border-emerald-900/50 space-y-1">
+                            <div className="flex flex-wrap items-center justify-between gap-1">
+                              <span className="font-mono text-xs italic font-semibold text-emerald-900 dark:text-emerald-300">
+                                {t.pali ? `Pāli: ${t.pali}` : '汉传特有名相'}
+                              </span>
+                              {t.matchLevel && (
+                                <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-700 text-white font-medium">
+                                  {t.matchLevel}
+                                </span>
+                              )}
+                            </div>
+                            {t.paliNote && (
+                              <div className="text-[11px] text-stone-600 dark:text-stone-300 leading-snug">
+                                对读说明：{t.paliNote}
+                              </div>
+                            )}
+                          </div>
+                        )}
 
                         {/* Category & Subcategory & Cause/Effect Attribute Badges */}
                         <div className="flex flex-wrap items-center gap-1 mt-2">

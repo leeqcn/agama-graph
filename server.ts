@@ -25,6 +25,9 @@ interface SutraMeta {
   isAnnotated: boolean;
   prevId?: string;
   nextId?: string;
+  paliParallel?: string;
+  paliMatchLevel?: string;
+  paliNote?: string;
 }
 
 interface SutraDetail extends SutraMeta {
@@ -34,6 +37,14 @@ interface SutraDetail extends SutraMeta {
   cbetaFootnote?: string;
   canUndoTags?: boolean;
   canUndoNote?: boolean;
+  paliTerms?: {
+    name: string;
+    pali: string;
+    matchLevel: string;
+    paliNote: string;
+    definition: string;
+    aspect: string;
+  }[];
 }
 
 // Helper to parse CSV simple quotes
@@ -197,6 +208,55 @@ function loadAllData() {
       sutraRecords.sort((a, b) => parseInt(a['顺序'] || '0', 10) - parseInt(b['顺序'] || '0', 10));
     }
 
+    // 2b. Load data/mapping/巴利对应.csv
+    const paliMapPath = path.resolve(__dirname, 'data', 'mapping', '巴利对应.csv');
+    const sutraPaliMap = new Map<string, { parallel: string; level: string; note: string }>();
+    if (fs.existsSync(paliMapPath)) {
+      const pRows = parseCsv(fs.readFileSync(paliMapPath, 'utf-8'));
+      for (const r of pRows) {
+        const sid = r['大正藏经号']?.trim();
+        if (sid) {
+          sutraPaliMap.set(sid, {
+            parallel: r['相应部经号']?.trim() || '',
+            level: r['对应程度']?.trim() || '',
+            note: r['备注']?.trim() || '',
+          });
+        }
+      }
+    }
+
+    // 2c. Load data/terms.csv for per-sutra Pali glossary
+    const termsCsvPath = path.resolve(__dirname, 'data', 'terms.csv');
+    const globalTermsMap = new Map<
+      string,
+      { name: string; pali: string; matchLevel: string; paliNote: string; definition: string; aspect: string }
+    >();
+    if (fs.existsSync(termsCsvPath)) {
+      const tRows = parseCsv(fs.readFileSync(termsCsvPath, 'utf-8'));
+      for (const r of tRows) {
+        const name = r['名相']?.trim();
+        if (!name) continue;
+        const entry = {
+          name,
+          pali: r['巴利']?.trim() || '',
+          matchLevel: r['对应类型']?.trim() || r['对等程度']?.trim() || '',
+          paliNote: r['说明']?.trim() || '',
+          definition: r['定义']?.trim() || '',
+          aspect: r['面向']?.trim() || '',
+        };
+        globalTermsMap.set(name, entry);
+        const aliases = (r['异称'] || '')
+          .split(/[、，,;；/]/)
+          .map((s) => s.trim())
+          .filter(Boolean);
+        for (const al of aliases) {
+          if (!globalTermsMap.has(al)) {
+            globalTermsMap.set(al, entry);
+          }
+        }
+      }
+    }
+
     // 3. Scan and load each sutra according to canonical sutras.csv
     const pagesDir = path.resolve(__dirname, 'pages', 'sutras');
     sutraList = [];
@@ -315,6 +375,25 @@ function loadAllData() {
       const isAnnotated = tags.length > 0 || unsortedTags.length > 0 || coreTags.length > 0;
       const prevId = i > 0 ? sutraRecords[i - 1]['经号']?.trim() : undefined;
       const nextId = i < sutraRecords.length - 1 ? sutraRecords[i + 1]['经号']?.trim() : undefined;
+      const paliInfo = sutraPaliMap.get(id);
+
+      // Build per-sutra Pali glossary from its tags
+      const seenTermNames = new Set<string>();
+      const paliTerms: {
+        name: string;
+        pali: string;
+        matchLevel: string;
+        paliNote: string;
+        definition: string;
+        aspect: string;
+      }[] = [];
+      for (const tg of [...coreTags, ...tags, ...unsortedTags]) {
+        const tm = globalTermsMap.get(tg);
+        if (tm && (tm.pali || tm.paliNote) && !seenTermNames.has(tm.name)) {
+          seenTermNames.add(tm.name);
+          paliTerms.push(tm);
+        }
+      }
 
       const sutraDetail: SutraDetail = {
         id,
@@ -331,9 +410,13 @@ function loadAllData() {
         isAnnotated,
         prevId,
         nextId,
+        paliParallel: paliInfo?.parallel,
+        paliMatchLevel: paliInfo?.level,
+        paliNote: paliInfo?.note,
         rawText,
         studyNotes,
         tableContent,
+        paliTerms,
       };
 
       sutraMap.set(id, sutraDetail);
@@ -352,6 +435,9 @@ function loadAllData() {
         isAnnotated,
         prevId,
         nextId,
+        paliParallel: paliInfo?.parallel,
+        paliMatchLevel: paliInfo?.level,
+        paliNote: paliInfo?.note,
       });
     }
     console.log(`Loaded ${sutraList.length} sutras, ${tagsRawMap.size} raw tag rows.`);
@@ -390,6 +476,7 @@ app.get('/api/tags', (req, res) => {
     {
       pali: string;
       matchLevel: string;
+      paliNote: string;
       samyukta: string;
       status: string;
       definition: string;
@@ -407,6 +494,7 @@ app.get('/api/tags', (req, res) => {
         const meta = {
           pali: r['巴利']?.trim() || '',
           matchLevel: r['对应类型']?.trim() || r['对等程度']?.trim() || '',
+          paliNote: r['说明']?.trim() || '',
           samyukta: r['所属相应']?.trim() || '',
           status: r['状态']?.trim() || '',
           definition: r['定义']?.trim() || '',
@@ -449,6 +537,8 @@ app.get('/api/tags', (req, res) => {
       subCategory: string;
       attribute: string;
       pali?: string;
+      matchLevel?: string;
+      paliNote?: string;
       samyukta?: string;
       definition?: string;
       aspect?: string;
@@ -472,6 +562,8 @@ app.get('/api/tags', (req, res) => {
         subCategory: taxMeta.subCategory,
         attribute: taxMeta.attribute || '',
         pali: termMeta?.pali,
+        matchLevel: termMeta?.matchLevel,
+        paliNote: termMeta?.paliNote,
         samyukta: termMeta?.samyukta,
         definition: termMeta?.definition,
         aspect: termMeta?.aspect,
